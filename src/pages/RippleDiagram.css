@@ -1,0 +1,79 @@
+.wrapperlow {
+    width: 500px;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    background-image: linear-gradient(to top, #697181 0%, #f8fbff 100%);
+    overflow: hidden;
+  }
+  
+  .wavelow {
+    width: 1000px;
+    height: 1025px;
+    position: absolute;
+    top: -25%;
+    left: 50%;
+    margin-left: -500px;
+    margin-top: -300px;
+    border-radius: 35%;
+    background: rgba(255, 255, 255, .75);
+    animation: wavelow 15s infinite linear;
+  }
+  
+  @keyframes wavelow {
+    from { transform: rotate(0deg);}
+    from { transform: rotate(360deg);}
+  }
+
+  .legend{
+    position: absolute;
+    bottom: 64px;
+    left: 10px;
+    width: 80%;
+    height: 64px;
+    z-index: -1;
+  }
+  .nodeBoxLegend1{
+    border-color: #FFB107 !important;
+    background-color: #FFC107;
+    border-radius: 20px;
+  }
+
+  .nodeBoxLegend2{
+    border-color: #8BA34A !important;
+    background-color: #8BC34A;
+    border-radius: 20px;
+  }
+
+  .nodeBoxLegend3{
+    border-color: #009CD4 !important;
+    background-color: #00BCD4;
+    border-radius: 20px;
+  }
+  @media (orientation: landscape) {
+    .wavelow{
+      width: 1532px;
+      height: 1472px;
+      left: 19%;
+      top: -162%;
+    }
+    .wrapperlow  {
+      width: 100% !important;
+      height: 500px !important; 
+    }
+  }
+  
+  @media (orientation: portrait) {
+    .wavelow{
+      width: 1000px;
+      height: 1025px;
+    }
+    .wrapperlow {
+      width: 500px !important;
+      height: 100% !important;
+    }
+  }

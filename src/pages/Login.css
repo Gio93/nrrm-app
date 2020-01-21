@@ -1,0 +1,38 @@
+.loginForm{
+    padding: 24px;
+    background: rgba(0,0,0,0.4);
+    color: white !important;
+
+}
+.loginForm input.native-input { 
+    color: white !important;
+    outline-color:white !important;
+    text-decoration-color:white !important;
+    font-size: 1.5em !important; 
+}
+.loginForm ion-input{
+    --placeholder-opacity: 1;
+}
+.loginForm.centerAbsolute{
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin: auto;
+    width: 70%;
+    transform: translate(-50%, -50%);
+}
+.loginbutton{
+    width: 100%;
+}
+ion-toolbar.toolbarCustom {
+    --background:transparent;
+    color:white;
+}
+ion-footer.footerLogin {
+    background:rgba(0,0,0,0.7);
+    color:white;
+    padding: 4px;
+}
+ion-item {
+    --ion-item-background : transparent;
+}

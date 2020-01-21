@@ -1,0 +1,43 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+ion-content {
+  --background: none;
+  background-image: url('../assets/images/bg_ripple.jpg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.centerAbsolute{
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  margin: auto;
+  width: 50%;
+  transform: translate(-50%, -50%);
+}
+.backgrounddiv{
+  background-image: linear-gradient(0deg, transparent);
+  background-size: 1800% 1800%;
+   }
+  
+   #backgroundvideo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	-o-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	background: url('../assets/video/loopWaves.webm') no-repeat;
+    background-size: cover;
+}

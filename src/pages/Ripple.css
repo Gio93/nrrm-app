@@ -1,0 +1,18 @@
+.rippleDetail{
+    --background:white;
+    
+}
+
+.rippleDetail ion-item-divider{
+        font-size: 2em;
+        height: 64px;
+}
+
+.rippleSegmentCustom{
+    --background: var(--ion-color-tertiary);
+    
+}
+
+.rippleSegmentCustom ion-segment-button {
+    color: white !important;
+}

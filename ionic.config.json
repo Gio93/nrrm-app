@@ -1,0 +1,7 @@
+{
+  "name": "NimblRippleMethod",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
