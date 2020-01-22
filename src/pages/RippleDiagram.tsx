@@ -2,12 +2,13 @@ import './RippleDiagram.css'
 import './RippleDiagramAnims.css'
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { 
-        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonItemDivider, IonIcon, IonSegment, IonSegmentButton, IonBackButton, IonInput, IonNote, IonProgressBar, IonLoading, IonCol, IonRow
+        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonItemDivider, IonIcon, IonSegment, IonSegmentButton, IonBackButton, IonInput, IonNote, IonProgressBar, IonLoading, IonCol, IonRow, IonFab, IonFabButton
         } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
 import { RippleInfo, RippleDiagramNode } from '../declarations';
+import { stats, list } from 'ionicons/icons';
 
 type Props = { props:any };
 
@@ -82,7 +83,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           <IonHeader>
             <IonToolbar>
               <IonButtons slot="start">
-                <IonBackButton  defaultHref="/ripple/"/>
+                {/* <IonBackButton  defaultHref="/ripple/"/> */}
               </IonButtons>
               <IonTitle>Ripple Diagram</IonTitle>
             </IonToolbar>
@@ -173,6 +174,12 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
             </IonRow>
             
           </div>
+
+          <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+            <IonFabButton routerLink="/ripple">
+              <IonIcon icon={list} color="light"/>
+            </IonFabButton>
+          </IonFab> 
           </IonContent>
         </IonPage>
     );

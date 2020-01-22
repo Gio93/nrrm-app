@@ -65,7 +65,7 @@ class Card extends React.Component<CardInfo, any> {
                   <IonRow class="ion-align-items-center">
                       <IonCol class="ion-float-left ">
                         {this.props.types.map((x:RippleTypeDto)=>
-                            <IonChip key={x.rippleType} color="tertiary">
+                            <IonChip key={x.rippleType} color="invent">
                                 <IonLabel color="dark">{x.rippleType}</IonLabel>
                             </IonChip>
                         )}
