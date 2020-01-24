@@ -1,0 +1,15 @@
+ion-list {
+    background: transparent !important;
+}
+
+ion-item {
+    --ion-item-background : transparent;
+}
+
+ion-card {
+    --background: white !important;
+}
+
+ion-fab-button {
+    color: white !important;
+}

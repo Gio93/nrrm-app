@@ -1,0 +1,16 @@
+
+.circularLabel{
+    background: #0D8585;
+    padding: 5px;
+    color:white !important;
+    font-weight: bold;
+    border-radius: 100%;
+}
+
+.customCard .customRipple{
+    z-index: 99;
+}
+
+.customCard {
+    height: 300px;
+}
