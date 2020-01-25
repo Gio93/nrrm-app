@@ -269,7 +269,9 @@ export interface RippleGrade {
   indicators: [RippleIndicator]
 }
 
-export interface RippleIndicatorInfoPie {
-  name: string,
-  value: number
+export interface RippleIndicatorInfo {
+  State: string,
+  current: number,
+  remainder: number,
+  total: number
 }
