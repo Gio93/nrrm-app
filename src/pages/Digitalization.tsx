@@ -1,4 +1,4 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading } from '@ionic/react';
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 
@@ -14,9 +14,7 @@ type Props = { props:any };
 
 //Function Component Definition
 const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) => {
-  debugger;
   
-
   const myapi = new API(Params);
   const [showLoading, setShowLoading] = useState(true);
 
@@ -26,6 +24,7 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
 
     const loadData= async ()=>{
       try{
+        setShowLoading(true);
         const response: Array<RippleIndicator> = await myapi.doGet("/nrrm-ripple/indicator");
         indicatorGroups(response);
       }catch (e) {
@@ -34,28 +33,6 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
       }
       
     }
-    // const data01 = [
-    //   { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-    //   { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
-    // ];
-    // const data02 = [
-    //   { name: 'A1', value: 100 },
-    //   { name: 'A2', value: 300 },
-    //   { name: 'B1', value: 100 },
-    //   { name: 'B2', value: 80 },
-    //   { name: 'B3', value: 40 },
-    //   { name: 'B4', value: 30 },
-    //   { name: 'B5', value: 50 },
-    //   { name: 'C1', value: 100 },
-    //   { name: 'C2', value: 200 },
-    //   { name: 'D1', value: 150 },
-    //   { name: 'D2', value: 50 },
-    // ];
-
-    // let renderLabel = function(entry: any) {
-    //   console.log("He entrado",entry);
-    //   return entry.name;
-    // }
 
     // let dataProof = [
     //   {State: "P&L Impact", current: 10, remainder: 90, total: 100},
@@ -75,15 +52,6 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
     
       if(!data) return;
       for(let i=0; i < data.length; i++){
-        //let isGroup = false;
-
-        // for(let j=0; j < data[i].indicators.length; j++){
-        //   isGroup = true;
-        //   flatPieBorderData.push({
-        //     name:data[i].indicators[j].name,
-        //     value: data[i].indicators[j].partialPercentage * 100
-        //   });
-        // }
         if(data[i].indicators.length>0){
           CoreData.push({
             State:data[i].name,
@@ -92,16 +60,7 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
             total: 100
           });
         }
-        
-        // //Indicators groups:
-        // if(isGroup){
-        //   flatPieCoreData.push({
-        //     name:data[i].name,
-        //     value: data[i].percentage * 100
-        //   });
-        // }
       }
-      //setData(flatData.sort((a,b)=>a.id-b.id));
       console.log('Loaded core data', CoreData);
 
      dataFormat = [...CoreData];
@@ -110,7 +69,7 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
     //  dataFormat = [...dataProof];
     //  dataFormat.columns =["State", "current" ,"remainder"];
 
-
+      setShowLoading(false);
       setData1(dataFormat);
     }
 
@@ -141,6 +100,12 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
         </IonToolbar>
       </IonHeader>
       <IonContent>
+      <IonLoading
+              isOpen={showLoading}
+              onDidDismiss={() => setShowLoading(false)}
+              message={'Loading...'}
+              duration={5000}
+            />
         <DigitalizationChart data={data1} />
       </IonContent>
     </IonPage>
