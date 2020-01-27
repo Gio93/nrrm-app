@@ -1,11 +1,13 @@
 import './DigitalizationChart.css'
-import { RippleIndicatorInfo } from '../declarations';
+import { RippleIndicatorInfo, RippleTypeDto, TechnologiesInvolvedDto } from '../declarations';
 import React from 'react';
 import { scaleLinear,scaleBand } from 'd3-scale';
 import { max } from 'd3-array';
 import { select } from 'd3-selection';
 import { axisBottom,axisLeft,axisRight,axisTop} from 'd3-axis'
 import * as d3 from 'd3';
+import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonChip, IonLabel, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem } from '@ionic/react';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 type State = {data:Array<RippleIndicatorInfo>};
 
@@ -20,8 +22,8 @@ class DigitalizationChart extends React.Component<any,State>{
         super(props)
         //this.createRadialStackedBarChart = this.createRadialStackedBarChart.bind(this)
         this.ref = React.createRef();
-        this.width = 500;
-        this.height = 500;
+        this.width = 975;
+        this.height = 975;
         this.outerRadius = Math.min(this.width, this.height) / 2;
         this.innerRadius = 180;
     }
@@ -34,13 +36,15 @@ class DigitalizationChart extends React.Component<any,State>{
         }
         
      }
+     
      createRadialStackedBarChart() {
 
         let svg = select(this.ref.current)
             .attr("viewBox", `${-this.width / 2} ${-this.height / 2} ${this.width} ${this.height}`)
             .style("width", "100%")
             .style("height", "auto")
-            .style("font", "10px sans-serif");
+            .style("font", "2.2em helvetica")
+            .style("padding", "0.1em");
 
         let x = scaleBand()
             .domain(this.props.data.map((d:any) => d.State))
@@ -48,12 +52,12 @@ class DigitalizationChart extends React.Component<any,State>{
             .align(0);
 
         let y = scaleLinear()
-            .domain([0, parseInt(max(this.props.data, (d:any) => d.total))])
-            .range([this.innerRadius * this.innerRadius, this.outerRadius * this.outerRadius]);
+            .domain([0, d3.max(this.props.data, (d:any) => parseInt(d.total))])
+            .range([this.innerRadius , this.outerRadius ]);
 
         let z: any = d3.scaleOrdinal()
             .domain(this.props.data.columns.slice(1))
-            .range(["#80c242", "#1b518f", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            .range(["#80c242", "#7E939E",  "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         let arc:any = d3.arc()
             .innerRadius((d:any) => y(d[0]))
@@ -77,15 +81,15 @@ class DigitalizationChart extends React.Component<any,State>{
                 .attr("stroke", "#000"))
             .call((g:any) => g.append("text")
                 .attr("transform", (d:any) => (x(d.State) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI
-                    ? "rotate(90)translate(0,16)"
-                    : "rotate(-90)translate(0,-9)")
+                    ? "rotate(90)translate(0,65)"
+                    : "rotate(-90)translate(0,-30)")
                 .text((d:any) => d.State)));
         
         let yAxis = (g:any) => g
         .attr("text-anchor", "middle")
         .call((g:any) => g.append("text")
             .attr("y", (d:any) => -y(y.ticks(5).pop()))
-            .attr("dy", "-1em")
+            .attr("dy", "-1.9em")
             .text("Population"))
         .call((g:any) => g.selectAll("g")
             .data(y.ticks(5).slice(1))
@@ -97,7 +101,7 @@ class DigitalizationChart extends React.Component<any,State>{
                 .attr("r", y))
             .call((g:any) => g.append("text")
                 .attr("y", (d:any) => -y(d))
-                .attr("dy", "0.35em")
+                .attr("dy", "0.85em")
                 .attr("stroke", "#fff")
                 .attr("stroke-width", 5)
                 .text(y.tickFormat(5, "s"))
@@ -105,7 +109,7 @@ class DigitalizationChart extends React.Component<any,State>{
                 .attr("fill", "#000")
                 .attr("stroke", "none")));
 
-        let legend = (g:any) => g.append("g")
+       /* let legend = (g:any) => g.append("g")
         .selectAll("g")
         .data(this.props.data.columns.slice(1).reverse())
         .join("g")
@@ -118,7 +122,7 @@ class DigitalizationChart extends React.Component<any,State>{
                 .attr("x", 24)
                 .attr("y", 9)
                 .attr("dy", "0.35em")
-                .text((d:any) => d))
+                .text((d:any) => d))*/
 
         svg.append("g")
             .selectAll("g")
@@ -137,15 +141,45 @@ class DigitalizationChart extends React.Component<any,State>{
         svg.append("g")
             .call(yAxis);
     
-        svg.append("g")
-            .call(legend);
+        // svg.append("g")
+        //     .call(legend);
         
      }
 
   render() {
-        return <svg ref={this.ref}
-        width={this.width} height={this.height}>
-        </svg>
+        return (
+            <div>
+                <IonCard className="ion-activatable">
+                    <IonCardHeader>
+                    <IonCardSubtitle>
+                        Estadística
+                        </IonCardSubtitle>
+                        <IonCardTitle>Grupos de Indicadores</IonCardTitle>
+                    </IonCardHeader>
+      
+                    <IonCardContent>
+                    <IonGrid>
+                    <IonRow>
+                        <IonCol class="ion-align-items-center">
+                            <div>
+                                <svg ref={this.ref}
+                                    width={this.width} height={this.height}>
+                                </svg>
+                            </div>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow class="ion-align-items-center">
+                        <IonCol class="ion-float-left ">
+                        {
+                           this.props.data? this.props.data.map((item:any) =>  <IonItem class="item item-text-wrap"><b>{item.State}</b> -> {item.current}%</IonItem>) : null
+                        }
+                        </IonCol>
+                    </IonRow>
+                    </IonGrid>
+                    </IonCardContent>
+                </IonCard>
+            </div>
+        );
      }
   }
 
