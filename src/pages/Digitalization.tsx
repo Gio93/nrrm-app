@@ -19,7 +19,8 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
   const [showLoading, setShowLoading] = useState(true);
 
   const [data1, setData1] = useState<Array<RippleIndicatorInfo>>(null);
-  
+  const [dataOrigen, setDataOrigen] = useState<Array<RippleIndicator>>(null);
+
   console.log("RippleDiagramIndicators");
 
     const loadData= async ()=>{
@@ -54,7 +55,7 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
       for(let i=0; i < data.length; i++){
         if(data[i].indicators.length>0){
           CoreData.push({
-            State:data[i].name,
+            State:data[i].alias,
             current: data[i].percentage * 100,
             remainder: 100 - (data[i].percentage * 100),
             total: 100
@@ -71,6 +72,7 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
 
       setShowLoading(false);
       setData1(dataFormat);
+      setDataOrigen(data);
     }
 
 
@@ -106,7 +108,7 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
               message={'Loading...'}
               duration={5000}
             />
-        <DigitalizationChart data={data1} />
+        <DigitalizationChart data={data1} dataOrigen={dataOrigen} />
       </IonContent>
     </IonPage>
   );

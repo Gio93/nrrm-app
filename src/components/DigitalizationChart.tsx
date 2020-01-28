@@ -1,5 +1,5 @@
 import './DigitalizationChart.css'
-import { RippleIndicatorInfo, RippleTypeDto, TechnologiesInvolvedDto } from '../declarations';
+import { RippleIndicatorInfo, RippleTypeDto, TechnologiesInvolvedDto, RippleIndicator } from '../declarations';
 import React from 'react';
 import { scaleLinear,scaleBand } from 'd3-scale';
 import { max } from 'd3-array';
@@ -9,7 +9,7 @@ import * as d3 from 'd3';
 import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonChip, IonLabel, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem } from '@ionic/react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
-type State = {data:Array<RippleIndicatorInfo>};
+type State = {data:Array<RippleIndicatorInfo>, dataOrigen:Array<RippleIndicator>};
 
 class DigitalizationChart extends React.Component<any,State>{
     ref:any;
@@ -31,7 +31,7 @@ class DigitalizationChart extends React.Component<any,State>{
         //this.createRadialStackedBarChart()
      }
      componentDidUpdate() {
-        if(this.props.data){
+        if(this.props.data && this.props.dataOrigen){
             this.createRadialStackedBarChart();
         }
         
@@ -43,7 +43,7 @@ class DigitalizationChart extends React.Component<any,State>{
             .attr("viewBox", `${-this.width / 2} ${-this.height / 2} ${this.width} ${this.height}`)
             .style("width", "100%")
             .style("height", "auto")
-            .style("font", "2.2em helvetica")
+            .style("font", "1.8em helvetica")
             .style("padding", "0.1em");
 
         let x = scaleBand()
@@ -57,14 +57,14 @@ class DigitalizationChart extends React.Component<any,State>{
 
         let z: any = d3.scaleOrdinal()
             .domain(this.props.data.columns.slice(1))
-            .range(["#80c242", "#7E939E",  "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+            .range(["#80c242", "#EDEDED",  "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
         let arc:any = d3.arc()
             .innerRadius((d:any) => y(d[0]))
             .outerRadius((d:any) => y(d[1]))
             .startAngle((d:any) => x(d.data.State))
             .endAngle((d:any) => x(d.data.State) + x.bandwidth())
-            .padAngle(0.01)
+            .padAngle(0.04)
             .padRadius(this.innerRadius);
 
         let xAxis = (g:any) => g
@@ -78,7 +78,7 @@ class DigitalizationChart extends React.Component<any,State>{
             `)
             .call((g:any) => g.append("line")
                 .attr("x2", -5)
-                .attr("stroke", "#000"))
+                .attr("stroke", "#FFF"))
             .call((g:any) => g.append("text")
                 .attr("transform", (d:any) => (x(d.State) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI) < Math.PI
                     ? "rotate(90)translate(0,65)"
@@ -96,7 +96,7 @@ class DigitalizationChart extends React.Component<any,State>{
             .join("g")
             .attr("fill", "none")
             .call((g:any) => g.append("circle")
-                .attr("stroke", "#000")
+                .attr("stroke", "#FFF")
                 .attr("stroke-opacity", 0.5)
                 .attr("r", y))
             .call((g:any) => g.append("text")
@@ -171,7 +171,7 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonRow class="ion-align-items-center">
                         <IonCol class="ion-float-left ">
                         {
-                           this.props.data? this.props.data.map((item:any) =>  <IonItem class="item item-text-wrap"><b>{item.State}</b> -> {item.current}%</IonItem>) : null
+                           this.props.dataOrigen? this.props.dataOrigen.map((item:any) =>  <IonItem class="item item-text-wrap"><b>{item.name}</b> -> {item.percentage*100}%</IonItem>) : null
                         }
                         </IonCol>
                     </IonRow>

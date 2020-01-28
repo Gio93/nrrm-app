@@ -252,6 +252,7 @@ export interface RippleIndicator {
   uuid:	string,
   tenant:	TenantDto,
   name:	string,
+  alias: string,
   description: string,
   weight:	number,
   percentage:	number,
