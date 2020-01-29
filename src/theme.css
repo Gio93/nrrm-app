@@ -91,6 +91,8 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  
 }
 
 /* Additional Ionic Colors
@@ -102,14 +104,7 @@
 // https://beta.ionicframework.com/docs/theming/advanced
 */
 
-.ion-color-invent {
-  --ion-color-base: #69bb7b;
-  --ion-color-base-rgb: 105, 187, 123;
-  --ion-color-contrast: #ffffff;
-  --ion-color-contrast-rgb: 255, 255, 255;
-  --ion-color-shade: #5ca56c;
-  --ion-color-tint: #78c288;
-}
+
 
 .ion-color-favorite {
   --ion-color-base: #69bb7b;

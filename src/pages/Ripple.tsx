@@ -48,8 +48,9 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
     const getText=(key:string)=>{
       if(!data)return;
-      let dd = data.texts.find((x:TextDto)=>x.type === key);
-      return dd.text;
+      let dd = data.texts.find((x:TextDto)=>x.type.toUpperCase().indexOf(key)!==-1 );
+      if(!!dd) return dd.text;
+      else return ""
     }
 
     const getRippleInfoItems=()=>{
@@ -81,7 +82,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
       switch(section){
         case "AS-IS":
-          return <IonItem key="asis0" className="asis"><IonInput disabled>{getText("ASIS")}</IonInput><IonNote slot="end"></IonNote></IonItem>;
+          return <IonItem key="asis0" className="asis"><IonInput disabled>{getText("AS-IS")}</IonInput><IonNote slot="end"></IonNote></IonItem>;
         case "Solution":
           return <IonItem key="solution0" className="solution"><IonInput disabled>{getText("SOLUTION")}</IonInput><IonNote slot="end"></IonNote></IonItem>;
         case "Challenge":

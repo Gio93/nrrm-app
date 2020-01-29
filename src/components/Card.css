@@ -14,3 +14,18 @@
 .customCard {
     height: 300px;
 }
+
+ion-chip.ion-color-nimbldigitalasset {
+    background: var(--ion-color-nimbldigitalasset) !important;
+    color: white;
+}
+
+ion-chip.ion-color-nimblintegrationsystem {
+    background: var(--ion-color-nimblintegrationsystem) !important;
+    color: white;
+}
+
+ion-chip.ion-color-backbone {
+    background: var(--ion-color-backbone) !important;
+    color: white;
+}

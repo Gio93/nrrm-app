@@ -127,7 +127,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
           // Call father onClickNode
           //this.props.onClickNode(nodeData);
         }
-        debugger;
+        //debugger;
         //this.removeChildrenFromParent(nodeData.data.id,[]);
         // while(let found = this.state.data.findIndex((a)=>a.father===nodeData.data.id)!==-1){
         //   this.state.data.splice(found,1);
@@ -215,7 +215,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
     // Display the tree based on the data
     this.myTree.refresh(this.state.data);
 
-    debugger;
+    //debugger;
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
