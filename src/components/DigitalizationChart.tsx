@@ -17,6 +17,8 @@ class DigitalizationChart extends React.Component<any,State>{
     height: number;
     innerRadius: number;
     outerRadius : number;
+    rendering: boolean;
+    
 
     constructor(props:any){
         super(props)
@@ -26,18 +28,20 @@ class DigitalizationChart extends React.Component<any,State>{
         this.height = 975;
         this.outerRadius = Math.min(this.width, this.height) / 2;
         this.innerRadius = 180;
+        this.rendering = true;
     }
      componentDidMount() {
         //this.createRadialStackedBarChart()
      }
      componentDidUpdate() {
-        if(this.props.data && this.props.dataOrigen){
+        if(this.props.data && this.props.dataOrigen && this.rendering){
             this.createRadialStackedBarChart();
-        }
-        
+            this.rendering=false;
+        } 
      }
      
      createRadialStackedBarChart() {
+         
 
         let svg = select(this.ref.current)
             .attr("viewBox", `${-this.width / 2} ${-this.height / 2} ${this.width} ${this.height}`)
@@ -172,7 +176,7 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonRow class="ion-align-items-center">
                         <IonCol class="ion-float-left ">
                         {
-                           this.props.dataOrigen? this.props.dataOrigen.map((item:any) =>  <IonItem class="item item-text-wrap"><b>{item.name}</b> -> {item.percentage*100}%</IonItem>) : null
+                           this.props.dataOrigen? this.props.dataOrigen.map((item:any) =>  <IonItem class="item item-text-wrap"><strong>{item.name}</strong>&nbsp;->&nbsp;{item.percentage*100}%</IonItem>) : null
                         }
                         </IonCol>
                     </IonRow>
