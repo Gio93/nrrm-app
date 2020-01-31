@@ -6,7 +6,7 @@ import { max } from 'd3-array';
 import { select } from 'd3-selection';
 import { axisBottom,axisLeft,axisRight,axisTop} from 'd3-axis'
 import * as d3 from 'd3';
-import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonChip, IonLabel, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem } from '@ionic/react';
+import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonChip, IonLabel, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList } from '@ionic/react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 type State = {data:Array<RippleIndicatorInfo>, dataOrigen:Array<RippleIndicator>};
@@ -176,7 +176,7 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonRow class="ion-align-items-center">
                         <IonCol class="ion-float-left ">
                         {
-  this.props.dataOrigen? this.props.dataOrigen.map((item:any) => <IonItem class="item item-text-wrap"><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp;{item.percentage*100}%</IonItem>) : null
+  this.props.dataOrigen? <IonList>{this.props.dataOrigen.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i}><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp;{item.percentage*100}%<IonIcon name="arrow-dropright-circle" mode="ios" color="success" size="medium" slot="end"></IonIcon></IonItem>)}</IonList> : null
                         }
                         </IonCol>
                     </IonRow>
