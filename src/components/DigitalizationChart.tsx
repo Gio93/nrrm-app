@@ -1,13 +1,11 @@
 import './DigitalizationChart.css'
-import { RippleIndicatorInfo, RippleTypeDto, TechnologiesInvolvedDto, RippleIndicator } from '../declarations';
-import React from 'react';
+import { RippleIndicatorInfo, RippleIndicator } from '../declarations';
+import React, { useState } from 'react';
 import { scaleLinear,scaleBand } from 'd3-scale';
-import { max } from 'd3-array';
 import { select } from 'd3-selection';
-import { axisBottom,axisLeft,axisRight,axisTop} from 'd3-axis'
 import * as d3 from 'd3';
-import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonChip, IonLabel, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList } from '@ionic/react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList } from '@ionic/react';
+import { withRouter } from "react-router-dom";
 
 type State = {data:Array<RippleIndicatorInfo>, dataOrigen:Array<RippleIndicator>};
 
@@ -18,27 +16,37 @@ class DigitalizationChart extends React.Component<any,State>{
     innerRadius: number;
     outerRadius : number;
     rendering: boolean;
-    
+    percentageGrade: number;
 
     constructor(props:any){
         super(props)
-        //this.createRadialStackedBarChart = this.createRadialStackedBarChart.bind(this)
         this.ref = React.createRef();
         this.width = 975;
         this.height = 975;
         this.outerRadius = Math.min(this.width, this.height) / 2;
         this.innerRadius = 180;
         this.rendering = true;
-    }
+        
+   }
      componentDidMount() {
         //this.createRadialStackedBarChart()
      }
      componentDidUpdate() {
         if(this.props.data && this.props.dataOrigen && this.rendering){
             this.createRadialStackedBarChart();
+            //this.percentageGrade = this.percentageGradeCalc();
             this.rendering=false;
         } 
      }
+
+     navigationtoIndicatorDetail(item:RippleIndicator){
+        //  this.props.history.push({
+        //      path: '/indicators/'+item.id,
+        //      state: {item}   
+        //  });
+        this.props.history.push('/indicators/'+item.id,item);
+     }
+
      
      createRadialStackedBarChart() {
          
@@ -92,9 +100,9 @@ class DigitalizationChart extends React.Component<any,State>{
         let yAxis = (g:any) => g
         .attr("text-anchor", "middle")
         .call((g:any) => g.append("text")
-            .attr("y", (d:any) => -y(y.ticks(5).pop()))
-            .attr("dy", "-1.9em")
-            .text("Population"))
+            .attr("y", () => -y(y.ticks(5).pop()))
+            .attr("dy", "-1.9em"))
+            // .text("Population"))
         .call((g:any) => g.selectAll("g")
             .data(y.ticks(5).slice(1))
             .join("g")
@@ -150,7 +158,7 @@ class DigitalizationChart extends React.Component<any,State>{
         //     .call(legend);
         
      }
-
+     
   render() {
         return (
             <div>
@@ -159,7 +167,12 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonCardSubtitle>
                         Digitalization grade
                         </IonCardSubtitle>
-                        <IonCardTitle>Indicator Groups</IonCardTitle>
+        {this.props.dataOrigen? this.props.dataOrigen.forEach((item:RippleIndicator) =>{
+                if(item.grade)
+                    this.percentageGrade = item.grade.totalPercentage*100;
+            }):null
+        }<IonCardTitle color="success">{this.percentageGrade+'%'}</IonCardTitle>
+        
                     </IonCardHeader>
       
                     <IonCardContent>
@@ -176,7 +189,7 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonRow class="ion-align-items-center">
                         <IonCol class="ion-float-left ">
                         {
-  this.props.dataOrigen? <IonList>{this.props.dataOrigen.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i}><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp;{item.percentage*100}%<IonIcon name="arrow-dropright-circle" mode="ios" color="success" size="medium" slot="end"></IonIcon></IonItem>)}</IonList> : null
+  this.props.dataOrigen? <IonList>{this.props.dataOrigen.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i} onClick={() => {this.navigationtoIndicatorDetail(item)}} ><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp;{item.percentage*100}%<IonIcon name="arrow-dropright-circle" mode="ios" color="success" size="medium" slot="end"></IonIcon></IonItem>)}</IonList> : null
                         }
                         </IonCol>
                     </IonRow>
@@ -189,4 +202,5 @@ class DigitalizationChart extends React.Component<any,State>{
   }
 
 
-export default DigitalizationChart;
+
+export default withRouter(DigitalizationChart);
