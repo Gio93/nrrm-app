@@ -53,6 +53,7 @@ class DigitalizationChart extends React.Component<any,State>{
 
         let svg = select(this.ref.current)
             .attr("viewBox", `${-this.width / 2} ${-this.height / 2} ${this.width} ${this.height}`)
+            .attr("class", "graphic")
             .style("width", "100%")
             .style("height", "auto")
             .style("font", "1.8em helvetica");
@@ -189,7 +190,7 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonRow class="ion-align-items-center">
                         <IonCol class="ion-float-left ">
                         {
-  this.props.dataOrigen? <IonList>{this.props.dataOrigen.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i} onClick={() => {this.navigationtoIndicatorDetail(item)}} ><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp;{item.percentage*100}%<IonIcon name="arrow-dropright-circle" mode="ios" color="success" size="medium" slot="end"></IonIcon></IonItem>)}</IonList> : null
+  this.props.dataOrigen? <IonList>{this.props.dataOrigen.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i} onClick={() => {this.navigationtoIndicatorDetail(item)}} ><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp; <span>{item.percentage*100}%</span><IonIcon name="arrow-dropright-circle" mode="ios" color="success" size="medium" slot="end"></IonIcon></IonItem>)}</IonList> : null
                         }
                         </IonCol>
                     </IonRow>
