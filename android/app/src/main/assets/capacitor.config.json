@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.nimbl.NimblRippleMethod",
   "appName": "NimblRippleMethod",
   "bundledWebRuntime": false,
   "npmClient": "npm",
