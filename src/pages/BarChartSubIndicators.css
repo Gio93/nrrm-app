@@ -8,3 +8,7 @@
     stroke: #000;
     shape-rendering: crispEdges;
 }
+
+ion-item {
+    font-size: 13px;
+}

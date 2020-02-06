@@ -1,8 +1,12 @@
-path {
+.graphic path {
     stroke-width: 0;
 }
 
 ion-item {
     --padding-start: 0;
-    font-size: 15px;
+    font-size: 13px;
+}
+
+span {
+    color: green;
 }
