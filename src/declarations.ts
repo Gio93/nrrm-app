@@ -247,3 +247,32 @@ export interface User {
 
 }
 
+export interface RippleIndicator {
+  id:	number,
+  uuid:	string,
+  tenant:	TenantDto,
+  name:	string,
+  alias: string,
+  description: string,
+  weight:	number,
+  percentage:	number,
+  partialPercentage:number,
+  indicators: [RippleIndicator],
+  indicatorGroup: RippleIndicator,
+  grade: RippleGrade
+}
+
+export interface RippleGrade {
+  id:	number,
+  uuid:	string,
+  tenant:	TenantDto,
+  totalPercentage:	number,
+  indicators: [RippleIndicator]
+}
+
+export interface RippleIndicatorInfo {
+  State: string,
+  current: number,
+  remainder: number,
+  total: number
+}

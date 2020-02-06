@@ -6,6 +6,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import LoginPage from './pages/Login';
 import RippleList from './pages/Ripples';
 import DigitalizationPage from './pages/Digitalization';
+import BarChartSubIndicators from './pages/BarChartSubIndicators';
 
 
 import Menu from './components/Menu';
@@ -54,6 +55,7 @@ const App: React.FC = () => {
             <Route path="/ripple/:ripple" component={RipplePage} />
             <Route path="/rippleDiagram" component={RippleDiagramPage} />
             <Route path="/dgrade" component={DigitalizationPage} />
+            <Route path="/indicators/:id" component={BarChartSubIndicators} />
             <Redirect from="/" to="/login"></Redirect>
           </IonRouterOutlet>
       </IonSplitPane>
