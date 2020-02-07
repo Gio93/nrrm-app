@@ -1,13 +1,12 @@
 import './BarChartSubIndicators.css'
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLabel, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonList, IonItem, IonIcon, IonBackButton, IonFabButton, IonFab } from '@ionic/react';
-import React, { useEffect,Component } from 'react';
+import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonList, IonItem, IonBackButton } from '@ionic/react';
+import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from "react-router-dom";
 import { RippleIndicator } from '../declarations';
 
 import * as d3 from 'd3';
 import { select } from 'd3-selection';
-import { scaleLinear } from 'd3';
 
 
 
@@ -162,7 +161,7 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
         }
     }
 
-    static getDerivedStateFromProps = (nextProps:any, prevState:any) => {
+    static getDerivedStateFromProps = (nextProps:any) => {
         return { indicator: nextProps.location.state }
     }
     
