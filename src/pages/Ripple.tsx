@@ -23,9 +23,10 @@ type KeyAndValue = {
 const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
     const [data, setData] = useState<RippleInfo>();
     const [selectedRippleId, setSelectedRippleId] = useState(Params.match.params.ripple);
+    
 
     const SECTIONS:Array<string> = ["AS-IS","Solution","Challenge","Value","Benefits","Ripple Information","Exponential Technologies","Roles", "Numbers", "Complexity"];
-
+    const [ionSelectedSegmentKey, setIonSelectedSegmentKey] = useState("part0");
     const myapi = new API(Params);
 
 
@@ -126,34 +127,22 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
           <IonTitle>Ripple Details</IonTitle>
         </IonToolbar>
         <IonToolbar className="rippleSegmentCustom">
-      <IonSegment  key="ionsegmentKey" scrollable onIonChange={e => {
-          console.log('Segment selected', e.detail.value);
-          let content:HTMLIonContentElement = document.querySelector('ion-content.customContent22');
-          debugger;
-          let divider:HTMLObjectElement=document.querySelector("ion-item-divider."+e.detail.value);
-          let parent:any = divider.offsetParent;
-          if(content!=null && divider!=null)content.scrollToPoint(100,parent.offsetTop-divider.clientHeight,1500);
-
-          // switch(e.detail.value){
-          //     case 'part1':
-          //           let divider1:HTMLObjectElement=document.querySelector("ion-item.part1")
-          //           if(content!=null)content.scrollToPoint(100,divider1.offsetTop-divider1.clientHeight,1500);
-          //         break;
-          //     case 'part2':
-          //           let divider2:HTMLObjectElement=document.querySelector("ion-item.part2")
-          //           if(content!=null)content.scrollToPoint(100,divider2.offsetTop-divider2.clientHeight,1500);
-          //         break;
-          //     case 'part3':
-          //           let divider3:HTMLObjectElement=document.querySelector("ion-item.part3")
-          //           if(content!=null)content.scrollToPoint(100,divider3.offsetTop-divider3.clientHeight,1500);
-          //         break;
-          // }
-          
+      <IonSegment  key="ionSegmentKey" value={ionSelectedSegmentKey} scrollable className="rippleSegment"
+        onIonChange={e => {
+            console.log('Segment selected', e.detail.value);
+            
+            
           }}>
           {SECTIONS.map((x,i)=>{
             let part="part"+i;
 
-            return <IonSegmentButton key={i} value={part}>
+            return <IonSegmentButton className={part} key={i} value={part} onClick={ e => {
+              let content:HTMLIonContentElement = document.querySelector('ion-content.customContent22');
+              let divider:HTMLObjectElement=document.querySelector("ion-item-divider."+e.currentTarget.getAttribute("VALUE")
+              );
+              let parent:any = divider.offsetParent;
+              if(content!=null && divider!=null)content.scrollToPoint(100,parent.offsetTop-divider.clientHeight,1500)
+            }}>
                     {/* <IonIcon name="camera"/> */}
                     <IonLabel key={i}>{x}</IonLabel>
                   </IonSegmentButton>})
@@ -177,14 +166,47 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
       <IonContent
         scrollEvents={true} 
         onIonScrollStart={() => {}}
-        onIonScroll={(e) => {console.log(e)}}
+        onIonScroll={(e) => {
+          try {
+            //debugger;
+            let y = e.detail.scrollTop;
+            let lowerDistance = 0;
+            let lowerDistanceElement = "";
+            let selectedIndex = 0;
+            for(var i=0;i<SECTIONS.length;i++){
+              let divider:HTMLObjectElement=document.querySelector("ion-item-divider.part"+i);
+              let parent:any = divider.offsetParent;
+              let distance = y - parent.offsetTop;
+              if(distance>0) continue;
+              if (lowerDistance === 0) {
+                lowerDistance=distance;
+                lowerDistanceElement = "part"+i;
+                selectedIndex=i;
+              };
+              if(lowerDistance > Math.abs(distance)) {
+                lowerDistance = distance;
+                lowerDistanceElement = "part"+i;
+                selectedIndex = i;
+              };
+            }
+            
+            setIonSelectedSegmentKey(lowerDistanceElement);
+            debugger;
+            let segmentButton:HTMLIonContentElement = document.querySelector('ion-segment.rippleSegment');
+            let segmentButtonSelected:HTMLIonContentElement = document.querySelector('ion-segment-button.'+lowerDistanceElement);
+            segmentButton.scrollTo(segmentButtonSelected.offsetLeft,0);
+            console.log(lowerDistanceElement)
+          } catch (error) {
+            console.log(error);
+          }
+        }}
         onIonScrollEnd={() => {}}
         className="customContent22 rippleDetail">
 
             {SECTIONS.map((x,i)=>{
-              let items = getItemsForSection(x);
-              let part="part"+i;
-            return <IonList><IonItemDivider sticky className={part}>{x}</IonItemDivider>{items}</IonList>;
+                let items = getItemsForSection(x);
+                let part="part"+i;
+              return <IonList><IonItemDivider sticky className={part}>{x}</IonItemDivider>{items}</IonList>;
             })}
             {/* {keysAndValues.map((x:KeyAndValue) => {
               return <IonItem key={x.key} className="part1"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>})} */}

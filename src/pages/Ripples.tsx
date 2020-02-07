@@ -1,5 +1,5 @@
-import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar } from '@ionic/react';
-import { beer, build, flask, football, search, stats } from 'ionicons/icons';
+import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel } from '@ionic/react';
+import { beer, build, flask, football, search, stats, funnel } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import './Ripples.css';
 import Card from '../components/Card';
@@ -20,7 +20,15 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
   //       value: value === null || value === undefined ? Math.random() * 100 : value
   //     })
   //   );
+  const [aImplementationTypes, setImplementationTypes] = useState([]);
+  const [aTypes, setTypes] = useState([]);
+  const [aBusinessAreas, setBusinessAreas] = useState([]);
+
+
   const [showLoading, setShowLoading] = useState(true);
+  const [showModalImplementationType, setShowModalImplementationType] = useState(false);
+  const [showModalType, setShowModalType] = useState(false);
+  const [showModalBusinessArea, setShowModalBusinessArea] = useState(false);
   const [data, setData] = useState<Array<RippleInfo>>(null);
   const myapi = new API(params);
   // const changeData = () => {
@@ -31,6 +39,17 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
       setShowLoading(true);
       myapi.doGet("/nrrm-ripple/ripple").then(data => {
         setShowLoading(false);
+        let aImp:Array<string>=[];
+        let aTypes:Array<string>=[];
+        let aBusinessAreas:Array<string>=[];
+        data.forEach( (element:RippleInfo) => {
+          aImp.push(element.implementationType.implementationType);
+          aTypes.push(element.type.rippleType);
+          aBusinessAreas.push(element.businessArea.businessArea);
+        });
+        setImplementationTypes(aImp.filter((a, b) => aImp.indexOf(a) === b));
+        setTypes(aTypes.filter((a, b) => aTypes.indexOf(a) === b));
+        setBusinessAreas(aBusinessAreas.filter((a, b) => aBusinessAreas.indexOf(a) === b));
         return setData(data);
       });
     }
@@ -88,7 +107,8 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
       />
       <IonSearchbar id="searchInput" animated onIonChange={onSearch} debounce={400}></IonSearchbar>
         <ListItems data = {data}/>
-         <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+        <div>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed" >
           <IonFabButton routerLink="/rippleDiagram">
             <IonIcon icon={stats} color="light"/>
           </IonFabButton> 
@@ -99,7 +119,44 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
             <IonFabButton><IonIcon icon={football} /></IonFabButton>
           </IonFabList>*/}
         </IonFab> 
-        <IonFab></IonFab>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
+          <IonFabButton color="secondary">
+              <IonIcon icon={funnel} color="light"/>
+          </IonFabButton> 
+          <IonFabList side="top">
+            <IonFabButton title="Implementation Type" onClick={(e)=>{
+              setShowModalImplementationType(true);
+            }}><IonIcon icon={flask} /></IonFabButton>
+            <IonFabButton title="Type" onClick={(e)=>{
+              setShowModalType(true);
+            }}><IonIcon icon={beer} /></IonFabButton>
+            <IonFabButton title="Business Area" onClick={(e)=>{
+              setShowModalBusinessArea(true);
+            }}><IonIcon icon={football} /></IonFabButton>
+          </IonFabList>
+        </IonFab>
+        </div>
+        <IonModal isOpen={showModalImplementationType}>
+          <IonList>
+            {aImplementationTypes.map(a=><IonItem>{a}</IonItem>)}
+          </IonList>
+          <IonButton onClick={() => setShowModalImplementationType(false)}>Apply</IonButton>
+        </IonModal>
+
+        <IonModal isOpen={showModalType}>
+        <IonList>
+            {aTypes.map(a=><IonItem>{a}</IonItem>)}
+          </IonList>
+          <IonButton onClick={() => setShowModalType(false)}>Apply</IonButton>
+        </IonModal>
+
+        <IonModal isOpen={showModalBusinessArea}>
+        <IonList>
+            {aBusinessAreas.map(a=><IonItem>{a}</IonItem>)}
+          </IonList>
+          <IonButton onClick={() => setShowModalBusinessArea(false)}>Apply</IonButton>
+        </IonModal>
+        
 
       </IonContent>
     </IonPage>
