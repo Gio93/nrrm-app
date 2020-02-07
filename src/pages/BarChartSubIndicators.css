@@ -9,6 +9,6 @@
     shape-rendering: crispEdges;
 }
 
-ion-item {
+.item-graph {
     font-size: 13px;
 }

@@ -1,6 +1,6 @@
 import './DigitalizationChart.css'
 import { RippleIndicatorInfo, RippleIndicator } from '../declarations';
-import React, { useState } from 'react';
+import React from 'react';
 import { scaleLinear,scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import * as d3 from 'd3';
@@ -34,16 +34,11 @@ class DigitalizationChart extends React.Component<any,State>{
      componentDidUpdate() {
         if(this.props.data && this.props.dataOrigen && this.rendering){
             this.createRadialStackedBarChart();
-            //this.percentageGrade = this.percentageGradeCalc();
             this.rendering=false;
         } 
      }
 
      navigationtoIndicatorDetail(item:RippleIndicator){
-        //  this.props.history.push({
-        //      path: '/indicators/'+item.id,
-        //      state: {item}   
-        //  });
         this.props.history.push('/indicators/'+item.id,item);
      }
 
@@ -123,21 +118,6 @@ class DigitalizationChart extends React.Component<any,State>{
                 .attr("fill", "#000")
                 .attr("stroke", "none")));
 
-       /* let legend = (g:any) => g.append("g")
-        .selectAll("g")
-        .data(this.props.data.columns.slice(1).reverse())
-        .join("g")
-            .attr("transform", (d:any,i:any) => `translate(-40,${(i - (this.props.data.columns.length - 1) / 2) * 20})`)
-            .call((g:any) => g.append("rect")
-                .attr("width", 18)
-                .attr("height", 18)
-                .attr("fill", z))
-            .call((g:any) => g.append("text")
-                .attr("x", 24)
-                .attr("y", 9)
-                .attr("dy", "0.35em")
-                .text((d:any) => d))*/
-
         svg.append("g")
             .selectAll("g")
             .data(d3.stack().keys(this.props.data.columns.slice(1))(this.props.data))
@@ -154,48 +134,82 @@ class DigitalizationChart extends React.Component<any,State>{
     
         svg.append("g")
             .call(yAxis);
-    
-        // svg.append("g")
-        //     .call(legend);
         
+     }
+
+     listItems(){
+        return (
+            <IonList>
+              {
+                this.props.dataOrigen.map((item:RippleIndicator, i:any) => {
+                  return (
+                    <IonItem class="item item-text-wrap item-graph" 
+                        key={i} 
+                        onClick= {
+                                    () => 
+                                    this.navigationtoIndicatorDetail(item)
+                                 }
+                    >
+                        <strong>
+                            {item.name}
+                        </strong>   &nbsp;
+                        <small>
+                            {'('+item.alias+')'}
+                        </small>    &nbsp;->&nbsp;
+                        <span>{item.percentage*100}%</span>
+                        <IonIcon name="arrow-dropright-circle" mode="ios"  color="success" size="medium" slot="end">
+                            {/*  */}
+                        </IonIcon>
+                    </IonItem>
+                  );
+                })
+              }
+            </IonList> 
+          );
      }
      
   render() {
         return (
             <div>
                 <IonCard className="ion-activatable">
+
                     <IonCardHeader>
-                    <IonCardSubtitle>
-                        Digitalization grade
-                        </IonCardSubtitle>
-        {this.props.dataOrigen? this.props.dataOrigen.forEach((item:RippleIndicator) =>{
-                if(item.grade)
-                    this.percentageGrade = item.grade.totalPercentage*100;
-            }):null
-        }<IonCardTitle color="success">{this.percentageGrade+'%'}</IonCardTitle>
-        
+                        <IonCardSubtitle>
+                            Digitalization grade
+                            </IonCardSubtitle>
+                        {this.props.dataOrigen? this.props.dataOrigen.some((item:RippleIndicator) =>{
+                                if(item.grade){
+                                    this.percentageGrade = item.grade.totalPercentage*100;
+                                    return true;
+                                }
+                                return false;
+                            }):null
+                        }<IonCardTitle class="totalPercentage" color="success">
+                            {this.percentageGrade+'%'}
+                        </IonCardTitle>
                     </IonCardHeader>
-      
+    
                     <IonCardContent>
-                    <IonGrid>
-                    <IonRow>
-                        <IonCol class="ion-align-items-center">
-                            <div>
-                                <svg ref={this.ref}
-                                    width={this.width} height={this.height}>
-                                </svg>
-                            </div>
-                        </IonCol>
-                    </IonRow>
-                    <IonRow class="ion-align-items-center">
-                        <IonCol class="ion-float-left ">
-                        {
-  this.props.dataOrigen? <IonList>{this.props.dataOrigen.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i} onClick={() => {this.navigationtoIndicatorDetail(item)}} ><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp; <span>{item.percentage*100}%</span><IonIcon name="arrow-dropright-circle" mode="ios" color="success" size="medium" slot="end"></IonIcon></IonItem>)}</IonList> : null
-                        }
-                        </IonCol>
-                    </IonRow>
-                    </IonGrid>
+                        <IonGrid>
+                            <IonRow>
+                                <IonCol class="ion-align-items-center">
+                                    <div>
+                                        <svg ref={this.ref}
+                                            width={this.width} height={this.height}>
+                                        </svg>
+                                    </div>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow class="ion-align-items-center">
+                                <IonCol class="ion-float-left ">
+                                {
+                                    this.props.dataOrigen? this.listItems() : null 
+                                }
+                                </IonCol>
+                            </IonRow>
+                        </IonGrid>
                     </IonCardContent>
+
                 </IonCard>
             </div>
         );
