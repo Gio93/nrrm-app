@@ -8,7 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
 import { RippleInfo, RippleDiagramNode, Filter, searchableRippleInfo } from '../declarations';
-import { stats, list, funnel, flask, beer, football } from 'ionicons/icons';
+import { stats, list, funnel, flask, beer, football, cloudDone, build, business } from 'ionicons/icons';
 import { isAbsolute } from 'path';
 
 type Props = { props:any };
@@ -288,13 +288,13 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
             <IonFabButton title="Implementation Type" onClick={(e)=>{
               
               setShowModalImplementationType(true);
-            }}><IonIcon icon={flask} /></IonFabButton>
+            }}><IonIcon icon={cloudDone} /></IonFabButton>
             <IonFabButton title="Type" onClick={(e)=>{
               setShowModalType(true);
-            }}><IonIcon icon={beer} /></IonFabButton>
+            }}><IonIcon icon={build} /></IonFabButton>
             <IonFabButton title="Business Area" onClick={(e)=>{    
               setShowModalBusinessArea(true);
-            }}><IonIcon icon={football} /></IonFabButton>
+            }}><IonIcon icon={business} /></IonFabButton>
           </IonFabList>
         </IonFab>
         </div>

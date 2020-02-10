@@ -1,5 +1,5 @@
 import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel, IonChip } from '@ionic/react';
-import { beer, build, flask, football, search, stats, funnel } from 'ionicons/icons';
+import {  stats, funnel, cloudDone, business, build  } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import './Ripples.css';
 import Card from '../components/Card';
@@ -176,14 +176,14 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
             <IonFabButton title="Implementation Type" onClick={(e)=>{
               
               setShowModalImplementationType(true);
-            }}><IonIcon icon={flask} /></IonFabButton>
+            }}><IonIcon icon={cloudDone} /></IonFabButton>
             <IonFabButton title="Type" onClick={(e)=>{
               setShowModalType(true);
-            }}><IonIcon icon={beer} /></IonFabButton>
+            }}><IonIcon icon={build} /></IonFabButton>
             <IonFabButton title="Business Area" onClick={(e)=>{
               
               setShowModalBusinessArea(true);
-            }}><IonIcon icon={football} /></IonFabButton>
+            }}><IonIcon icon={business} /></IonFabButton>
           </IonFabList>
         </IonFab>
         </div>
