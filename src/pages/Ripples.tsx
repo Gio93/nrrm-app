@@ -1,4 +1,4 @@
-import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel } from '@ionic/react';
+import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel, IonChip } from '@ionic/react';
 import { beer, build, flask, football, search, stats, funnel } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import './Ripples.css';
@@ -11,6 +11,7 @@ import  '../utils/httpUtils';
 import API from '../utils/httpUtils';
 
 type Props = { props:any };
+type Filter = {key:string, value:string, type:number};
 
 const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
   
@@ -20,6 +21,9 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
   //       value: value === null || value === undefined ? Math.random() * 100 : value
   //     })
   //   );
+
+  const [aFilters, setFilters] = useState([]);
+
   const [aImplementationTypes, setImplementationTypes] = useState([]);
   const [aTypes, setTypes] = useState([]);
   const [aBusinessAreas, setBusinessAreas] = useState([]);
@@ -39,19 +43,24 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
       setShowLoading(true);
       myapi.doGet("/nrrm-ripple/ripple").then(data => {
         setShowLoading(false);
-        let aImp:Array<string>=[];
-        let aTypes:Array<string>=[];
-        let aBusinessAreas:Array<string>=[];
+        if(!data) return setData([]); 
+        let aImp:Array<Filter>=[];
+        let aTypes:Array<Filter>=[];
+        let aBusinessAreas:Array<Filter>=[];
         data.forEach( (element:RippleInfo) => {
-          aImp.push(element.implementationType.implementationType);
-          aTypes.push(element.type.rippleType);
-          aBusinessAreas.push(element.businessArea.businessArea);
+          aImp.push({key:element.implementationType.uuid,value:element.implementationType.implementationType,type:0});
+          aTypes.push({key:element.type.uuid,value:element.type.rippleType,type:1});
+          aBusinessAreas.push({key:element.businessArea.uuid,value:element.businessArea.businessArea,type:2});
         });
-        setImplementationTypes(aImp.filter((a, b) => aImp.indexOf(a) === b));
-        setTypes(aTypes.filter((a, b) => aTypes.indexOf(a) === b));
-        setBusinessAreas(aBusinessAreas.filter((a, b) => aBusinessAreas.indexOf(a) === b));
+        setImplementationTypes(uniqueValues(aImp));
+        setTypes(uniqueValues(aTypes));
+        setBusinessAreas(uniqueValues(aBusinessAreas));
         return setData(data);
       });
+    }
+
+    const uniqueValues=(aArray:Array<any>)=>{
+      return aArray.filter((thing, index, self) => self.findIndex(t => t.place === thing.place && t.key === thing.key) === index);
     }
 
     const loadFilteredData=(text:string)=>{
@@ -74,6 +83,44 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
     loadData();
   }, []);
 
+  const loadAdvancedFilteredData=()=>{
+    setShowLoading(true);
+    let sfilters = aFilters.reduce((acc,current)=>{
+      if(current.type===0){
+        return acc+"&implementationType="+current.key;
+      }else if(current.type===1){
+        return acc+"&type="+current.key;
+      }else if(current.type===2){
+        return acc+"&businessArea="+current.key;
+      }
+    },"");
+
+    myapi.doGet("/nrrm-ripple/ripple/getFilters?"+sfilters).then(data=>{
+      setShowLoading(false);
+      return setData(data);
+    })
+
+    
+    
+  }
+
+  const resetFilter = (selectedFilter:Filter)=>{
+    
+    aFilters.splice(aFilters.indexOf(selectedFilter),1);
+    let tmp=aFilters.slice();
+    setFilters(tmp);
+    loadAdvancedFilteredData();
+  };
+
+  const addFilters = (selectedFilter:Filter)=>{
+    
+    if(aFilters.indexOf(selectedFilter)===-1){
+      aFilters.push(selectedFilter);
+      setFilters(aFilters);
+      loadAdvancedFilteredData();
+    }
+    
+  };
  
 
   const onSearch = (e:any)=>{
@@ -106,8 +153,11 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         duration={5000}
       />
       <IonSearchbar id="searchInput" animated onIonChange={onSearch} debounce={400}></IonSearchbar>
+      {aFilters.map(a=>{console.log("ionchip"); return <IonChip onClick={()=>{
+        resetFilter(a);
+      }}><IonLabel>{a.value}</IonLabel><IonIcon name="close-circle" /></IonChip>})}
         <ListItems data = {data}/>
-        <div>
+        <div className="customStackedButtons">
         <IonFab vertical="bottom" horizontal="end" slot="fixed" >
           <IonFabButton routerLink="/rippleDiagram">
             <IonIcon icon={stats} color="light"/>
@@ -125,12 +175,14 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
           </IonFabButton> 
           <IonFabList side="top">
             <IonFabButton title="Implementation Type" onClick={(e)=>{
+              
               setShowModalImplementationType(true);
             }}><IonIcon icon={flask} /></IonFabButton>
             <IonFabButton title="Type" onClick={(e)=>{
               setShowModalType(true);
             }}><IonIcon icon={beer} /></IonFabButton>
             <IonFabButton title="Business Area" onClick={(e)=>{
+              
               setShowModalBusinessArea(true);
             }}><IonIcon icon={football} /></IonFabButton>
           </IonFabList>
@@ -138,23 +190,32 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         </div>
         <IonModal isOpen={showModalImplementationType}>
           <IonList>
-            {aImplementationTypes.map(a=><IonItem>{a}</IonItem>)}
+            {aImplementationTypes.map(a=><IonItem onClick={(e)=>{
+              addFilters(a);
+              setShowModalImplementationType(false);
+            }}>{a.value}</IonItem>)}
           </IonList>
-          <IonButton onClick={() => setShowModalImplementationType(false)}>Apply</IonButton>
+          <IonButton onClick={() => setShowModalImplementationType(false)}>Cerrar</IonButton>
         </IonModal>
 
         <IonModal isOpen={showModalType}>
         <IonList>
-            {aTypes.map(a=><IonItem>{a}</IonItem>)}
+            {aTypes.map(a=><IonItem onClick={(e)=>{
+              addFilters(a);
+              setShowModalType(false);
+            }}>{a.value}</IonItem>)}
           </IonList>
-          <IonButton onClick={() => setShowModalType(false)}>Apply</IonButton>
+          <IonButton onClick={() => setShowModalType(false)}>Cerrar</IonButton>
         </IonModal>
 
         <IonModal isOpen={showModalBusinessArea}>
         <IonList>
-            {aBusinessAreas.map(a=><IonItem>{a}</IonItem>)}
+            {aBusinessAreas.map(a=><IonItem onClick={(e)=>{
+              addFilters(a);
+              setShowModalBusinessArea(false);
+            }}>{a.value}</IonItem>)}
           </IonList>
-          <IonButton onClick={() => setShowModalBusinessArea(false)}>Apply</IonButton>
+          <IonButton onClick={() => setShowModalBusinessArea(false)}>Cerrar</IonButton>
         </IonModal>
         
 
