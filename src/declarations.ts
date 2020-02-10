@@ -25,6 +25,9 @@ export interface CardInfo {
   onClick : Function;
 }
 
+export interface searchableRippleInfo extends RippleInfo{
+    selected? : boolean
+}
 export interface RippleInfo{
 
     id :	number;    
@@ -81,6 +84,7 @@ export interface RippleInfo{
     texts : Array<TextDto>;
 
     rippleRoleables : Array<RoleableDto>;
+    
     
 }
 
@@ -241,6 +245,10 @@ export interface RippleDiagramNode{
   father:number,
   type:number,
   isOpened:boolean,
+  highlighted:boolean,
+  typeUUID:string,
+  implementationTypeUUID:string,
+  businessAreaUUID:string
 } 
 
 export interface User {
@@ -276,3 +284,5 @@ export interface RippleIndicatorInfo {
   remainder: number,
   total: number
 }
+
+export interface Filter  {key:string, value:string, type:number};

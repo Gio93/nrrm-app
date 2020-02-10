@@ -81,7 +81,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
   getNodeTemplate(node:any){
     let border = this.getBorderColorForType(node.data.type);
     let color= this.getColorForType(node.data.type);
-
+    debugger;
     return `<div 
               class='nodeBox' 
               style='cursor:pointer;
@@ -93,9 +93,11 @@ class RippleRoadDiagram extends React.Component<any,State>{
               align-items:center;
               border-color:${border};
               background-color:${color};
+              ${(node.data.highlighted)?"box-shadow: 2px 2px 12px 9px "+border+";":"box-shadow:none;"}
               border-radius:20px;'>
               <div style='border-left:2px;border-color:red;width:150px'>
               <div style='margin-bottom:100px;text-align: center;'>${node.data.name}</div>
+              
               </div>
             </div>`;
   }
