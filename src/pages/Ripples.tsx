@@ -3,7 +3,7 @@ import { beer, build, flask, football, search, stats, funnel } from 'ionicons/ic
 import React, { useState, useEffect } from 'react';
 import './Ripples.css';
 import Card from '../components/Card';
-import {RippleInfo} from '../declarations';
+import {RippleInfo,Filter} from '../declarations';
 import { CONFIG, COMMAND, Operator } from '../constants';
 import { RouteComponentProps } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
@@ -11,7 +11,6 @@ import  '../utils/httpUtils';
 import API from '../utils/httpUtils';
 
 type Props = { props:any };
-type Filter = {key:string, value:string, type:number};
 
 const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
   
