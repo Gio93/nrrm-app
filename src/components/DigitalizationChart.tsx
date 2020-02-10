@@ -4,8 +4,9 @@ import React from 'react';
 import { scaleLinear,scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import * as d3 from 'd3';
-import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList } from '@ionic/react';
+import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton } from '@ionic/react';
 import { withRouter } from "react-router-dom";
+import { arrowDropdownCircle } from 'ionicons/icons';
 
 type State = {data:Array<RippleIndicatorInfo>, dataOrigen:Array<RippleIndicator>};
 
@@ -137,35 +138,64 @@ class DigitalizationChart extends React.Component<any,State>{
         
      }
 
+     searchGradePercentage(){
+        if(this.props.dataOrigen)
+        {
+            return (
+                this.props.dataOrigen.some((item:RippleIndicator) =>{
+                    if(item.grade){
+                        this.percentageGrade = item.grade.totalPercentage*100;
+                        return true;
+                    }
+                    return false;
+                })
+             );
+        }
+     }
+
      listItems(){
-        return (
-            <IonList>
-              {
-                this.props.dataOrigen.map((item:RippleIndicator, i:any) => {
-                  return (
-                    <IonItem class="item item-text-wrap item-graph" 
-                        key={i} 
-                        onClick= {
+        if(this.props.dataOrigen)
+        {
+            return (
+                <IonList>
+                  {
+                    this.props.dataOrigen.map((item:RippleIndicator, i:any) => {
+                      return (
+                        <IonItem class="item item-text-wrap item-graph" 
+                            key={i} 
+                            
+                        >
+                            <IonText>
+                                <strong>
+                                    {item.name}
+                                </strong>
+                            </IonText>
+
+                            <IonButton 
+                                onClick= 
+                                {
                                     () => 
                                     this.navigationtoIndicatorDetail(item)
-                                 }
-                    >
-                        <strong>
-                            {item.name}
-                        </strong>   &nbsp;
-                        <small>
-                            {'('+item.alias+')'}
-                        </small>    &nbsp;->&nbsp;
-                        <span>{item.percentage*100}%</span>
-                        <IonIcon name="arrow-dropright-circle" mode="ios"  color="success" size="medium" slot="end">
-                            {/*  */}
-                        </IonIcon>
-                    </IonItem>
-                  );
-                })
-              }
-            </IonList> 
-          );
+                                }
+                                slot="end" 
+                                fill="clear"
+                                size="default"
+                                class="info">
+                                <IonLabel color="success" mode="ios">
+                                    { Math.round((item.percentage*100 + Number.EPSILON) * 100) / 100}%
+                                </IonLabel>
+                                <IonIcon icon={arrowDropdownCircle} mode="ios" color="success" size="medium" slot="end">
+                                {/*  */}
+                                </IonIcon>
+                            </IonButton>
+                        </IonItem>
+                      );
+                    })
+                  }
+                </IonList> 
+              );
+        }
+        
      }
      
   render() {
@@ -176,15 +206,11 @@ class DigitalizationChart extends React.Component<any,State>{
                     <IonCardHeader>
                         <IonCardSubtitle>
                             Digitalization grade
-                            </IonCardSubtitle>
-                        {this.props.dataOrigen? this.props.dataOrigen.some((item:RippleIndicator) =>{
-                                if(item.grade){
-                                    this.percentageGrade = item.grade.totalPercentage*100;
-                                    return true;
-                                }
-                                return false;
-                            }):null
-                        }<IonCardTitle class="totalPercentage" color="success">
+                        </IonCardSubtitle>
+                        {
+                            this.searchGradePercentage()
+                        }
+                        <IonCardTitle class="totalPercentage" color="success">
                             {this.percentageGrade+'%'}
                         </IonCardTitle>
                     </IonCardHeader>
@@ -203,7 +229,7 @@ class DigitalizationChart extends React.Component<any,State>{
                             <IonRow class="ion-align-items-center">
                                 <IonCol class="ion-float-left ">
                                 {
-                                    this.props.dataOrigen? this.listItems() : null 
+                                     this.listItems() 
                                 }
                                 </IonCol>
                             </IonRow>
