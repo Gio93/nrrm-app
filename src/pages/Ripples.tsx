@@ -112,6 +112,9 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
   };
 
   const addFilters = (selectedFilter:Filter)=>{
+
+    let index = aFilters.findIndex((a)=>a.type===selectedFilter.type);
+    if(index>-1) aFilters.splice(index,1);
     
     if(aFilters.indexOf(selectedFilter)===-1){
       aFilters.push(selectedFilter);
