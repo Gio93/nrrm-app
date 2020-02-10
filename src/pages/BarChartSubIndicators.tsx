@@ -1,23 +1,26 @@
 import './BarChartSubIndicators.css'
-import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonList, IonItem, IonBackButton } from '@ionic/react';
-import React, { Component } from 'react';
+import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonList, IonItem, IonBackButton, IonIcon, IonAlert, IonButton, IonText, IonLabel } from '@ionic/react';
+import React, { Component, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from "react-router-dom";
 import { RippleIndicator } from '../declarations';
 
 import * as d3 from 'd3';
 import { select } from 'd3-selection';
-
+import { informationCircleOutline } from 'ionicons/icons';
 
 
 //Function Component Definition
-class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indicator: RippleIndicator}>{
+class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indicator: RippleIndicator, showAlert:boolean, alerMessage: string}>{
     ref:any;
     // indicador: RippleIndicator;
     margin: any;
     width:number;
     height:number;
     rendering: boolean;
+    romanos: Array<String>;
+    
+   
 
     constructor(props: any) {
         super(props);
@@ -27,11 +30,13 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
         this.height = 300;
         // this.indicador = this.props.location.state;
         this.state = {
-            indicator: this.props.location.state
+            indicator: this.props.location.state,
+            showAlert: false,
+            alerMessage: ""
         }
+        this.romanos  = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
     }
-
-    
+   
 
     componentDidMount() {
         console.log("Pagina Montada, lanzando gráfico...");
@@ -60,7 +65,7 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
             let childIndicators = preData.indicators;
             for(let i=0;i<childIndicators.length;i++){
                 let itemBar:any = {};
-                itemBar.name = childIndicators[i].name;
+                itemBar.name = (i+1).toString();//this.romanos[i]//childIndicators[i].name;
                 itemBar.value = (childIndicators[i].percentage*100).toFixed(2);
                 formattedData.push(itemBar);
             }
@@ -73,6 +78,7 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
 
         console.log("Construyendo chart.................");
         if(data.length>0){
+
             let svg = select(this.ref.current).append("svg")
                 .attr("id", "graph")
                 .attr("width", "300")
@@ -90,7 +96,7 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
 
             let x = d3.scaleBand()
                     // .domain(d3.range(this.subindicadores.length))
-                    .domain(data.map(function(d:any) { return d.name; }))
+                    .domain(data.map(function(d:any,i:number) { return d.name}))
                     .range([this.margin.left, this.width - this.margin.right])
                     .padding(0.1);
 
@@ -124,40 +130,57 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
                         .attr("width", x.bandwidth());
 
             svg.append("g")
-            .call(xAxis);
+            .call(xAxis)
+            
 
             svg.append("g")
-                .call(yAxis);
-            
-            //     svg.append("g")
-            //     .attr("class", "x axis")
-            //     .attr("transform", "translate(0," + this.height + ")")
-            //     .call(xAxis)
-            //   .selectAll("text")
-            //     .style("text-anchor", "end")
-            //     .attr("dx", "-.8em")
-            //     .attr("dy", "-.55em")
-            //     .attr("transform", "rotate(-90)" );
-        
-            // svg.append("g")
-            //     .attr("class", "y axis")
-            //     .call(yAxis)
-            //   .append("text")
-            //     .attr("transform", "rotate(-90)")
-            //     .attr("y", 6)
-            //     .attr("dy", ".71em")
-            //     .style("text-anchor", "end")
-            //     .text("Value ($)");
-        
-            // svg.selectAll("bar")
-            //     .data(this.subindicadores)
-            //   .enter().append("rect")
-            //     .style("fill", "steelblue")
-            //     .attr("x", function(d) { return x(d.name); })
-            //     .attr("width", x.bandwidth())
-            //     .attr("y", function(d) { return y(d.value); })
-            //     .attr("height", d => this.height - y(d.value));      
+                .call(yAxis);   
                 
+        }
+    }
+
+    listItems(){
+        if(this.state.indicator && this.state.indicator.indicators)
+        {
+            return (
+            
+                <IonList>
+                {
+                    this.state.indicator.indicators.map((item:any, i:any) =>
+                    {   
+                        return (
+                            <IonItem class="item item-text-wrap item-graph" 
+                                key={i} 
+                            >
+                                <IonText>
+                                    <strong>
+                                        {i+1}.&nbsp;{item.alias}
+                                    </strong>
+                                </IonText>
+                                    
+                                <IonButton 
+                                    onClick={() => {
+                                                      this.setState({showAlert: true});
+                                                      this.setState({alerMessage: item.name});
+                                                   }
+                                            } 
+                                    slot="end" 
+                                    fill="clear"
+                                    size="default"
+                                    class="info">
+                                    <IonLabel color="success" mode="ios">
+                                        { Math.round((item.percentage*100 + Number.EPSILON) * 100) / 100}%
+                                    </IonLabel>
+                                    <IonIcon icon={informationCircleOutline} mode="ios" color="success" size="small" slot="end">
+                                        {/*  */}
+                                    </IonIcon>
+                                </IonButton>
+                            </IonItem>
+                        );
+                    })
+                }
+                </IonList>
+            );
         }
     }
 
@@ -185,7 +208,7 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
                                     <IonCardSubtitle>
                                         {this.state.indicator? this.state.indicator.name : null} indicators
                                     </IonCardSubtitle>
-                                    <IonCardTitle color="success">
+                                    <IonCardTitle color="success" class="totalPercentage">
                                         {this.state.indicator? this.state.indicator.percentage*100 +'%': null}
                                     </IonCardTitle>
                                 </IonCardHeader>
@@ -204,7 +227,7 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
                                         <IonRow class="ion-align-items-center">
                                             <IonCol class="ion-float-left ">
                                                 {
-                                                    this.state.indicator? this.state.indicator.indicators? <IonList>{this.state.indicator.indicators.map((item:any, i:any) => <IonItem class="item item-text-wrap" key={i} ><strong>{item.name}</strong>&nbsp;<small>{'('+item.alias+')'}</small>&nbsp;->&nbsp;{ Math.round((item.percentage*100 + Number.EPSILON) * 100) / 100}%</IonItem>)}</IonList> : null : null
+                                                    this.listItems()
                                                 }
                                             </IonCol>
                                         </IonRow>
@@ -212,6 +235,14 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
                                 </IonCardContent>
                     </IonCard>
                 </div>
+                <IonAlert
+                    isOpen={this.state.showAlert}
+                    onDidDismiss={() => this.setState({showAlert: false})}
+                    header={'Indicator Detail'}
+                    // subHeader={'Subtitle'}
+                    message={this.state.alerMessage}
+                    buttons={['Close']}
+                />
              </IonContent>
            </IonPage>
         );
