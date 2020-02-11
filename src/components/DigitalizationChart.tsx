@@ -6,7 +6,7 @@ import { select } from 'd3-selection';
 import * as d3 from 'd3';
 import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton } from '@ionic/react';
 import { withRouter } from "react-router-dom";
-import { arrowDropdownCircle } from 'ionicons/icons';
+import { arrowForward } from 'ionicons/icons';
 
 type State = {data:Array<RippleIndicatorInfo>, dataOrigen:Array<RippleIndicator>};
 
@@ -184,7 +184,7 @@ class DigitalizationChart extends React.Component<any,State>{
                                 <IonLabel color="success" mode="ios">
                                     { Math.round((item.percentage*100 + Number.EPSILON) * 100) / 100}%
                                 </IonLabel>
-                                <IonIcon icon={arrowDropdownCircle} mode="ios" color="success" size="medium" slot="end">
+                                <IonIcon icon={arrowForward} mode="ios" color="success" size="medium" slot="end">
                                 {/*  */}
                                 </IonIcon>
                             </IonButton>
