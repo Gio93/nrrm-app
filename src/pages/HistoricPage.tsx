@@ -62,7 +62,7 @@ class HistoricPage extends Component <ChartProps, ChartState> {
               99
             ],
             backgroundColor: [
-              'rgb(128,194,66)'
+              'rgba(128,194,66,0.9)'
             ]
           }
         ]

@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Line } from 'react-chartjs-2';
+
 import './Chart.css'
 import {
     IonButtons,
@@ -50,6 +51,8 @@ export class Chart extends Component<any, State> {
 
 
     render() {
+
+
         return (
             <div className="chart">
 
@@ -64,7 +67,6 @@ export class Chart extends Component<any, State> {
                                 options={{
                                     responsive: true,
                                     maintainAspectRatio: false,
-
                                     layout: {
                                         padding: {
                                             left: 5,
@@ -73,28 +75,20 @@ export class Chart extends Component<any, State> {
                                             bottom: 5
                                         }
                                     },
-                                    animation: {
-                                        duration: 100000,
-                                        easing: 'linear'
-                                       
-                                    },
-
                                     title: {
                                         display: this.props.displayTitle,
-                                        text: 'Report from'+ this.props.title,
+                                        text: 'Report from' + this.props.title,
                                         fontSize: 20,
-
                                     },
-
                                     legend: {
                                         display: this.props.displayLegend,
                                         position: this.props.legendPosition,
                                         labels: {
-                                            fontSize: 16
+                                            fontSize: 16,
+                                            fontStyle: 'light'
                                         }
-                                      
-                                    },
 
+                                    },
                                     tooltips: {
                                         enabled: true,
                                         mode: 'nearest',
@@ -103,17 +97,22 @@ export class Chart extends Component<any, State> {
                                         // footerFontSize: 46,
                                         bodyFontSize: 18,
                                         caretPadding: 2,
-                                        caretSize: 5
-
+                                        caretSize: 15,
+                                        yPadding: 10,
+                                        xPadding: 10,
                                     },
                                     elements: {
                                         line: {
-                                            tension: 0.5
+                                            tension: 0.5,
+                                            borderColor: "rgba(32, 156, 56)",
+                                            borderWidth: 1
                                         },
                                         point: {
                                             backgroundColor: "rgba(14, 128, 37, 1)",
                                             radius: 2,
-                                            hitRadius: 6         
+                                            hitRadius: 6,
+                                            hoverRadius: 6,
+                                            borderWidth: 2,
                                         }
                                     }
                                 }}
