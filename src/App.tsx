@@ -7,12 +7,16 @@ import LoginPage from './pages/Login';
 import RippleList from './pages/Ripples';
 import DigitalizationPage from './pages/Digitalization';
 import BarChartSubIndicators from './pages/BarChartSubIndicators';
+import HistoricPage from './pages/HistoricPage';
+
 
 
 import Menu from './components/Menu';
 import Home from './pages/Home';
 import RipplePage from './pages/Ripple';
 import RippleDiagramPage from './pages/RippleDiagram';
+
+
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,6 +36,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
 
 
 const App: React.FC = () => {
@@ -56,6 +61,10 @@ const App: React.FC = () => {
             <Route path="/rippleDiagram" component={RippleDiagramPage} />
             <Route path="/dgrade" component={DigitalizationPage} />
             <Route path="/indicators/:id" component={BarChartSubIndicators} />
+            <Route path="/historicalChart" component={HistoricPage} />
+           
+
+            
             <Redirect from="/" to="/login"></Redirect>
           </IonRouterOutlet>
       </IonSplitPane>

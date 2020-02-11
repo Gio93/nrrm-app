@@ -4,9 +4,10 @@ import React from 'react';
 import { scaleLinear,scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import * as d3 from 'd3';
-import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton } from '@ionic/react';
+import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton, IonToolbar } from '@ionic/react';
 import { withRouter } from "react-router-dom";
 import { arrowForward } from 'ionicons/icons';
+import { useHistory } from "react-router-dom";
 
 type State = {data:Array<RippleIndicatorInfo>, dataOrigen:Array<RippleIndicator>};
 
@@ -29,6 +30,10 @@ class DigitalizationChart extends React.Component<any,State>{
         this.rendering = true;
         
    }
+
+
+   
+
      componentDidMount() {
         //this.createRadialStackedBarChart()
      }
@@ -42,6 +47,8 @@ class DigitalizationChart extends React.Component<any,State>{
      navigationtoIndicatorDetail(item:RippleIndicator){
         this.props.history.push('/indicators/'+item.id,item);
      }
+
+     
 
      
      createRadialStackedBarChart() {
@@ -204,6 +211,8 @@ class DigitalizationChart extends React.Component<any,State>{
                 <IonCard className="ion-activatable">
 
                     <IonCardHeader>
+                        <div className = "container">
+                            <div>
                         <IonCardSubtitle>
                             Digitalization grade
                         </IonCardSubtitle>
@@ -213,9 +222,17 @@ class DigitalizationChart extends React.Component<any,State>{
                         <IonCardTitle class="totalPercentage" color="success">
                             {this.percentageGrade+'%'}
                         </IonCardTitle>
+                        </div>
+                        <div>
+                        <IonToolbar>
+                            <IonButton>Go historic</IonButton>
+                        </IonToolbar>
+                        </div>
+                        </div>
                     </IonCardHeader>
     
                     <IonCardContent>
+                        
                         <IonGrid>
                             <IonRow>
                                 <IonCol class="ion-align-items-center">

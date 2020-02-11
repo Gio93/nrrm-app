@@ -16,3 +16,9 @@
     color: #80c242;
     font-size: 33px;
 }
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
