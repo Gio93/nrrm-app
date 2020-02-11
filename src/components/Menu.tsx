@@ -17,7 +17,8 @@ class Menu extends React.Component<any, any> {
           { title: 'Ripple Road', path: '/ripple', icon: 'create' },
           { title: 'Digitalization', path: '/dgrade', icon: 'podium' },
           { title: 'Logout', path: '/login', icon: 'log-out' },
-          { path: '/historicalChart'}
+          { title: 'historicalPage', path: '/historicalChart', icon: 'stats'},
+
 
         ],
         loggedOutPages: [
@@ -35,12 +36,11 @@ class Menu extends React.Component<any, any> {
             // { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
             { title: 'Ripple Road', path: '/ripple', icon: 'create' },
             { title: 'Digitalization', path: '/dgrade', icon: 'stats' },
-            { path: '/historicalChart'},
             { title: 'Logout', path: '/login', icon: 'log-out' }
             
           ],
           loggedOutPages: [
-            { title: 'Login', path: '/login', icon: 'log-in' },
+            { title: 'Login', path: '/login', icon: 'log-in' }, 
           ]  }        
       })      
  

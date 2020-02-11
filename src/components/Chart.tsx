@@ -65,10 +65,6 @@ export class Chart extends Component<any, State> {
                                     responsive: true,
                                     maintainAspectRatio: false,
 
-
-                                    
-
-
                                     layout: {
                                         padding: {
                                             left: 5,
@@ -77,17 +73,11 @@ export class Chart extends Component<any, State> {
                                             bottom: 5
                                         }
                                     },
-                                    // animation: {
-                                    //     duration: 2000,
-                                    //     onProgress: function(animation) {
-                                    //         progress.value = animation.currentStep / animation.numSteps;
-                                    //     },
-                                    //     onComplete: function() {
-                                    //         window.setTimeout(function() {
-                                    //             progress.value = 0;
-                                    //         }, 2000);
-                                    //     }
-                                    // },
+                                    animation: {
+                                        duration: 100000,
+                                        easing: 'linear'
+                                       
+                                    },
 
                                     title: {
                                         display: this.props.displayTitle,
@@ -95,6 +85,7 @@ export class Chart extends Component<any, State> {
                                         fontSize: 20,
 
                                     },
+
                                     legend: {
                                         display: this.props.displayLegend,
                                         position: this.props.legendPosition,
@@ -103,10 +94,11 @@ export class Chart extends Component<any, State> {
                                         }
                                       
                                     },
+
                                     tooltips: {
                                         enabled: true,
                                         mode: 'nearest',
-                                        backgroundColor: "rgba(31, 26, 26,1)",
+                                        backgroundColor: "rgba(36, 64, 42,1)",
                                         // titleFontSize: 22,
                                         // footerFontSize: 46,
                                         bodyFontSize: 18,
@@ -116,7 +108,7 @@ export class Chart extends Component<any, State> {
                                     },
                                     elements: {
                                         line: {
-                                            tension: 1
+                                            tension: 0.5
                                         },
                                         point: {
                                             backgroundColor: "rgba(14, 128, 37, 1)",
