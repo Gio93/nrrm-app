@@ -18,7 +18,6 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
     width:number;
     height:number;
     rendering: boolean;
-    romanos: Array<String>;
     
    
 
@@ -34,7 +33,6 @@ class BarChartSubIndicators extends Component < RouteComponentProps<any>, {indic
             showAlert: false,
             alerMessage: ""
         }
-        this.romanos  = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
     }
    
 

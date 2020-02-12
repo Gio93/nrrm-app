@@ -14,5 +14,9 @@
 
 .totalPercentage {
     color: #80c242;
-    font-size: 33px;
+    font-size: 40px;
+}
+
+.important {
+    font-weight: 700;
 }

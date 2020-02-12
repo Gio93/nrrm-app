@@ -210,7 +210,7 @@ class DigitalizationChart extends React.Component<any,State>{
                         {
                             this.searchGradePercentage()
                         }
-                        <IonCardTitle class="totalPercentage" color="success">
+                        <IonCardTitle class="totalPercentage important" color="success">
                             {this.percentageGrade+'%'}
                         </IonCardTitle>
                     </IonCardHeader>
