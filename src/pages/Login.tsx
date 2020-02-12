@@ -181,7 +181,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
               <img src={image} alt="logo" width="100%" />
             </div>
             <IonItem>
-              <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email" ></IonInput>
+              <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email"></IonInput>
             </IonItem>
             {this.state.action === 'SignUp' ?
             <IonItem>
@@ -189,7 +189,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
             </IonItem>
               : <></>}
             <IonItem>
-              <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password"></IonInput>
+              <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" ></IonInput>
             </IonItem>
             <IonButton onClick={this.login} className="loginbutton">{this.state.action}</IonButton>
           </form>

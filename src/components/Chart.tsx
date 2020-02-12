@@ -13,6 +13,7 @@ import {
     IonCard
 } from '@ionic/react';
 import { lineRadial, rgb } from 'd3';
+import { IonCardSubtitle } from '@ionic/react';
 
 
 
@@ -57,9 +58,19 @@ export class Chart extends Component<any, State> {
             <div className="chart">
 
                 <IonCard>
-                    <IonHeader>
 
-                    </IonHeader>
+                    <div className="subtitle">
+                        <div>
+                            <h3>Historical Data</h3>
+                            <p>Highest value = <span className="goodValue">sort data by highest value</span> </p>
+                            <p>Lowest value = <span className="badValue">sort data by lowest value</span></p>
+                        </div>
+
+                    </div>
+
+
+
+
                     <div className="contentChart2">
                         {this.props.data ?
                             <Line
@@ -76,28 +87,38 @@ export class Chart extends Component<any, State> {
                                         }
                                     },
                                     title: {
-                                        display: this.props.displayTitle,
+                                        display: false,
                                         text: 'Report from' + this.props.title,
-                                        fontSize: 20,
+                                        fontSize: 30,
+                                        position: 'top',
+                                        fontStyle: 'regular',
+                                        padding: 12
                                     },
                                     legend: {
                                         display: this.props.displayLegend,
                                         position: this.props.legendPosition,
                                         labels: {
                                             fontSize: 16,
-                                            fontStyle: 'light'
+                                            fontStyle: 'regular'
                                         }
 
                                     },
                                     tooltips: {
                                         enabled: true,
                                         mode: 'nearest',
-                                        backgroundColor: "rgba(36, 64, 42,1)",
-                                        // titleFontSize: 22,
-                                        // footerFontSize: 46,
+                                        backgroundColor: "rgba(224, 232, 216,1)",
+                                        titleFontSize: 16,
+                                        titleFontColor: "rgba(117, 93, 96, 1)",  
+                                        borderColor: "rgba(184, 204, 189, 1)",  
+                                        borderWidth: 0.7,
+                                        footerFontSize: 22, 
+                                        footerFontColor: "rgba(117, 93, 96, 1)",  
+                                        footerAlign: 'right',    
                                         bodyFontSize: 18,
-                                        caretPadding: 2,
-                                        caretSize: 15,
+                                        bodyFontColor: "rgba(117, 93, 96, 1)",  
+                                        
+                                        // caretPadding: 2,
+                                        caretSize: 10,
                                         yPadding: 10,
                                         xPadding: 10,
                                     },
@@ -110,16 +131,15 @@ export class Chart extends Component<any, State> {
                                         point: {
                                             backgroundColor: "rgba(14, 128, 37, 1)",
                                             radius: 2,
-                                            hitRadius: 6,
-                                            hoverRadius: 6,
-                                            borderWidth: 2,
+                                            hitRadius: 4,
+
+
                                         }
                                     }
                                 }}
                             /> : null}
 
                     </div>
-
                 </IonCard>
 
             </div>

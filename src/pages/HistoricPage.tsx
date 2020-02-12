@@ -62,14 +62,15 @@ class HistoricPage extends Component <ChartProps, ChartState> {
               99
             ],
             backgroundColor: [
-              'rgba(128,194,66,0.9)'
+              'rgba(128,194,66, 0.9)'
             ]
           }
         ]
       }
+      
     })
 
-    
+   
     this.getchartData();
   }
 
@@ -87,7 +88,8 @@ class HistoricPage extends Component <ChartProps, ChartState> {
     //
     
   }
-  
+
+
  
   render() {
     
@@ -108,7 +110,7 @@ class HistoricPage extends Component <ChartProps, ChartState> {
             <Chart
               data={this.state.data} location="Madrid" legendPosition="bottom" 
               /> : null}
-          </IonContent>
+          </IonContent>  
         </IonPage>
       </div>
 
@@ -119,7 +121,7 @@ class HistoricPage extends Component <ChartProps, ChartState> {
 }
 
 
-
+console.log("{data}");
 export default HistoricPage;
 
 
