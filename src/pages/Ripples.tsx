@@ -1,5 +1,5 @@
 import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel, IonChip } from '@ionic/react';
-import {  stats, funnel, cloudDone, business, build  } from 'ionicons/icons';
+import {  stats, funnel, cloudDone, business, build, desktop, trophy  } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import './Ripples.css';
 import Card from '../components/Card';
@@ -177,14 +177,12 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
           </IonFabButton> 
           <IonFabList side="top">
             <IonFabButton title="Implementation Type" onClick={(e)=>{
-              
               setShowModalImplementationType(true);
-            }}><IonIcon icon={cloudDone} /></IonFabButton>
-            <IonFabButton title="Type" onClick={(e)=>{
+            }}><IonIcon icon={trophy} /></IonFabButton>
+            <IonFabButton title="Solution Type" onClick={(e)=>{
               setShowModalType(true);
-            }}><IonIcon icon={build} /></IonFabButton>
-            <IonFabButton title="Business Area" onClick={(e)=>{
-              
+            }}><IonIcon icon={desktop} /></IonFabButton>
+            <IonFabButton title="Business Area" onClick={(e)=>{    
               setShowModalBusinessArea(true);
             }}><IonIcon icon={business} /></IonFabButton>
           </IonFabList>
