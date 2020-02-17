@@ -1,10 +1,6 @@
 import React, { Component, useState } from 'react'
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading, IonLabel, IonButton, IonItem } from '@ionic/react';
 import Chart from "../components/Chart"
-import { RouteComponentProps } from 'react-router';
-import { withRouter } from "react-router-dom";
-
-
 import './HistoricPage.css';
 
 interface ChartProps {}
@@ -70,31 +66,17 @@ class HistoricPage extends Component <ChartProps, ChartState> {
       
     })
 
-   
     this.getchartData();
   }
 
-  // formatData(){
-  //   let dataF = 
-  //   this.setState({data:dataF});
-  // }
-
-  
-
   getchartData() {
-
     //
     // Axios call goes here.
     //
-    
   }
 
-
- 
   render() {
-    
     return (
-
         <div>
         <IonPage>
           <IonHeader>
@@ -115,13 +97,8 @@ class HistoricPage extends Component <ChartProps, ChartState> {
       </div>
 
     )
-  }
-
-  
+  } 
 }
-
-
-console.log("{data}");
 export default HistoricPage;
 
 

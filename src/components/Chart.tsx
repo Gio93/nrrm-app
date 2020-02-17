@@ -1,7 +1,9 @@
 import React, { Component, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-
 import './Chart.css'
+import { lineRadial, rgb } from 'd3';
+import { IonCardSubtitle } from '@ionic/react';
+import { array } from 'prop-types';
 import {
     IonButtons,
     IonContent,
@@ -12,16 +14,7 @@ import {
     IonToolbar,
     IonCard
 } from '@ionic/react';
-import { lineRadial, rgb } from 'd3';
-import { IonCardSubtitle } from '@ionic/react';
 
-
-
-// interface TheProps  {};
-// interface TheState { 
-//   title: String,
-//   data: {};
-// }
 
 type State = { data: any };
 
@@ -31,10 +24,6 @@ export class Chart extends Component<any, State> {
         this.state = {
             data: {}
         }
-        console.log(this.props.data);
-        console.log.apply("Esto funciona?")
-
-
     }
 
     static defaultProps = {
@@ -46,33 +35,47 @@ export class Chart extends Component<any, State> {
 
     componentDidMount() {
         this.setState({
-            data: this.props.data
+            data: {...this.props.data}
         })
     }
 
+    pocData(){
+        console.log(this.props.data.datasets[0].data);
+    }
 
+
+    // Aqui obtenemos el valor maximo y el minimo de historical Data Chart 
+    // ---> topValue()
+    // ---> lowValue()
+
+    // topValue() {
+    //     let topV = (this.props.data.datasets[0].data)
+    //     .sort();
+    //     // topV.sort((a, b) => (a.topV > b.topV) ? 1 : (a.topV === b.topV) ? ((a.topV > b.topV) ? 1 : -1) : -1 )
+    //     console.log(topV[0])
+    // }
+
+    // lowValue() {
+    //     let lowV = (this.props.data.datasets[0].data)
+    //     .sort(-1);
+    //     // topV.sort((a, b) => (a.topV > b.topV) ? 1 : (a.topV === b.topV) ? ((a.topV > b.topV) ? 1 : -1) : -1 )
+    //     console.log(lowV[0])
+    //     console.log("YEEEEEEEEEEEEE")
+    // }
+
+    
     render() {
-
 
         return (
             <div className="chart">
-
                 <IonCard>
-
                     <div className="subtitle">
                         <div>
                             <h3>Historical Data</h3>
-                            <p>Highest value = <span className="goodValue">sort data by highest value</span> </p>
-                            <p>Lowest value = <span className="badValue">sort data by lowest value</span></p>
                         </div>
-
                     </div>
-
-
-
-
                     <div className="contentChart2">
-                        {this.props.data ?
+                        {this.props.data ? 
                             <Line
                                 data={this.props.data}
                                 options={{
@@ -116,32 +119,29 @@ export class Chart extends Component<any, State> {
                                         footerAlign: 'right',    
                                         bodyFontSize: 18,
                                         bodyFontColor: "rgba(117, 93, 96, 1)",  
-                                        
-                                        // caretPadding: 2,
                                         caretSize: 10,
                                         yPadding: 10,
                                         xPadding: 10,
                                     },
                                     elements: {
                                         line: {
-                                            tension: 0.5,
+                                            tension: 0.4,
                                             borderColor: "rgba(32, 156, 56)",
-                                            borderWidth: 1
+                                            borderWidth: 1,
+                                            borderCapStyle: "square"
                                         },
                                         point: {
                                             backgroundColor: "rgba(14, 128, 37, 1)",
                                             radius: 2,
                                             hitRadius: 4,
-
-
                                         }
                                     }
                                 }}
-                            /> : null}
+                            />   : null}
 
                     </div>
                 </IonCard>
-
+            {this.props.data.datasets ? this.pocData() : null}
             </div>
         )
     }
