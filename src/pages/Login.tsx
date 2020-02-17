@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonToolbar,  IonContent,   IonButton, IonInput, IonToast, IonItem,  IonFooter, IonHeader, IonTitle, IonMenuButton, IonPage } from '@ionic/react';
+import { IonToolbar,  IonContent,   IonButton, IonInput, IonToast, IonItem, IonHeader, IonTitle, IonMenuButton, IonPage } from '@ionic/react';
 // import { any } from 'prop-types';
 import image from '../assets/images/logoNRM.png';
 import { RouteComponentProps } from 'react-router';
@@ -65,6 +65,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
   }
 
   clearCredentials(){
+    console.log("Cleaning credentials...");
     this.event = new CustomEvent('loggedIn', {
       detail: false
     });

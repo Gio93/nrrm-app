@@ -56,7 +56,7 @@ const App: React.FC = () => {
             <Route path="/rippleDiagram" component={RippleDiagramPage} />
             <Route path="/dgrade" component={DigitalizationPage} />
             <Route path="/indicators/:id" component={BarChartSubIndicators} />
-            <Redirect from="/" to="/login"></Redirect>
+            <Redirect exact from="/" to="/login"></Redirect>
           </IonRouterOutlet>
       </IonSplitPane>
     </IonReactRouter>
