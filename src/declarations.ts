@@ -244,6 +244,7 @@ export interface RippleDiagramNode{
   smallDescription:string,
   father:number,
   type:number,
+  hasChildren:boolean,
   isOpened:boolean,
   highlighted:boolean,
   typeUUID:string,

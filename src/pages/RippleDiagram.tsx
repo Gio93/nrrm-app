@@ -118,11 +118,12 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       let flatData:Array<RippleDiagramNode> = [
         {
           id:0,
-          name:"",
+          name:"Inicio",
           smallDescription:"",
           father:undefined,
           type:0,
           isOpened:true,
+          hasChildren: true,
           highlighted : false,
           typeUUID:"",
           implementationTypeUUID:"",
@@ -137,6 +138,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           father: (data[i].predecessor)?data[i].predecessor.id : 0,
           type: (data[i].type)?data[i].type.id : 0,
           isOpened:true,
+          hasChildren: !data.find((e)=>e.id === ((data[i].predecessor)?data[i].predecessor.id:0)),
           highlighted:!!data[i].selected,
           typeUUID:data[i].type.uuid,
           implementationTypeUUID:data[i].implementationType.uuid,
@@ -156,7 +158,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
     useEffect(() => {
        loadData();
-    });  
+    }, []);  
 
     return (
         <IonPage>

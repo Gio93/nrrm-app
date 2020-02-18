@@ -88,13 +88,13 @@ class RippleRoadDiagram extends React.Component<any,State>{
               flex-direction:column;
               justify-content:center;
               align-items:center;
-              border-color:${border};
+              border-color:${node.data.hasChildren && !node.children ? 'gray':border};
+              border-width: ${node.data.hasChildren && !node.children ? '5px':'1px'};
               background-color:${color};
-              ${(node.data.highlighted)?"box-shadow: 2px 2px 12px 9px "+border+";":"box-shadow:none;"}
+              ${(node.data.highlighted)?"box-shadow: 0px 0px 20px 9px "+border+";":"box-shadow:none;"}
               border-radius:20px;'>
               <div style='border-left:2px;border-color:red;width:150px'>
-              <div style='margin-bottom:100px;text-align: center;'>${node.data.name}</div>
-              
+                <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div>
               </div>
             </div>`;
   }
