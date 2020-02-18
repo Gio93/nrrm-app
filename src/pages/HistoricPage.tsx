@@ -9,7 +9,7 @@ import { ChartData } from '../declarations';
 
 
 interface ChartProps {}
-interface ChartState {data:any, spinner: boolean}
+interface ChartState {data:any, spinner: boolean, timeStamp:any}
  
 class HistoricPage extends Component <ChartProps, ChartState>  {
 
@@ -17,17 +17,22 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     super(props);
     this.state = {
        data: {},
-       spinner: true
+       spinner: true,
+       timeStamp : ""
+       
+       
     }
     
   }
 
   componentDidMount() {
     this.getChartData();
+    this.currentDate();
   }
 
    getChartData = async () => {
     const myapi = new API();
+    
     // const [showLoading, setShowLoading]; 
     const response : Array<ChartData> = await myapi.doGet("/nrrm-ripple/grade-history");
     try {
@@ -37,18 +42,30 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     }catch(e){
       console.log(e);
     }
+    
   }
 
-  // getChartData = async () => {
-  //   const myapi = new API();
 
-  //   let res = await Axios.get("/nrrm-ripple/grade-history")
-  //   let { data }  = res.data;
-  //   this.setState({ data:res });
-  //   console.log(res);
-  // };
+  currentDate = () => {
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+    console.log(dateTime);
+      this.setState({
+        ...this.state,
+        timeStamp: dateTime,
+
+      })
+      
+      // console.log(this.state.timeStamp);
+        
+
+      
+  }
 
   render() {
+    console.log(this.state.timeStamp)
     return (
         <div>
         <IonPage>
@@ -72,6 +89,9 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
               data={this.state.data} location="Madrid" legendPosition="bottom" 
               /> : null}
           </IonContent>  
+          {/* <IonContent>
+          
+          </IonContent> */}
         </IonPage>
       </div>
 
