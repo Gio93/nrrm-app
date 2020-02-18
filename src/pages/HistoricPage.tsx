@@ -2,78 +2,51 @@ import React, { Component, useState } from 'react'
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading, IonLabel, IonButton, IonItem } from '@ionic/react';
 import Chart from "../components/Chart"
 import './HistoricPage.css';
+import Axios from 'axios';
+import API from '../utils/httpUtils';
+import { ChartData } from '../declarations';
+
+
 
 interface ChartProps {}
-interface ChartState {data:any}
+interface ChartState {data:any, spinner: boolean}
  
-class HistoricPage extends Component <ChartProps, ChartState> {
+class HistoricPage extends Component <ChartProps, ChartState>  {
 
   constructor(props: any) {
     super(props);
     this.state = {
-       data:{}
+       data: {},
+       spinner: true
     }
     
   }
 
   componentDidMount() {
-    this.setState ({
-      data: {
-        labels: [' D-1', 'D-2', 'D-3', 'D-4', 'D-5', 'D-6', 'D-7','D-8', 'D-9', 'D-10', 'D-11', 'D-12', 'D-13', 'D-14', 'D-15', 'D-16', 'D-17','D-18','D-19','D-20', 'D-21', 'D-22', 'D-23','D-24','D-25','D-26','D-27', 'D-28', 'D-29', 'D-30', 'D-31'],
-        datasets: [
-          {
-            label: 'Values',
-            data: [
-              77,
-              51,
-              63,
-              89,
-              95,
-              95, 
-              66,
-              58,
-              78,
-              69,
-              60,
-              95,
-              79,
-              67,
-              77,
-              89,
-              67,
-              77,
-              58,
-              94,
-              95,
-              85, 
-              66,
-              77,
-              78,
-              69,
-              90,
-              72,
-              59,
-              99,
-              89,
-              99
-            ],
-            backgroundColor: [
-              'rgba(128,194,66, 0.9)'
-            ]
-          }
-        ]
-      }
-      
-    })
-
-    this.getchartData();
+    this.getChartData();
   }
 
-  getchartData() {
-    //
-    // Axios call goes here.
-    //
+   getChartData = async () => {
+    const myapi = new API();
+    // const [showLoading, setShowLoading]; 
+    const response : Array<ChartData> = await myapi.doGet("/nrrm-ripple/grade-history");
+    try {
+      // setShowLoading(true);
+      this.setState({spinner: true});
+      console.log(response);
+    }catch(e){
+      console.log(e);
+    }
   }
+
+  // getChartData = async () => {
+  //   const myapi = new API();
+
+  //   let res = await Axios.get("/nrrm-ripple/grade-history")
+  //   let { data }  = res.data;
+  //   this.setState({ data:res });
+  //   console.log(res);
+  // };
 
   render() {
     return (
@@ -88,6 +61,12 @@ class HistoricPage extends Component <ChartProps, ChartState> {
             </IonToolbar>
           </IonHeader>
           <IonContent className = "chart-content">
+          <IonLoading
+              isOpen={this.state.spinner}
+              onDidDismiss={() => this.setState({spinner:false})}
+              message={'Loading...'}
+              duration={5000}
+            />
           {this.state.data ?
             <Chart
               data={this.state.data} location="Madrid" legendPosition="bottom" 

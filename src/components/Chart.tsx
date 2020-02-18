@@ -28,7 +28,7 @@ export class Chart extends Component<any, State> {
 
     static defaultProps = {
         displayTitle: true,
-        displayLegend: true,
+        displayLegend: false,
         legendPosition: 'right',
         location: 'Your historic data'
     }
@@ -39,9 +39,9 @@ export class Chart extends Component<any, State> {
         })
     }
 
-    pocData(){
-        console.log(this.props.data.datasets[0].data);
-    }
+    // pocData(){
+    //     console.log(this.props.data.datasets[0].data);
+    // }
 
 
     // Aqui obtenemos el valor maximo y el minimo de historical Data Chart 
@@ -141,7 +141,7 @@ export class Chart extends Component<any, State> {
 
                     </div>
                 </IonCard>
-            {this.props.data.datasets ? this.pocData() : null}
+            {/* {this.props.data.datasets ? this.pocData() : null} */}
             </div>
         )
     }

@@ -270,6 +270,28 @@ export interface RippleIndicator {
   grade: RippleGrade
 }
 
+export interface ChartData {
+  id: number,
+  uuid: number,
+  externalId: boolean,
+  totalPercentage: string,
+  timestamp: string,
+  grade: {
+    id: number,
+    uuid: string,
+    externalid: boolean,
+    totalPercentaje: string,
+  },
+  tenant: {
+    id: number,
+    uuid: number,
+    customer: string,
+    description: string,
+    createdAt: string,
+    updatedAt: string
+  }
+}
+
 export interface RippleGrade {
   id:	number,
   uuid:	string,

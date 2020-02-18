@@ -3,7 +3,7 @@ import { CONFIG } from '../constants';
 
 export default class API {
 
-    constructor({history}){
+    constructor(history){
         this.history = history;
 
         this.toast = document.createElement('ion-toast');
