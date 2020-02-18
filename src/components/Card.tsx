@@ -1,10 +1,9 @@
 import React from 'react';
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonChip, IonLabel, IonGrid, IonRow, IonCol, IonRippleEffect } from '@ionic/react';
-import {CardInfo, RippleBussinesAreaDto, RippleTypeDto, TechnologiesInvolvedDto} from '../declarations';
+import {CardInfo, RippleTypeDto, TechnologiesInvolvedDto} from '../declarations';
 import './Card.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { withRouter } from "react-router";
 
 
 

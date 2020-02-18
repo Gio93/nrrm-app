@@ -1,6 +1,5 @@
 import React from 'react';
 import { IonIcon, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem,  IonMenuToggle, IonLabel } from '@ionic/react';
-import { Link } from 'react-router-dom';
 import './Menu.css';
 
 class Menu extends React.Component<any, any> {

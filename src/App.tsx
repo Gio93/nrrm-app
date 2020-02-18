@@ -62,11 +62,7 @@ const App: React.FC = () => {
             <Route path="/dgrade" component={DigitalizationPage} />
             <Route path="/indicators/:id" component={BarChartSubIndicators} />
             <Route path="/historicalChart" component={HistoricPage} />
-            <Redirect from="/" to="/historicalChart" />
-            <Redirect from="/dgrade" to="historicalChart"></Redirect>
-
-
-            <Redirect from="/" to="/login"></Redirect>
+            <Redirect exact from="/" to="/login"></Redirect>
           </IonRouterOutlet>
       </IonSplitPane>
     </IonReactRouter>

@@ -1,15 +1,14 @@
 import './RippleDiagram.css'
 import './RippleDiagramAnims.css'
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonItemDivider, IonIcon, IonSegment, IonSegmentButton, IonBackButton, IonInput, IonNote, IonProgressBar, IonLoading, IonCol, IonRow, IonFab, IonFabButton, IonMenuButton, IonFabList, IonModal, IonButton, IonChip
+        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonIcon, IonLoading, IonCol, IonRow, IonFab, IonFabButton, IonMenuButton, IonFabList, IonModal, IonButton, IonChip
         } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
-import { RippleInfo, RippleDiagramNode, Filter, searchableRippleInfo } from '../declarations';
-import { stats, list, funnel, flask, beer, football, cloudDone, build, business, desktop, trophy } from 'ionicons/icons';
-import { isAbsolute } from 'path';
+import { RippleDiagramNode, Filter, searchableRippleInfo } from '../declarations';
+import {  list, funnel, business, desktop, trophy } from 'ionicons/icons';
 
 type Props = { props:any };
 
@@ -28,7 +27,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
   const myapi = new API(Params);
   const [showLoading, setShowLoading] = useState(true);
   const [animate, setAnimate] = useState(false);
-  const [closeModal, setCloseModal] = useState(false);
   const [aFilters, setFilters] = useState([]);
   const [aImplementationTypes, setImplementationTypes] = useState([]);
   const [aTypes, setTypes] = useState([]);
@@ -158,7 +156,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
     useEffect(() => {
        loadData();
-    }, []);  
+    });  
 
     return (
         <IonPage>

@@ -1,10 +1,7 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
-import * as d3 from "d3";
+import React from "react";
 import './RippleRoadDiagram.css'
 import * as Treeviz from 'treeviz';
-import { tsv } from "d3";
 import { RippleDiagramNode } from "../declarations";
-import { zoom } from "d3-zoom";
 
 
 
@@ -81,7 +78,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
   getNodeTemplate(node:any){
     let border = this.getBorderColorForType(node.data.type);
     let color= this.getColorForType(node.data.type);
-    debugger;
+    //debugger;
     return `<div 
               class='nodeBox' 
               style='cursor:pointer;
@@ -144,7 +141,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
         if(this.findIfShowingChildren(nodeData.data.id)){
           //close
           let nArray = this.removeChildrenFromParent(nodeData.data.id);
-          let obj=nArray.find((a)=>a.id==nodeData.data.id);
+          let obj=nArray.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=false;
           this.tmpData=nArray;
           this.myTree.refresh(this.tmpData);
@@ -153,7 +150,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
           let nArray = this.addChildrenFromParent(nodeData.data.id);
           
           this.tmpData=this.tmpData.concat(nArray);
-          let obj=this.tmpData.find((a)=>a.id==nodeData.data.id);
+          let obj=this.tmpData.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=true;
           this.tmpData.sort(function(a,b){ return a.id - b.id; });
           this.myTree.refresh(this.tmpData);
@@ -164,18 +161,18 @@ class RippleRoadDiagram extends React.Component<any,State>{
   }
 
   findIfShowingChildren(nodeId:number){
-    let children = this.tmpData.filter((el)=>el.father==nodeId);
+    let children = this.tmpData.filter((el)=>el.father===nodeId);
     return children.length>0;
   }
 
   getIndicesFromChildrenForRemove(nodeId:number){
     let tmpData = this.tmpData.slice();
-    let children = tmpData.filter((el)=>el.father==nodeId);
+    let children = tmpData.filter((el)=>el.father===nodeId);
     console.log("CHILDREN OF "+nodeId+" are "+JSON.stringify(children));
     let indices:Array<number>=[];
     children.forEach((node)=>{
     console.log("looking for children of "+node.id);
-    indices.push(tmpData.findIndex((a)=>a.id==node.id));
+    indices.push(tmpData.findIndex((a)=>a.id===node.id));
     if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
     indices=indices.concat(this.getIndicesFromChildrenForRemove(node.id))
     });
@@ -184,12 +181,12 @@ class RippleRoadDiagram extends React.Component<any,State>{
 
   getIndicesFromChildren(nodeId:number){
     let tmpData = this.allData.slice();
-    let children = tmpData.filter((el)=>el.father==nodeId);
+    let children = tmpData.filter((el)=>el.father===nodeId);
     console.log("CHILDREN OF "+nodeId+" are "+JSON.stringify(children));
     let indices:Array<number>=[];
     children.forEach((node)=>{
     console.log("looking for children of "+node.id);
-    indices.push(tmpData.findIndex((a)=>a.id==node.id));
+    indices.push(tmpData.findIndex((a)=>a.id===node.id));
     if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
     indices=indices.concat(this.getIndicesFromChildren(node.id))
     });
