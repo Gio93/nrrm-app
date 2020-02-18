@@ -30,6 +30,7 @@ export default class API {
         headers : this.getHeaders(),
         method: 'post',
         data:data
+        
       }).then(response => {
         console.log(response);
         return response.data;
@@ -54,11 +55,22 @@ export default class API {
     // return header;
 }
 
+getDate() {
+  let today = new Date();
+  let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  let dateTime = date+' '+time;
+  console.log(dateTime);
+   return {
+    "fecha_fin":{dateTime}
+   }       
+}
+
  doGet(url){
     return axios({
         headers : this.getHeaders(),
         url: CONFIG.API_ENDPOINT+url,
-        method: 'get'
+        method: 'get',
       }).then(response => {
         console.log(response);
         return response.data;
@@ -73,6 +85,28 @@ export default class API {
     });
 };
 
+// , this.getDate()
+doGetwithParams(url){
+  return axios({
+      headers : this.getHeaders(),
+      // body: this.getDate(),
+      url: CONFIG.API_ENDPOINT+url,
+      method: 'get',
+      params: {
+        fecha_fin: this.getDate()
+      }
+    }).then(response => {
+      console.log(response);
+      return response.data;
+    }).catch((e)=>{
+        debugger;
+        if(e.request.status === 401){
+          this.handleRedirect();
+        }else{
+          this.showError(e.message);
+        }      
+  });
+};
 showError(message){
     this.toast.message=message;
     document.body.appendChild(this.toast);

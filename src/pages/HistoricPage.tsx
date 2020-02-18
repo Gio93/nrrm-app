@@ -18,9 +18,7 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     this.state = {
        data: {},
        spinner: true,
-       timeStamp : ""
-       
-       
+       timeStamp : ""      
     }
     
   }
@@ -34,18 +32,21 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     const myapi = new API();
     
     // const [showLoading, setShowLoading]; 
-    const response : Array<ChartData> = await myapi.doGet("/nrrm-ripple/grade-history");
+    const response : Array<ChartData> = await myapi.doGetwithParams("/nrrm-ripple/grade-history");
     try {
       // setShowLoading(true);
       this.setState({spinner: true});
+      let ok = response[0].timestamp.slice(0,10);
+      let ko = response[0].totalPercentage;
       console.log(response);
+      console.log(ok);
+      console.log(ko)
     }catch(e){
       console.log(e);
     }
-    
   }
-
-
+  
+  
   currentDate = () => {
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();

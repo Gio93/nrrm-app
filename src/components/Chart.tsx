@@ -39,7 +39,7 @@ export class Chart extends Component<any, State> {
         })
     }
 
-    // pocData(){
+    // pocData(){  
     //     console.log(this.props.data.datasets[0].data);
     // }
 
