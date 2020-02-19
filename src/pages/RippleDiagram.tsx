@@ -43,6 +43,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       myapi.doGet("/nrrm-ripple/ripple").then(data => {
         setShowLoading(false);
         setFilterData(data);
+        //debugger;
         return flatterDataSet(data);
       });
     }
@@ -69,7 +70,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     const loadAdvancedFilteredData=()=>{
         setShowLoading(true);
         if(!data)return;
-        debugger;
+        //debugger;
         data.forEach((singleData)=>{
           if(aFilters.length===0) {
             singleData.highlighted=false;
@@ -168,7 +169,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                 {/* <IonBackButton  defaultHref="/ripple/"/> */}
                 <IonMenuButton />
               </IonButtons>
-              <IonTitle>Ripple Diagram</IonTitle>
+              <IonTitle>Ripple Road Daigram</IonTitle>
             </IonToolbar>
           </IonHeader>
           <IonContent>
@@ -300,7 +301,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
         </div>
         <IonModal isOpen={showModalImplementationType}>
           <IonList>
-            {aImplementationTypes.map(a=><IonItem onClick={(e)=>{
+            {aImplementationTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalImplementationType(false);
             }}>{a.value}</IonItem>)}

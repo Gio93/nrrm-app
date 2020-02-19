@@ -143,7 +143,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Ripple Road</IonTitle>
+          <IonTitle>Ripple List</IonTitle>
         </IonToolbar>
       </IonHeader>
 

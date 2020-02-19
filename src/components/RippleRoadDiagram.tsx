@@ -18,11 +18,11 @@ class RippleRoadDiagram extends React.Component<any,State>{
     super(props);
     //this.ref = useRef(null);
     console.debug("constructor");
-
+    //debugger;
     this.state = {
       data: props.data
     };
-
+    
     if(this.state.data)
       {
         this.allData = this.state.data.slice();
@@ -38,13 +38,14 @@ class RippleRoadDiagram extends React.Component<any,State>{
     console.debug("componentDidMount::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     setTimeout(() => {
       console.debug("Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientHeight);
+      //debugger;
       if(this.ref.current.clientHeight+this.ref.current.clientHeight>0){
         this.paintDiagram();
       }
-    }, 200);
+    }, 1000);
     
   }
-
+  
   getColorForType(type:any){
     switch(type){
       case 0:
@@ -218,6 +219,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
+   // debugger;
     console.debug("componentDidUpdate::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     if ( prevState.data!== this.props.data) {
       if(this.props.data)this.setState({data:this.props.data});
