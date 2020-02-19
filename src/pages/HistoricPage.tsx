@@ -5,11 +5,14 @@ import './HistoricPage.css';
 import Axios from 'axios';
 import API from '../utils/httpUtils';
 import { ChartData } from '../declarations';
+import { KeyObject } from 'crypto';
+import { ok } from 'assert';
+import { values } from 'd3';
 
 
 
 interface ChartProps {}
-interface ChartState {data:any, spinner: boolean, timeStamp:any}
+interface ChartState {data:any, spinner: boolean, timeStamp:any, query:any}
  
 class HistoricPage extends Component <ChartProps, ChartState>  {
 
@@ -18,9 +21,10 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     this.state = {
        data: {},
        spinner: true,
-       timeStamp : ""      
+       timeStamp : "",
+       query: "",
+       
     }
-    
   }
 
   componentDidMount() {
@@ -29,22 +33,56 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
   }
 
    getChartData = async () => {
+
     const myapi = new API();
-    
-    // const [showLoading, setShowLoading]; 
     const response : Array<ChartData> = await myapi.doGetwithParams("/nrrm-ripple/grade-history");
     try {
-      // setShowLoading(true);
-      this.setState({spinner: true});
-      let ok = response[0].timestamp.slice(0,10);
-      let ko = response[0].totalPercentage;
       console.log(response);
-      console.log(ok);
-      console.log(ko)
+
+      let labelsArray:any = [];
+      let valuesArray:any = [];
+
+      response.forEach(element => {
+        labelsArray.push(element.timestamp.slice(0,10));
+        valuesArray.push(parseFloat(element.totalPercentage));
+      });
+
+      const graphData = {
+        
+          labels: labelsArray,
+          datasets: [
+            {
+              label: 'Values',
+              data: valuesArray,
+              backgroundColor: [
+                'rgba(128,194,66, 0.9)' 
+              ]
+            }
+          ]
+         
+        
+      };
+
+      const graphData2 = {
+        data: {
+          labelsArray : valuesArray
+        }
+      }
+      const graphData3 = {
+        data: [{x: "hola", y: 20}, {x: "adios", y:30}]
+      }
+    
+
+      console.log(graphData);
+      this.setState({spinner: true, data: graphData });
+      console.log(this.state.data);
+   
     }catch(e){
       console.log(e);
     }
   }
+
+ 
   
   
   currentDate = () => {
@@ -56,17 +94,10 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
       this.setState({
         ...this.state,
         timeStamp: dateTime,
-
-      })
-      
-      // console.log(this.state.timeStamp);
-        
-
-      
+      })       
   }
 
   render() {
-    console.log(this.state.timeStamp)
     return (
         <div>
         <IonPage>

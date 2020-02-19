@@ -24,6 +24,7 @@ export class Chart extends Component<any, State> {
         this.state = {
             data: {}
         }
+        
     }
 
     static defaultProps = {
@@ -34,14 +35,31 @@ export class Chart extends Component<any, State> {
     }
 
     componentDidMount() {
-        this.setState({
-            data: {...this.props.data}
-        })
+        const data = this.state.data;
+        this.setState({data})
+        // this.setState({
+        //     data: {...this.props.data}
+        // })
+        console.log(this.state.data);
+        console.log(this.props.data);
+        console.log("EEEEEOOOOOOO");
     }
 
-    // pocData(){  
-    //     console.log(this.props.data.datasets[0].data);
+
+    // componentDidUpdate() {
+    //     this.setState({
+    //         data: {...this.props.data}
+    //     })
+    //     console.log(this.state.data)
     // }
+
+ 
+
+    pocData(){  
+        console.log(this.state.data);
+    }
+
+    
 
 
     // Aqui obtenemos el valor maximo y el minimo de historical Data Chart 
@@ -65,15 +83,12 @@ export class Chart extends Component<any, State> {
 
     
     render() {
-
+        console.log(this.props.data)
+        console.log(this.state.data)
+        console.log("tengo datos??")
         return (
             <div className="chart">
                 <IonCard>
-                    <div className="subtitle">
-                        <div>
-                            <h3>Historical Data</h3>
-                        </div>
-                    </div>
                     <div className="contentChart2">
                         {this.props.data ? 
                             <Line
@@ -141,7 +156,7 @@ export class Chart extends Component<any, State> {
 
                     </div>
                 </IonCard>
-            {/* {this.props.data.datasets ? this.pocData() : null} */}
+            {this.props.data.datasets ? this.pocData() : null}
             </div>
         )
     }
