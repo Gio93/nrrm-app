@@ -18,11 +18,11 @@ class RippleRoadDiagram extends React.Component<any,State>{
     super(props);
     //this.ref = useRef(null);
     console.debug("constructor");
-
+    //debugger;
     this.state = {
       data: props.data
     };
-
+    
     if(this.state.data)
       {
         this.allData = this.state.data.slice();
@@ -38,13 +38,14 @@ class RippleRoadDiagram extends React.Component<any,State>{
     console.debug("componentDidMount::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     setTimeout(() => {
       console.debug("Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientHeight);
+      //debugger;
       if(this.ref.current.clientHeight+this.ref.current.clientHeight>0){
         this.paintDiagram();
       }
-    }, 200);
+    }, 1000);
     
   }
-
+  
   getColorForType(type:any){
     switch(type){
       case 0:
@@ -88,13 +89,13 @@ class RippleRoadDiagram extends React.Component<any,State>{
               flex-direction:column;
               justify-content:center;
               align-items:center;
-              border-color:${border};
+              border-color:${node.data.hasChildren && !node.children ? 'gray':border};
+              border-width: ${node.data.hasChildren && !node.children ? '5px':'1px'};
               background-color:${color};
-              ${(node.data.highlighted)?"box-shadow: 2px 2px 12px 9px "+border+";":"box-shadow:none;"}
+              ${(node.data.highlighted)?"box-shadow: 0px 0px 20px 9px "+border+";":"box-shadow:none;"}
               border-radius:20px;'>
               <div style='border-left:2px;border-color:red;width:150px'>
-              <div style='margin-bottom:100px;text-align: center;'>${node.data.name}</div>
-              
+                <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div>
               </div>
             </div>`;
   }
@@ -218,6 +219,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
+   // debugger;
     console.debug("componentDidUpdate::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     if ( prevState.data!== this.props.data) {
       if(this.props.data)this.setState({data:this.props.data});

@@ -143,7 +143,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
                 detail: true,
               });
               window.dispatchEvent(this.event);
-              this.props.history.replace('/ripple');
+              this.props.history.replace('/rippleDiagram');
           },
     
           (error) => {

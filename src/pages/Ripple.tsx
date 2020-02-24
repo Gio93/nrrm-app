@@ -125,7 +125,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             {/* <IonMenuButton /> */}
             <IonBackButton  defaultHref="/ripple/"/>
           </IonButtons>
-          <IonTitle>Ripple Details</IonTitle>
+          <IonTitle>{data ? data.name : ""}</IonTitle>
         </IonToolbar>
         <IonToolbar className="rippleSegmentCustom">
       <IonSegment  key="ionSegmentKey" value={ionSelectedSegmentKey} scrollable className="rippleSegment"

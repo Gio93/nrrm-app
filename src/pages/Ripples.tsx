@@ -143,7 +143,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Ripple Road</IonTitle>
+          <IonTitle>Ripple List</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -236,7 +236,7 @@ const ListItems = (data: any[] & any) => {
       console.log("navigate!");
       history2.push("/ripple/"+x.uuid);
     }
-    
+    //debugger;
     return (
       <IonCol size="12" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="3" key={x.id}>
       
@@ -246,6 +246,7 @@ const ListItems = (data: any[] & any) => {
           description={x.smallDescription} 
           technologies={x.technologiesInvolved} 
           types={[x.type]} 
+          implementationType={[x.implementationType]}
           owner={x.rippleOwner}
           progress={x.progressDegree}
           onClick={navigateToDetail} 
