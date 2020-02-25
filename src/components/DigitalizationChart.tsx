@@ -226,7 +226,7 @@ class DigitalizationChart extends React.Component<any, State>{
                             </div>
                             <div>
                                 <IonToolbar>
-                                    <IonButton routerLink="/hitoricalChart">Go historic</IonButton>
+                                    <IonButton routerLink="/historicalChart">Go historic</IonButton>
                                 </IonToolbar>
                             </div>
                         </div>

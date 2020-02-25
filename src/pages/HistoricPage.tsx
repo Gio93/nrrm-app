@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading } from '@ionic/react';
 import Chart from "../components/Chart"
 import './HistoricPage.css';
-import Axios from 'axios';
 import API from '../utils/httpUtils';
 import { ChartData } from '../declarations';
 import { KeyObject } from 'crypto';
@@ -105,7 +104,7 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
   render() {
 
     return (
-        <div>
+        
         <IonPage>
           <IonHeader>
             <IonToolbar>
@@ -128,7 +127,7 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
               /> : null}
           </IonContent>  
         </IonPage>
-      </div>
+      
 
     )
   } 
