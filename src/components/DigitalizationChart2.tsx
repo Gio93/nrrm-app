@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 import './Chart.css'
-import { IonCardSubtitle, IonItem, IonText, IonButton, IonLabel, IonIcon } from '@ionic/react';
-import { array } from 'prop-types';
+import { IonCardSubtitle, IonItem, IonText, IonButton, IonLabel, IonIcon, IonAlert } from '@ionic/react';
 import { GraphDataChartBar, RippleIndicator } from '../declarations';
 import {
-    IonToolbar,
     IonCard,
     IonCardHeader,
     IonCardTitle,
@@ -14,10 +12,6 @@ import {
     IonRow,
     IonCol,
     IonList
-
-
-
-
 } from '@ionic/react';
 import { informationCircleOutline } from 'ionicons/icons';
 
@@ -31,15 +25,11 @@ export class DigitalionChart2 extends Component<any, State> {
             data: null,
             indicator: null,
             showAlert: false,
-            alerMessage: ""
+            alerMessage: "",
             // dataOrigen: {}
         }
         
     }
-
-
-    
-
     static defaultProps = {
         displayTitle: true,
         displayLegend: false,
@@ -47,22 +37,31 @@ export class DigitalionChart2 extends Component<any, State> {
         location: 'Your historic data'
     }
 
-    componentDidMount() {
-        // const data = this.state.data;
-        // this.setState({data});
+    componentDidMount(){
+        console.log("RENDERIZO componentDidMount Chart2 con props:", this.props);
+        const { indicator } = this.props;
+        const { data } = this.props;
+        this.setState({ indicator: indicator });
+        this.setState({ data: data });
+
     }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if(prevState.indicator ! == this.state.indicator){
-            
-    //     }
-    // }
-
-
-
-    pocData(){  
-        console.log(this.state.data);
+    
+    componentDidUpdate(nextProps: any) {
+        console.log("RENDERIZO componentDidUpdate Chart2");
+        const { indicator } = this.props;
+        const { data } = this.props;
+        if (nextProps.indicator !== indicator) {
+            if (indicator) {
+                this.setState({ indicator: indicator });
+            }
+        }
+        if (nextProps.data !== data) {
+            if (data) {
+                this.setState({ data: data });
+            }
+        }
     }
+    
 
 
     listItems(){
@@ -88,6 +87,7 @@ export class DigitalionChart2 extends Component<any, State> {
                                     onClick={() => {
                                                       this.setState({showAlert: true});
                                                       this.setState({alerMessage: item.name});
+                                                      console.log(this.state.showAlert);
                                                    }
                                             } 
                                     slot="end" 
@@ -105,136 +105,116 @@ export class DigitalionChart2 extends Component<any, State> {
                         );
                     })
                 }
+                {this.props.handlerSpinner(false)}
                 </IonList>
+                 
             );
+            
         }
     }
 
 
-
-    // static getDerivedStateFromProps = (nextProps:any) => {
-    //     return { indicator: nextProps.indicator, data: nextProps.data }
-    // }
-
-
-    
-componentDidUpdate(nextProps: any) {
-    const { indicator } = this.props;
-    const { data } = this.props;
-    if (nextProps.indicator !== indicator) {
-        if (indicator) {
-            this.setState({ indicator: indicator });
-        }
-    }
-    if (nextProps.data !== data) {
-        if (data) {
-            this.setState({ data: data });
-        }
-    }
-}
-    
     render() {
         return (
             
             <div className="chart">
                 <IonCard className="ion-activatable">
-                <IonCardHeader>
-                    <div className="container">
-                        <div>
-                            <IonCardSubtitle>
-                                Digitalization grade
-                            </IonCardSubtitle>
-                            nombre de la cat clicked
-                            <IonCardTitle class="totalPercentage important" color="success">
-                                x%
-                            </IonCardTitle>
-                        </div>
-                        <div>
-                            <IonToolbar>
-                            </IonToolbar>
-                        </div>
-                    </div>
-                </IonCardHeader>
+                    <IonCardHeader>
+                        <IonCardSubtitle>
+                            {this.state.indicator? this.state.indicator.name : null} indicators
+                        </IonCardSubtitle>
+                        <IonCardTitle color="success">
+                            {this.state.indicator? this.state.indicator.percentage*100 +'%': null}
+                        </IonCardTitle>
+                    </IonCardHeader>
 
-                    <div className="contentChart2">
-                        {this.props.data ? 
-                            <Bar
-                                data={this.state.data}
-                                options={{
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    layout: {
-                                        padding: {
-                                            left: 5,
-                                            right: 40,
-                                            top: 40,
-                                            bottom: 5
-                                        }
-                                    },
-                                    title: {
-                                        display: false,
-                                        // text: 'Report from' + this.state.indicator.name,
-                                        fontSize: 30,
-                                        position: 'top',
-                                        fontStyle: 'regular',
-                                        padding: 12
-                                    },
-                                    legend: {
-                                        display: this.props.displayLegend,
-                                        position: this.props.legendPosition,
-                                        labels: {
-                                            fontSize: 16,
-                                            fontStyle: 'regular'
-                                        }
-
-                                    },
-                                    tooltips: {
-                                        enabled: true,
-                                        mode: 'nearest',
-                                        backgroundColor: "rgba(224, 232, 216,1)",
-                                        titleFontSize: 16,
-                                        titleFontColor: "rgba(117, 93, 96, 1)",  
-                                        borderColor: "rgba(184, 204, 189, 1)",  
-                                        borderWidth: 0.7,
-                                        footerFontSize: 22, 
-                                        footerFontColor: "rgba(117, 93, 96, 1)",  
-                                        footerAlign: 'right',    
-                                        bodyFontSize: 18,
-                                        bodyFontColor: "rgba(117, 93, 96, 1)",  
-                                        caretSize: 10,
-                                        yPadding: 10,
-                                        xPadding: 10,
-                                    },
-                                    elements: {
-                                        line: {
-                                            tension: 0.4,
-                                            borderColor: "rgba(32, 156, 56)",
-                                            borderWidth: 1,
-                                            borderCapStyle: "square"
+                        <div className="contentChart2">
+                            {this.state.data ? 
+                                <Bar
+                                    data={this.state.data}
+                                    options={{
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        layout: {
+                                            padding: {
+                                                left: 5,
+                                                right: 40,
+                                                top: 40,
+                                                bottom: 5
+                                            }
                                         },
-                                        point: {
-                                            backgroundColor: "rgba(14, 128, 37, 1)",
-                                            radius: 2,
-                                            hitRadius: 4,
+                                        title: {
+                                            display: false,
+                                            // text: 'Report from' + this.state.indicator.name,
+                                            fontSize: 30,
+                                            position: 'top',
+                                            fontStyle: 'regular',
+                                            padding: 12
+                                        },
+                                        legend: {
+                                            display: this.props.displayLegend,
+                                            position: this.props.legendPosition,
+                                            labels: {
+                                                fontSize: 16,
+                                                fontStyle: 'regular'
+                                            }
+
+                                        },
+                                        tooltips: {
+                                            enabled: true,
+                                            mode: 'nearest',
+                                            backgroundColor: "rgba(224, 232, 216,1)",
+                                            titleFontSize: 16,
+                                            titleFontColor: "rgba(117, 93, 96, 1)",  
+                                            borderColor: "rgba(184, 204, 189, 1)",  
+                                            borderWidth: 0.7,
+                                            footerFontSize: 22, 
+                                            footerFontColor: "rgba(117, 93, 96, 1)",  
+                                            footerAlign: 'right',    
+                                            bodyFontSize: 18,
+                                            bodyFontColor: "rgba(117, 93, 96, 1)",  
+                                            caretSize: 10,
+                                            yPadding: 10,
+                                            xPadding: 10,
+                                        },
+                                        elements: {
+                                            line: {
+                                                tension: 0.4,
+                                                borderColor: "rgba(32, 156, 56)",
+                                                borderWidth: 1,
+                                                borderCapStyle: "square"
+                                            },
+                                            point: {
+                                                backgroundColor: "rgba(14, 128, 37, 1)",
+                                                radius: 2,
+                                                hitRadius: 4,
+                                            }
                                         }
-                                    }
-                                }}
-                            />   : null}
-                            
-                    </div>
-                    <IonCardContent>
-                    <IonGrid>
-                   
-                        <IonRow class="ion-align-items-center">
-                        <IonCol class="ion-float-left ">
-                        {
-                            this.listItems()
-                        }
-                        </IonCol>
-                        </IonRow>
-                        </IonGrid>
-                    </IonCardContent>
-            </IonCard>                           
+                                    }}
+                                />   : null}
+                                
+                        </div>
+                        <IonCardContent>
+                        <IonGrid>
+                    
+                            <IonRow class="ion-align-items-center">
+                            <IonCol class="ion-float-left ">
+                            {
+                                this.listItems()
+                            }
+                            </IonCol>
+                            </IonRow>
+                            </IonGrid>
+                        </IonCardContent>
+                </IonCard>
+            <IonAlert
+                isOpen={this.state.showAlert}
+                onDidDismiss={() => this.setState({showAlert: false})}
+                header={'Indicator Detail'}
+                // subHeader={'Subtitle'}
+                message={this.state.alerMessage}
+                buttons={['Close']}
+            />                          
         </div>
         )
     }

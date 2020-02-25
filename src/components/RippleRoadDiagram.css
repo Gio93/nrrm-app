@@ -1,27 +1,26 @@
-.nodeBox{
-    border : 1px solid;
+.nodeBox {
+    border: 1px solid;
     padding: 0px;
     box-shadow: 0px 10px 30px 0px rgba(0, 0, 0, 0.1);
 }
 
 .nodeBox::after {
     box-shadow: 0 5px 15px 2px;
-    opacity: 0; /* hide the hover shadow */
+    opacity: 0;
+    /* hide the hover shadow */
     transition: opacity 0.3s ease-in-out;
-  }
+}
 
-@media (orientation: landscape) {
-    #tree, #tree svg{
-        height: 100% !important;
-        width: 700px  !important;
-    }
-  }
+#tree {
+    display: block;
+    width: 90%;
+    height: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
-  @media (orientation: portrait) {
-    #tree, #tree svg {
-        height: 700px !important;
-        width: 100% !important;
-    }
-  }
-
-
+#tree svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}

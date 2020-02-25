@@ -4,7 +4,6 @@ import * as Treeviz from 'treeviz';
 import { RippleDiagramNode } from "../declarations";
 
 
-
 type State = {data:Array<RippleDiagramNode>};
 
 class RippleRoadDiagram extends React.Component<any,State>{
@@ -23,16 +22,13 @@ class RippleRoadDiagram extends React.Component<any,State>{
       data: props.data
     };
     
-    if(this.state.data)
-      {
+    if(this.state.data){
         this.allData = this.state.data.slice();
         this.tmpData = this.state.data.slice();
-      }
+    }
 
     this.ref = React.createRef(); 
   }
-
-  
 
   componentDidMount(){
     console.debug("componentDidMount::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
@@ -43,7 +39,6 @@ class RippleRoadDiagram extends React.Component<any,State>{
         this.paintDiagram();
       }
     }, 1000);
-    
   }
   
   getColorForType(type:any){
@@ -94,9 +89,9 @@ class RippleRoadDiagram extends React.Component<any,State>{
               background-color:${color};
               ${(node.data.highlighted)?"box-shadow: 0px 0px 20px 9px "+border+";":"box-shadow:none;"}
               border-radius:20px;'>
-              <div style='border-left:2px;border-color:red;width:150px'>
-                <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div>
-              </div>
+                <div style='border-left:2px;border-color:red;width:150px'>
+                  <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div>
+                </div>
             </div>`;
   }
 
@@ -117,39 +112,38 @@ class RippleRoadDiagram extends React.Component<any,State>{
       mainAxisNodeSpacing:"auto",
       secondaryAxisNodeSpacing:1,
       isHorizontal:true,
-      renderNode: (node)=>this.getNodeTemplate(node),
-      linkWidth : (nodeData)=> 1,
-      linkShape:"curve",
-      linkColor : (nodeData) => "#B0BEC5" ,
-      onNodeClick : (nodeData) => {
+      renderNode: (node) => this.getNodeTemplate(node),
+      linkWidth: (nodeData) => 1,
+      linkShape: "curve",
+      linkColor: (nodeData) => "#B0BEC5" ,
+      onNodeClick: (nodeData) => {
         console.log(nodeData);
-        if(this.props.onClickNode){
-          // Call father onClickNode
-          //this.props.onClickNode(nodeData);
-        }
-        //debugger;
-        //this.removeChildrenFromParent(nodeData.data.id,[]);
+        // if(this.props.onClickNode){
+        //   Call father onClickNode
+        //   this.props.onClickNode(nodeData);
+        // }
+        // debugger;
+        // this.removeChildrenFromParent(nodeData.data.id,[]);
         // while(let found = this.state.data.findIndex((a)=>a.father===nodeData.data.id)!==-1){
         //   this.state.data.splice(found,1);
         // }
-        //this.setState({data:this.state.data.splice(1,1)});
-        //this.setState({data:this.state.data.filter((el)=>el.father!==nodeData.data.id)});
-        //this.state.data.push({ id: this.state.data.length+1, text_1: "new!", text_2: "new", father: nodeData.id,  color:"#00BCD4" });
-        //this.updateData();
+        // this.setState({data:this.state.data.splice(1,1)});
+        // this.setState({data:this.state.data.filter((el)=>el.father!==nodeData.data.id)});
+        // this.state.data.push({ id: this.state.data.length+1, text_1: "new!", text_2: "new", father: nodeData.id,  color:"#00BCD4" });
+        // this.updateData();
         // if(nodeData.id > 2)
         //   this.myTree.refresh(this.allData);
         // else this.updateData();
         if(this.findIfShowingChildren(nodeData.data.id)){
-          //close
+          // close
           let nArray = this.removeChildrenFromParent(nodeData.data.id);
           let obj=nArray.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=false;
           this.tmpData=nArray;
           this.myTree.refresh(this.tmpData);
         }else{
-          //open
+          // open
           let nArray = this.addChildrenFromParent(nodeData.data.id);
-          
           this.tmpData=this.tmpData.concat(nArray);
           let obj=this.tmpData.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=true;
@@ -168,39 +162,40 @@ class RippleRoadDiagram extends React.Component<any,State>{
 
   getIndicesFromChildrenForRemove(nodeId:number){
     let tmpData = this.tmpData.slice();
-    let children = tmpData.filter((el)=>el.father===nodeId);
+    let children = tmpData.filter((el) => el.father === nodeId);
+    let indices:Array<number> = [];
     console.log("CHILDREN OF "+nodeId+" are "+JSON.stringify(children));
-    let indices:Array<number>=[];
-    children.forEach((node)=>{
-    console.log("looking for children of "+node.id);
-    indices.push(tmpData.findIndex((a)=>a.id===node.id));
-    if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
-    indices=indices.concat(this.getIndicesFromChildrenForRemove(node.id))
+    children.forEach((node) => {
+      console.log("looking for children of "+node.id);
+      indices.push(tmpData.findIndex((a) => a.id === node.id));
+      if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
+        indices = indices.concat(this.getIndicesFromChildrenForRemove(node.id))
     });
     return indices;
-    }
+  }
 
   getIndicesFromChildren(nodeId:number){
     let tmpData = this.allData.slice();
-    let children = tmpData.filter((el)=>el.father===nodeId);
+    let children = tmpData.filter((el) => el.father === nodeId);
+    let indices:Array<number> = [];
     console.log("CHILDREN OF "+nodeId+" are "+JSON.stringify(children));
-    let indices:Array<number>=[];
     children.forEach((node)=>{
-    console.log("looking for children of "+node.id);
-    indices.push(tmpData.findIndex((a)=>a.id===node.id));
-    if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
-    indices=indices.concat(this.getIndicesFromChildren(node.id))
+      indices.push(tmpData.findIndex((a)=>a.id===node.id));
+      console.log("looking for children of "+node.id);
+      if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
+        indices=indices.concat(this.getIndicesFromChildren(node.id))
     });
     return indices;
-    }
+  }
 
-    addChildrenFromParent(nodeId:number){
-      let tmpData:Array<RippleDiagramNode> = []; 
-      let toAdd = this.getIndicesFromChildren(nodeId);
-      for (var i = toAdd.length -1; i >= 0; i--)
-        tmpData.push(this.allData[toAdd[i]]);
-      return tmpData;
-    }
+  addChildrenFromParent(nodeId:number){
+    let tmpData:Array<RippleDiagramNode> = []; 
+    let toAdd = this.getIndicesFromChildren(nodeId);
+    for (var i = toAdd.length -1; i >= 0; i--)
+      tmpData.push(this.allData[toAdd[i]]);
+    return tmpData;
+  }
+
   removeChildrenFromParent(nodeId:number){   
     let tmpData = this.tmpData.slice(); 
     let toRemove = this.getIndicesFromChildrenForRemove(nodeId);
@@ -214,19 +209,17 @@ class RippleRoadDiagram extends React.Component<any,State>{
     if(!this.myTree || !this.state.data) return;
     // Display the tree based on the data
     this.myTree.refresh(this.state.data);
-
     //debugger;
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
    // debugger;
     console.debug("componentDidUpdate::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
-    if ( prevState.data!== this.props.data) {
+    if(prevState.data!== this.props.data){
       if(this.props.data)this.setState({data:this.props.data});
       if(this.state.data){
         this.allData = this.state.data.slice();
         this.tmpData = this.state.data.slice();
-        
       }
     }
     if(this.ref.current.clientHeight+this.ref.current.clientHeight>0){
@@ -234,15 +227,11 @@ class RippleRoadDiagram extends React.Component<any,State>{
     }
   }
 
-
   render() {
     return (
-      <div ref={this.ref} id="tree" style={{ height:"700px", width:"100%"}}></div>
+      <div ref={this.ref} id="tree"></div>
     );
   }
-  
-
-  
 };
 
 export default RippleRoadDiagram;

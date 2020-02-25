@@ -16,9 +16,10 @@ class Menu extends React.Component<any, any> {
           { title: 'Ripple Road', path: '/rippleDiagram', icon: 'create' },
           { title: 'Ripple', path: '/ripple', icon: 'create'},
           { title: 'Digitalization', path: '/dgrade', icon: 'podium' },
-          { title: 'Logout', path: '/login', icon: 'log-out' },
           { title: 'historicalPage', path: '/historicalChart', icon: 'stats'},
-          { title: 'Digitalization2', path: '/dgrade2', icon: 'stats'},
+          { title: 'Logout', path: '/login', icon: 'log-out' },
+          // { title: 'historicalPage', path: '/historicalChart', icon: 'stats'},
+          // { title: 'Digitalization2', path: '/dgrade2', icon: 'stats'},
 
 
         ],
@@ -38,8 +39,10 @@ class Menu extends React.Component<any, any> {
             { title: 'Ripple Road', path: '/rippleDiagram', icon: 'create' },
             { title: 'Ripple', path: '/ripple', icon: 'create'},
             { title: 'Digitalization', path: '/dgrade', icon: 'stats' },
+            // { title: 'Digitalization2', path: '/dgrade2', icon: 'stats'},
+            { title: 'historicalPage', path: '/historicalChart', icon: 'stats'},
             { title: 'Logout', path: '/login', icon: 'log-out' },
-            { title: 'Digitalization2', path: '/dgrade2', icon: 'stats'},
+            
 
             
           ],

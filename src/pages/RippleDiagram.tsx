@@ -158,179 +158,134 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     }
 
     useEffect(() => {
-       loadData();
+      loadData();
     }, []);  
 
     return (
         <IonPage>
           <IonHeader>
+            
             <IonToolbar>
               <IonButtons slot="start">
-                {/* <IonBackButton  defaultHref="/ripple/"/> */}
                 <IonMenuButton />
               </IonButtons>
-              <IonTitle>Ripple Road Daigram</IonTitle>
+              <IonTitle>Ripple Road Diagram</IonTitle>
             </IonToolbar>
+
           </IonHeader>
           <IonContent>
-            <div style={{
-              position: "absolute",
-              top:0,
-              left:0
-            }}>
-              {aFilters.map(a=>{console.log("ionchip"); return <IonChip onClick={()=>{
-                resetFilter(a);
-              }}><IonLabel>{a.value}</IonLabel><IonIcon name="close-circle" /></IonChip>})}
-            </div>
-          {/* <div id="modal-container" className={`${animate?"six":""} ${closeModal?"out":""}`} onClick={(a)=>{
-            setCloseModal(true);
-            setTimeout(()=>{
-              setAnimate(false);
-              setCloseModal(false);
-            },500)
-          }}> */}
-  {/* <div className="modal-background">
-    <div className="modal">
-      <h2>I'm a Modal</h2>
-      <p>Hear me roar.</p>
-      <svg className="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
-								<rect x="0" y="0" fill="none" width="226" height="162" rx="3" ry="3"></rect>
-							</svg>
-    </div>
-  </div>
-</div> */}
 
-          <IonLoading
+            <div className="chips-wrapper">
+              {aFilters.map((a) => {
+                return <IonChip onClick={()=>{resetFilter(a);}}>
+                  <IonLabel>{a.value}</IonLabel>
+                  <IonIcon name="close-circle" />
+                </IonChip>
+              })}
+            </div>
+            <IonLoading
               isOpen={showLoading}
               onDidDismiss={() => setShowLoading(false)}
               message={'Loading...'}
-              duration={5000}
+              duration={3000}
             />
-          <div style={{ display: "flex" }}>
-          <RippleRoadDiagram onClickNode={(a:RippleDiagramNode)=>onClickNode(a)}
-              data={data}
-            />
-          </div>
-          <div className="wrapperlow">
-              <div className="wavelow"></div>
-          </div>
-          <div className="legend" style={{
+            <div className="ripple-diagram-wrapper">
+              <RippleRoadDiagram onClickNode={(a:RippleDiagramNode) => onClickNode(a)}
+                data={data}
+              />
+            </div>
+            <div className="legend">
+              <IonRow>
+                <IonCol size="auto">
+                  <div className='legend__item legend__item--one'></div>
+                </IonCol>
+                <IonCol size="auto">
+                  <span>Backbone</span> 
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="auto">
+                  <div className='legend__item legend__item--two'></div>
+                </IonCol>
+                <IonCol size="auto">
+                  <span>Nimbl System Integration</span> 
+                </IonCol>
+              </IonRow>
+              <IonRow>
+                <IonCol size="auto">
+                  <div className='legend__item legend__item--three'></div>
+                </IonCol>
+                <IonCol size="auto">
+                  <span>Nimbl Digital Asset</span> 
+                </IonCol>
+              </IonRow>
+            </div>
+            <div className="customStackedButtons">
+              <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+                <IonFabButton routerLink="/ripple">
+                  <IonIcon icon={list} color="light"/>
+                </IonFabButton> 
+              </IonFab> 
+              <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
+                <IonFabButton color="secondary">
+                  <IonIcon icon={funnel} color="light"/>
+                </IonFabButton> 
+                <IonFabList side="top">
+                  <IonFabButton title="Implementation Type" onClick={(e)=>{setShowModalImplementationType(true);}}>
+                    <IonIcon icon={trophy} />
+                  </IonFabButton>
+                  <IonFabButton title="Solution Type" onClick={(e)=>{setShowModalType(true);}}>
+                    <IonIcon icon={desktop} />
+                  </IonFabButton>
+                  <IonFabButton title="Business Area" onClick={(e)=>{setShowModalBusinessArea(true);}}>
+                    <IonIcon icon={business} />
+                  </IonFabButton>
+                </IonFabList>
+              </IonFab>
+            </div>
+            <IonModal isOpen={showModalImplementationType}>
+              <IonList>
+                {aImplementationTypes.map((a) => 
+                  <IonItem key={a.key} onClick={(e) => {
+                    addFilters(a);
+                    setShowModalImplementationType(false);
+                  }}>
+                    {a.value}
+                  </IonItem>
+                )}
+              </IonList>
+              <IonButton onClick={() => setShowModalImplementationType(false)}>Cerrar</IonButton>
+            </IonModal>
 
-          }}>
-            <IonRow>
-            <IonCol size="1">
-            <div 
-              className='nodeBoxLegend1' 
-              style={{
-                'cursor':'pointer',
-                'height':'20px',
-                'width':'20px',
-                'display':'flex',
-                }}></div>
-            </IonCol>
-            <IonCol>
-              Backbone 
-            </IonCol>
-            </IonRow>
+            <IonModal isOpen={showModalType}>
+              <IonList>
+                {aTypes.map((a) =>
+                  <IonItem key={a.key} onClick={(e)=>{
+                    addFilters(a);
+                    setShowModalType(false);
+                  }}>
+                    {a.value}
+                  </IonItem>
+                )}
+              </IonList>
+              <IonButton onClick={() => setShowModalType(false)}>Cerrar</IonButton>
+            </IonModal>
 
-            <IonRow>
-            <IonCol size="1">
-            <div 
-              className='nodeBoxLegend2' 
-              style={{
-                'cursor':'pointer',
-                'height':'20px',
-                'width':'20px',
-                'display':'flex',
-                }}></div>
-            </IonCol>
-            <IonCol>
-              Nimbl System Integration
-            </IonCol>
-            </IonRow>
+            <IonModal isOpen={showModalBusinessArea}>
+              <IonList>
+                {aBusinessAreas.map((a) =>
+                  <IonItem key={a.key} onClick={(e)=>{
+                    addFilters(a);
+                    setShowModalBusinessArea(false);
+                  }}>
+                    {a.value}
+                  </IonItem>
+                )}
+              </IonList>
+              <IonButton onClick={() => setShowModalBusinessArea(false)}>Cerrar</IonButton>
+            </IonModal>
 
-            <IonRow>
-            <IonCol size="1">
-            <div 
-              className='nodeBoxLegend3' 
-              style={{
-                'cursor':'pointer',
-                'height':'20px',
-                'width':'20px',
-                'display':'flex',
-                }}></div>
-            </IonCol>
-            <IonCol>
-            Nimbl Digital Asset  
-            </IonCol>
-            </IonRow>
-            
-          </div>
-
-
-
-          <div className="customStackedButtons">
-        <IonFab vertical="bottom" horizontal="end" slot="fixed" >
-          <IonFabButton routerLink="/ripple">
-            <IonIcon icon={list} color="light"/>
-          </IonFabButton> 
-
-          {/*<IonFabList side="top">
-            <IonFabButton><IonIcon icon={flask} /></IonFabButton>
-            <IonFabButton><IonIcon icon={beer} /></IonFabButton>
-            <IonFabButton><IonIcon icon={football} /></IonFabButton>
-          </IonFabList>*/}
-        </IonFab> 
-        <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
-          <IonFabButton color="secondary">
-              <IonIcon icon={funnel} color="light"/>
-          </IonFabButton> 
-          <IonFabList side="top">
-            <IonFabButton title="Implementation Type" onClick={(e)=>{
-              
-              setShowModalImplementationType(true);
-            }}><IonIcon icon={trophy} /></IonFabButton>
-            <IonFabButton title="Solution Type" onClick={(e)=>{
-              setShowModalType(true);
-            }}><IonIcon icon={desktop} /></IonFabButton>
-            <IonFabButton title="Business Area" onClick={(e)=>{    
-              setShowModalBusinessArea(true);
-            }}><IonIcon icon={business} /></IonFabButton>
-          </IonFabList>
-        </IonFab>
-        </div>
-        <IonModal isOpen={showModalImplementationType}>
-          <IonList>
-            {aImplementationTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
-              addFilters(a);
-              setShowModalImplementationType(false);
-            }}>{a.value}</IonItem>)}
-          </IonList>
-          <IonButton onClick={() => setShowModalImplementationType(false)}>Cerrar</IonButton>
-        </IonModal>
-
-        <IonModal isOpen={showModalType}>
-        <IonList>
-            {aTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
-              addFilters(a);
-              setShowModalType(false);
-            }}>{a.value}</IonItem>)}
-          </IonList>
-          <IonButton onClick={() => setShowModalType(false)}>Cerrar</IonButton>
-        </IonModal>
-
-        <IonModal isOpen={showModalBusinessArea}>
-        <IonList>
-            {aBusinessAreas.map(a=><IonItem key={a.key} onClick={(e)=>{
-              addFilters(a);
-              setShowModalBusinessArea(false);
-            }}>{a.value}</IonItem>)}
-          </IonList>
-          <IonButton onClick={() => setShowModalBusinessArea(false)}>Cerrar</IonButton>
-        </IonModal>
-
-
-        </IonContent>
+          </IonContent>
         </IonPage>
     );
 };

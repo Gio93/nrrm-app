@@ -1,13 +1,10 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonRow, IonPage, IonTitle, IonToolbar,IonItem , IonLoading, IonCard, IonCardSubtitle, IonCardHeader, IonCardContent, IonCardTitle, IonCol } from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonLoading, IonBackButton } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import DigitalizationChart2 from '../components/DigitalizationChart2'
 
-import API from '../utils/httpUtils';
-import { RippleIndicator, RippleIndicatorInfo, GraphDataChartBar } from '../declarations';
-import BarChartSubIndicators from './BarChartSubIndicators';
-import { number } from 'prop-types';
+import { RippleIndicator, GraphDataChartBar } from '../declarations';
 
 
 
@@ -19,65 +16,68 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
   
   
-  const myapi = new API(Params);
-  const [showLoading, setShowLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(null);
 
   const [dataOrigen, setDataOrigen] = useState<RippleIndicator>(null);
   const [graphData, setGraphData] = useState<GraphDataChartBar>(null);
+  
+  const loadData = ()=>{
+    try{
 
-    const loadData = async ()=>{
-      try{
+      setShowLoading(true);
 
-        setShowLoading(true);
+     // if(Params.location.state != null && Params.location.state as RippleIndicator){
+          
+          let indicator = Params.location.state;
 
-        if(Params.location.state != null && Params.location.state as RippleIndicator){
-            
-            let indicator = Params.location.state;
+          if(indicator.indicators){
+            console.log("Inicio de formateo de datos, con variable:", indicator)
+      
+            let valuesArray:Array<number> = [];
+            let numberLabels:Array<string> = [];
+            let backgroundColors:Array<string> = [];
 
-            if(indicator.indicators){
-              console.log("Inicio de formateo de datos, con variable:", Params.location.state)
-        
-              let valuesArray:Array<number> = [];
-              let numberLabels:Array<string> = [];
+            indicator.indicators.forEach((element:RippleIndicator, index:number) => {
+              // labelsArray.push(element.description);
+              numberLabels.push((index+1).toString());
+              
+              valuesArray.push(element.percentage*100);
+              backgroundColors.push('rgba(128,194,66, 0.9)');
+              
+            });
 
-              console.log(indicator);
-              indicator.indicators.forEach((element:RippleIndicator, index:number) => {
-                // labelsArray.push(element.description);
-                numberLabels.push((index+1).toString());
-                
-                valuesArray.push(element.percentage*100);
-                
-                
-              });
-
-              const graphData: GraphDataChartBar = {        
-                labels: numberLabels,
-                datasets: [
-                  {
-                    label: 'Values',
-                    data: valuesArray,
-                    backgroundColor: [
-                      'rgba(128,194,66, 0.9)' 
-                    ]
-                  }
-                ]
-                            
-            };
-            console.log(graphData);
-            setGraphData(graphData);
-            setDataOrigen(indicator);
-          }
+            const graphData: GraphDataChartBar = {        
+              labels: numberLabels,
+              datasets: [
+                {
+                  label: 'Values',
+                  data: valuesArray,
+                  backgroundColor: backgroundColors
+                }
+              ]
+                          
+          };
+          setGraphData(graphData);
+          setDataOrigen(indicator);
+          
         }
-      }catch (e) {
-        console.log(e);
-        
-      }   
-    }
+      //}
+    }catch (e) {
+      console.log(e);
+      
+    }   
+  }
 
+  function handlerSpinner(control:boolean){
+    setShowLoading(control);
+  }
 
   useEffect(() => {
+    handlerSpinner(true);
+    console.log("RENDERIZO Digitalization2");
     loadData();
- }, [Params,dataOrigen]);
+    
+ }, []);
 
  
 
@@ -86,22 +86,23 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
   <IonPage>
   <IonHeader>
     <IonToolbar>
-      <IonButtons slot="start">
-        <IonMenuButton />
-      </IonButtons>
+    <IonButtons slot="start">
+      <IonBackButton  defaultHref="/dgrade/"/>
+    </IonButtons>
       <IonTitle>Digitalization Grade</IonTitle>
     </IonToolbar>
   </IonHeader>
   <IonContent>
   <IonLoading
           isOpen={showLoading}
-          onDidDismiss={() => setShowLoading(false)}
+          // onDidDismiss={() => setShowLoading(false)}
           message={'Loading...'}
-          duration={3000}
+          // duration={5000}
         />
-    <DigitalizationChart2 data={graphData} indicator={dataOrigen}  />
+    {graphData && dataOrigen? <DigitalizationChart2 data={graphData} indicator={dataOrigen} handlerSpinner={handlerSpinner}  /> : null }
   </IonContent>
 </IonPage>
+  
   );
 };
 

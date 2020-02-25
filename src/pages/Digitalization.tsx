@@ -21,8 +21,6 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
   const [data1, setData1] = useState<Array<RippleIndicatorInfo>>(null);
   const [dataOrigen, setDataOrigen] = useState<Array<RippleIndicator>>(null);
 
-  console.log("RippleDiagramIndicators");
-
     const loadData= async ()=>{
       try{
         setShowLoading(true);
