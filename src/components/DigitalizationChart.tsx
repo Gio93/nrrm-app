@@ -4,10 +4,9 @@ import React from 'react';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import * as d3 from 'd3';
-import { IonRouterLink,IonRouterOutlet, IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton, IonToolbar } from '@ionic/react';
+import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton, IonToolbar } from '@ionic/react';
 import { withRouter } from "react-router-dom";
 import { arrowForward } from 'ionicons/icons';
-import { useHistory } from "react-router-dom";
 
 type State = { data: Array<RippleIndicatorInfo>, dataOrigen: Array<RippleIndicator> };
 

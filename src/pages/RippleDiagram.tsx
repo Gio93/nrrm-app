@@ -311,7 +311,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
         <IonModal isOpen={showModalType}>
         <IonList>
-            {aTypes.map(a=><IonItem onClick={(e)=>{
+            {aTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalType(false);
             }}>{a.value}</IonItem>)}
@@ -321,7 +321,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
         <IonModal isOpen={showModalBusinessArea}>
         <IonList>
-            {aBusinessAreas.map(a=><IonItem onClick={(e)=>{
+            {aBusinessAreas.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalBusinessArea(false);
             }}>{a.value}</IonItem>)}

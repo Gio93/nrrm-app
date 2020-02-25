@@ -1,17 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import './Chart.css'
-import { lineRadial, rgb } from 'd3';
-import { IonCardSubtitle } from '@ionic/react';
-import { array } from 'prop-types';
 import {
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonMenuButton,
-    IonPage,
-    IonTitle,
-    IonToolbar,
     IonCard
 } from '@ionic/react';
 

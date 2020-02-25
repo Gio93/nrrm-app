@@ -35,18 +35,6 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
       
     }
 
-    // let dataProof = [
-    //   {State: "P&L Impact", current: 10, remainder: 90, total: 100},
-    //   {State: "Digital Assets", current: 20, remainder: 80, total: 100},
-    //   {State: "Customer Experience", current: 30, remainder: 70, total: 100},
-    //   {State: "Collaborative Ecosystem", current: 40, remainder: 60, total: 100},
-    //   {State: "Data Driven", current: 50, remainder: 50, total: 100},
-    //   {State: "Manual Process Automation", current: 60, remainder: 40, total: 100},
-    //   {State: "Adoption Grade Cloud Native", current: 70, remainder: 30, total: 100},
-
-    // ]
-
-
     const indicatorGroups = (data:Array<RippleIndicator>)=>{
       let CoreData: Array<RippleIndicatorInfo> = [];
       let dataFormat:any;
