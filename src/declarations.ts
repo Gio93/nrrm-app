@@ -20,6 +20,7 @@ export interface CardInfo {
   description:string;
   technologies:Array<TechnologiesInvolvedDto>;
   types : Array<RippleTypeDto>;
+  implementationType : Array<RippleImplementationTypeDto>;
   owner: string;
   progress: number;
   onClick : Function;
@@ -244,6 +245,7 @@ export interface RippleDiagramNode{
   smallDescription:string,
   father:number,
   type:number,
+  hasChildren:boolean,
   isOpened:boolean,
   highlighted:boolean,
   typeUUID:string,

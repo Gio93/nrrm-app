@@ -1,10 +1,9 @@
 import React from 'react';
 import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonChip, IonLabel, IonGrid, IonRow, IonCol, IonRippleEffect } from '@ionic/react';
-import {CardInfo, RippleBussinesAreaDto, RippleTypeDto, TechnologiesInvolvedDto} from '../declarations';
+import {CardInfo, RippleTypeDto, TechnologiesInvolvedDto, RippleImplementationTypeDto} from '../declarations';
 import './Card.css'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { withRouter } from "react-router";
 
 
 
@@ -64,11 +63,19 @@ class Card extends React.Component<CardInfo, any> {
                   </IonRow>
                   <IonRow class="ion-align-items-center">
                       <IonCol class="ion-float-left ">
-                        {this.props.types.map((x:RippleTypeDto)=>
-                            <IonChip  key={x.rippleType} color={x.rippleType.split(" ").join("").toLowerCase()}>
+                        {this.props.types.map((x:RippleTypeDto)=>{
+                            return (<IonChip style={{width: 'max-content'}}  key={x.rippleType} color={x.rippleType.split(" ").join("").toLowerCase()}>
                                 <IonLabel>{x.rippleType}</IonLabel>
-                            </IonChip>
+                            </IonChip>)
+                        }
                         )}
+                         {this.props.implementationType.map((x:RippleImplementationTypeDto)=>{
+                            return (<IonChip style={{width: 'max-content'}}   key={x.id}>
+                                <IonLabel>{x.implementationType}</IonLabel>
+                            </IonChip>)
+                        }
+                        )}
+
                       </IonCol>
                         <IonCol ><IonLabel class="ion-float-right ion-align-self-center circularLabel" color="dark">{this.props.owner.split(" ").map((x)=>x.charAt(0)).join("")}</IonLabel></IonCol>
                   </IonRow>

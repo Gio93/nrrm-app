@@ -1,15 +1,14 @@
 import './RippleDiagram.css'
 import './RippleDiagramAnims.css'
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonItemDivider, IonIcon, IonSegment, IonSegmentButton, IonBackButton, IonInput, IonNote, IonProgressBar, IonLoading, IonCol, IonRow, IonFab, IonFabButton, IonMenuButton, IonFabList, IonModal, IonButton, IonChip
+        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonIcon, IonLoading, IonCol, IonRow, IonFab, IonFabButton, IonMenuButton, IonFabList, IonModal, IonButton, IonChip
         } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
-import { RippleInfo, RippleDiagramNode, Filter, searchableRippleInfo } from '../declarations';
-import { stats, list, funnel, flask, beer, football, cloudDone, build, business, desktop, trophy } from 'ionicons/icons';
-import { isAbsolute } from 'path';
+import { RippleDiagramNode, Filter, searchableRippleInfo } from '../declarations';
+import {  list, funnel, business, desktop, trophy } from 'ionicons/icons';
 
 type Props = { props:any };
 
@@ -28,7 +27,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
   const myapi = new API(Params);
   const [showLoading, setShowLoading] = useState(true);
   const [animate, setAnimate] = useState(false);
-  const [closeModal, setCloseModal] = useState(false);
   const [aFilters, setFilters] = useState([]);
   const [aImplementationTypes, setImplementationTypes] = useState([]);
   const [aTypes, setTypes] = useState([]);
@@ -45,6 +43,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       myapi.doGet("/nrrm-ripple/ripple").then(data => {
         setShowLoading(false);
         setFilterData(data);
+        //debugger;
         return flatterDataSet(data);
       });
     }
@@ -71,7 +70,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     const loadAdvancedFilteredData=()=>{
         setShowLoading(true);
         if(!data)return;
-        debugger;
+        //debugger;
         data.forEach((singleData)=>{
           if(aFilters.length===0) {
             singleData.highlighted=false;
@@ -120,11 +119,12 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       let flatData:Array<RippleDiagramNode> = [
         {
           id:0,
-          name:"",
+          name:"Inicio",
           smallDescription:"",
           father:undefined,
           type:0,
           isOpened:true,
+          hasChildren: true,
           highlighted : false,
           typeUUID:"",
           implementationTypeUUID:"",
@@ -139,6 +139,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           father: (data[i].predecessor)?data[i].predecessor.id : 0,
           type: (data[i].type)?data[i].type.id : 0,
           isOpened:true,
+          hasChildren: !data.find((e)=>e.id === ((data[i].predecessor)?data[i].predecessor.id:0)),
           highlighted:!!data[i].selected,
           typeUUID:data[i].type.uuid,
           implementationTypeUUID:data[i].implementationType.uuid,
@@ -168,7 +169,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                 {/* <IonBackButton  defaultHref="/ripple/"/> */}
                 <IonMenuButton />
               </IonButtons>
-              <IonTitle>Ripple Diagram</IonTitle>
+              <IonTitle>Ripple Road Daigram</IonTitle>
             </IonToolbar>
           </IonHeader>
           <IonContent>
@@ -300,7 +301,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
         </div>
         <IonModal isOpen={showModalImplementationType}>
           <IonList>
-            {aImplementationTypes.map(a=><IonItem onClick={(e)=>{
+            {aImplementationTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalImplementationType(false);
             }}>{a.value}</IonItem>)}
@@ -310,7 +311,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
         <IonModal isOpen={showModalType}>
         <IonList>
-            {aTypes.map(a=><IonItem onClick={(e)=>{
+            {aTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalType(false);
             }}>{a.value}</IonItem>)}
@@ -320,7 +321,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
         <IonModal isOpen={showModalBusinessArea}>
         <IonList>
-            {aBusinessAreas.map(a=><IonItem onClick={(e)=>{
+            {aBusinessAreas.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalBusinessArea(false);
             }}>{a.value}</IonItem>)}

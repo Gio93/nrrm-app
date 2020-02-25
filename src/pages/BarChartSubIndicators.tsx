@@ -1,6 +1,6 @@
 import './BarChartSubIndicators.css'
 import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol, IonList, IonItem, IonBackButton, IonIcon, IonAlert, IonButton, IonText, IonLabel } from '@ionic/react';
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from "react-router-dom";
 import { RippleIndicator } from '../declarations';

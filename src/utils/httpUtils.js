@@ -75,7 +75,7 @@ getDate() {
         console.log(response);
         return response.data;
       }).catch((e)=>{
-          debugger;
+          //debugger;
           if(e.request.status === 401){
             this.handleRedirect();
           }else{

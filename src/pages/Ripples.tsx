@@ -1,10 +1,9 @@
-import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonRippleEffect, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel, IonChip } from '@ionic/react';
-import {  stats, funnel, cloudDone, business, build, desktop, trophy  } from 'ionicons/icons';
+import { IonButtons,IonLoading, IonContent, IonHeader, IonIcon, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonFab, IonFabButton, IonFabList, IonGrid, IonRow, IonCol, IonSearchbar, IonModal, IonButton, IonLabel, IonChip } from '@ionic/react';
+import {  stats, funnel, business, desktop, trophy  } from 'ionicons/icons';
 import React, { useState, useEffect } from 'react';
 import './Ripples.css';
 import Card from '../components/Card';
 import {RippleInfo,Filter} from '../declarations';
-import { CONFIG, COMMAND, Operator } from '../constants';
 import { RouteComponentProps } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import  '../utils/httpUtils';
@@ -80,7 +79,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  },[]);
 
   const loadAdvancedFilteredData=()=>{
     setShowLoading(true);
@@ -91,7 +90,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         return acc+"&type="+current.key;
       }else if(current.type===2){
         return acc+"&businessArea="+current.key;
-      }
+      }else return "";
     },"");
 
     myapi.doGet("/nrrm-ripple/ripple/getFilters?"+sfilters).then(data=>{
@@ -144,7 +143,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Ripple Road</IonTitle>
+          <IonTitle>Ripple List</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -190,7 +189,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         </div>
         <IonModal isOpen={showModalImplementationType}>
           <IonList>
-            {aImplementationTypes.map(a=><IonItem onClick={(e)=>{
+            {aImplementationTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalImplementationType(false);
             }}>{a.value}</IonItem>)}
@@ -200,7 +199,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
 
         <IonModal isOpen={showModalType}>
         <IonList>
-            {aTypes.map(a=><IonItem onClick={(e)=>{
+            {aTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalType(false);
             }}>{a.value}</IonItem>)}
@@ -210,7 +209,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
 
         <IonModal isOpen={showModalBusinessArea}>
         <IonList>
-            {aBusinessAreas.map(a=><IonItem onClick={(e)=>{
+            {aBusinessAreas.map(a=><IonItem key={a.key} onClick={(e)=>{
               addFilters(a);
               setShowModalBusinessArea(false);
             }}>{a.value}</IonItem>)}
@@ -237,7 +236,7 @@ const ListItems = (data: any[] & any) => {
       console.log("navigate!");
       history2.push("/ripple/"+x.uuid);
     }
-    
+    //debugger;
     return (
       <IonCol size="12" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="3" key={x.id}>
       
@@ -247,6 +246,7 @@ const ListItems = (data: any[] & any) => {
           description={x.smallDescription} 
           technologies={x.technologiesInvolved} 
           types={[x.type]} 
+          implementationType={[x.implementationType]}
           owner={x.rippleOwner}
           progress={x.progressDegree}
           onClick={navigateToDetail} 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { IonIcon, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem,  IonMenuToggle, IonLabel } from '@ionic/react';
-import { Link } from 'react-router-dom';
 import './Menu.css';
 
 class Menu extends React.Component<any, any> {
@@ -14,7 +13,8 @@ class Menu extends React.Component<any, any> {
         ],
         loggedInPages: [
           // { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
-          { title: 'Ripple Road', path: '/ripple', icon: 'create' },
+          { title: 'Ripple Road', path: '/rippleDiagram', icon: 'create' },
+          { title: 'Ripple', path: '/ripple', icon: 'create'},
           { title: 'Digitalization', path: '/dgrade', icon: 'podium' },
           { title: 'Logout', path: '/login', icon: 'log-out' },
           { title: 'historicalPage', path: '/historicalChart', icon: 'stats'},
@@ -35,7 +35,8 @@ class Menu extends React.Component<any, any> {
           ],
           loggedInPages: [
             // { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
-            { title: 'Ripple Road', path: '/ripple', icon: 'create' },
+            { title: 'Ripple Road', path: '/rippleDiagram', icon: 'create' },
+            { title: 'Ripple', path: '/ripple', icon: 'create'},
             { title: 'Digitalization', path: '/dgrade', icon: 'stats' },
             { title: 'Logout', path: '/login', icon: 'log-out' },
             { title: 'Digitalization2', path: '/dgrade2', icon: 'stats'},

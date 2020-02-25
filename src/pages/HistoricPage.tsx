@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react'
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading, IonLabel, IonButton, IonItem } from '@ionic/react';
+import React, { Component } from 'react'
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonLoading } from '@ionic/react';
 import Chart from "../components/Chart"
 import './HistoricPage.css';
 import Axios from 'axios';

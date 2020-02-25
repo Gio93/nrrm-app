@@ -1,11 +1,11 @@
 import './Ripple.css'
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonItemDivider, IonIcon, IonSegment, IonSegmentButton, IonBackButton, IonInput, IonNote, IonProgressBar
+        IonPage, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonButtons, IonTitle, IonContent, IonItemDivider, IonSegment, IonSegmentButton, IonBackButton, IonInput, IonNote, IonProgressBar
         } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
-import { RippleInfo, TextDto, RoleableDto, RolDto } from '../declarations';
+import { RippleInfo, TextDto } from '../declarations';
 
 
 type Props = { props:any };
@@ -31,6 +31,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
 
     useEffect(() => {
+        setSelectedRippleId(Params.match.params.ripple);
         console.log("useEffect");
         myapi.doGet("/nrrm-ripple/ripple/findOne/"+selectedRippleId).then(data => {
           return setData(data);
@@ -45,7 +46,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
         //   loadData();
         // //}
         
-    }, []);  
+    },[]);  
 
     const getText=(key:string)=>{
       if(!data)return;
@@ -124,7 +125,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             {/* <IonMenuButton /> */}
             <IonBackButton  defaultHref="/ripple/"/>
           </IonButtons>
-          <IonTitle>Ripple Details</IonTitle>
+          <IonTitle>{data ? data.name : ""}</IonTitle>
         </IonToolbar>
         <IonToolbar className="rippleSegmentCustom">
       <IonSegment  key="ionSegmentKey" value={ionSelectedSegmentKey} scrollable className="rippleSegment"
@@ -172,7 +173,6 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             let y = e.detail.scrollTop;
             let lowerDistance = 0;
             let lowerDistanceElement = "";
-            let selectedIndex = 0;
             for(var i=0;i<SECTIONS.length;i++){
               let divider:HTMLObjectElement=document.querySelector("ion-item-divider.part"+i);
               let parent:any = divider.offsetParent;
@@ -181,17 +181,15 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
               if (lowerDistance === 0) {
                 lowerDistance=distance;
                 lowerDistanceElement = "part"+i;
-                selectedIndex=i;
               };
               if(lowerDistance > Math.abs(distance)) {
                 lowerDistance = distance;
                 lowerDistanceElement = "part"+i;
-                selectedIndex = i;
               };
             }
             
             setIonSelectedSegmentKey(lowerDistanceElement);
-            debugger;
+            //debugger;
             let segmentButton:HTMLIonContentElement = document.querySelector('ion-segment.rippleSegment');
             let segmentButtonSelected:HTMLIonContentElement = document.querySelector('ion-segment-button.'+lowerDistanceElement);
             segmentButton.scrollTo(segmentButtonSelected.offsetLeft,0);
@@ -206,7 +204,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             {SECTIONS.map((x,i)=>{
                 let items = getItemsForSection(x);
                 let part="part"+i;
-              return <IonList><IonItemDivider sticky className={part}>{x}</IonItemDivider>{items}</IonList>;
+              return <IonList key={part+"list"} ><IonItemDivider sticky key={part} className={part}>{x}</IonItemDivider>{items}</IonList>;
             })}
             {/* {keysAndValues.map((x:KeyAndValue) => {
               return <IonItem key={x.key} className="part1"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>})} */}
