@@ -44,8 +44,11 @@ class DigitalizationChart extends React.Component<any, State>{
         }
     }
 
+    // navigationtoIndicatorDetail(item: RippleIndicator) {
+    //     this.props.history.push('/indicators/' + item.id, item);
+    // }
     navigationtoIndicatorDetail(item: RippleIndicator) {
-        this.props.history.push('/indicators/' + item.id, item);
+        this.props.history.push('/dgrade2/' + item.id, item);
     }
 
 

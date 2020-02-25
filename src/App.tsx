@@ -6,8 +6,10 @@ import { IonReactRouter } from '@ionic/react-router';
 import LoginPage from './pages/Login';
 import RippleList from './pages/Ripples';
 import DigitalizationPage from './pages/Digitalization';
+import Digitalization2 from './pages/Digitalization2'
 import BarChartSubIndicators from './pages/BarChartSubIndicators';
 import HistoricPage from './pages/HistoricPage';
+
 
 
 
@@ -60,6 +62,7 @@ const App: React.FC = () => {
             <Route path="/ripple/:ripple" component={RipplePage} />
             <Route path="/rippleDiagram" component={RippleDiagramPage} />
             <Route path="/dgrade" component={DigitalizationPage} />
+            <Route path="/dgrade2" component={Digitalization2} />
             <Route path="/indicators/:id" component={BarChartSubIndicators} />
             <Route path="/historicalChart" component={HistoricPage} />
             <Redirect from="/" to="/historicalChart" />

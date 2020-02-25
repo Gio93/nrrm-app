@@ -307,4 +307,15 @@ export interface RippleIndicatorInfo {
   total: number
 }
 
+export interface GraphDataChartBar {
+  labels: Array<string>,
+  datasets: Array<GraphDataChartBarSubItem>
+}
+
+export interface GraphDataChartBarSubItem {
+  label: string,
+  data: Array<number>,
+  backgroundColor: Array<string>
+}
+
 export interface Filter  {key:string, value:string, type:number};

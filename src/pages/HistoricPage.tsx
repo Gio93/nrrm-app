@@ -30,7 +30,20 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
   componentDidMount() {
     this.getChartData();
     this.currentDate();
+    // this.postData();
   }
+  
+    // postData = async () => {
+    //   const myapi = new API();
+    //   const dataThrow : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history")
+    //   try {
+    //     this.state.timeStamp;
+    //     console.log(dataThrow);
+    //   }catch(e){
+    //     console.log(e);
+    //   }
+    // }
+
 
    getChartData = async () => {
 
@@ -63,19 +76,9 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
         
       };
 
-      const graphData2 = {
-        data: {
-          labelsArray : valuesArray
-        }
-      }
-      const graphData3 = {
-        data: [{x: "hola", y: 20}, {x: "adios", y:30}]
-      }
     
-
       console.log(graphData);
       this.setState({spinner: true, data: graphData });
-      console.log(this.state.data);
    
     }catch(e){
       console.log(e);
@@ -90,14 +93,17 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     let dateTime = date+' '+time;
-    console.log(dateTime);
       this.setState({
         ...this.state,
         timeStamp: dateTime,
-      })       
+      })     
+      console.log(dateTime);
+      console.log(this.state.timeStamp);
+      
   }
 
   render() {
+
     return (
         <div>
         <IonPage>
@@ -121,9 +127,6 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
               data={this.state.data} location="Madrid" legendPosition="bottom" 
               /> : null}
           </IonContent>  
-          {/* <IonContent>
-          
-          </IonContent> */}
         </IonPage>
       </div>
 
