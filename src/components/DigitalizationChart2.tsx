@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import './Chart.css'
+import './DigitalizationChart2.css'
 import { IonCardSubtitle, IonItem, IonText, IonButton, IonLabel, IonIcon } from '@ionic/react';
-import { array } from 'prop-types';
 import { GraphDataChartBar, RippleIndicator } from '../declarations';
 import {
     IonToolbar,
@@ -32,13 +31,8 @@ export class DigitalionChart2 extends Component<any, State> {
             indicator: null,
             showAlert: false,
             alerMessage: ""
-            // dataOrigen: {}
-        }
-        
+        }      
     }
-
-
-    
 
     static defaultProps = {
         displayTitle: true,
@@ -48,16 +42,7 @@ export class DigitalionChart2 extends Component<any, State> {
     }
 
     componentDidMount() {
-        // const data = this.state.data;
-        // this.setState({data});
     }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     if(prevState.indicator ! == this.state.indicator){
-            
-    //     }
-    // }
-
 
 
     pocData(){  
@@ -111,12 +96,6 @@ export class DigitalionChart2 extends Component<any, State> {
     }
 
 
-
-    // static getDerivedStateFromProps = (nextProps:any) => {
-    //     return { indicator: nextProps.indicator, data: nextProps.data }
-    // }
-
-
     
 componentDidUpdate(nextProps: any) {
     const { indicator } = this.props;
@@ -134,8 +113,7 @@ componentDidUpdate(nextProps: any) {
 }
     
     render() {
-        return (
-            
+        return (      
             <div className="chart">
                 <IonCard className="ion-activatable">
                 <IonCardHeader>
@@ -156,7 +134,7 @@ componentDidUpdate(nextProps: any) {
                     </div>
                 </IonCardHeader>
 
-                    <div className="contentChart2">
+                    <div className="contentBarChart">
                         {this.props.data ? 
                             <Bar
                                 data={this.state.data}
@@ -167,17 +145,30 @@ componentDidUpdate(nextProps: any) {
                                         padding: {
                                             left: 5,
                                             right: 40,
-                                            top: 40,
+                                            top: 0,
                                             bottom: 5
                                         }
                                     },
                                     title: {
                                         display: false,
-                                        // text: 'Report from' + this.state.indicator.name,
                                         fontSize: 30,
                                         position: 'top',
                                         fontStyle: 'regular',
                                         padding: 12
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+                                                max: 100
+                                            }
+                                        }],
+                                        xAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+ 
+                                            }
+                                        }]
                                     },
                                     legend: {
                                         display: this.props.displayLegend,
@@ -186,7 +177,6 @@ componentDidUpdate(nextProps: any) {
                                             fontSize: 16,
                                             fontStyle: 'regular'
                                         }
-
                                     },
                                     tooltips: {
                                         enabled: true,
@@ -224,7 +214,6 @@ componentDidUpdate(nextProps: any) {
                     </div>
                     <IonCardContent>
                     <IonGrid>
-                   
                         <IonRow class="ion-align-items-center">
                         <IonCol class="ion-float-left ">
                         {

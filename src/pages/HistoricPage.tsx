@@ -4,14 +4,10 @@ import Chart from "../components/Chart"
 import './HistoricPage.css';
 import API from '../utils/httpUtils';
 import { ChartData } from '../declarations';
-import { KeyObject } from 'crypto';
-import { ok } from 'assert';
-import { values } from 'd3';
-
 
 
 interface ChartProps {}
-interface ChartState {data:any, spinner: boolean, timeStamp:any, query:any}
+interface ChartState {data:any, spinner: boolean, timeStamp:any}
  
 class HistoricPage extends Component <ChartProps, ChartState>  {
 
@@ -20,43 +16,53 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     this.state = {
        data: {},
        spinner: true,
-       timeStamp : "",
-       query: "",
-       
+       timeStamp : ""
     }
   }
 
   componentDidMount() {
     this.getChartData();
     this.currentDate();
-    // this.postData();
   }
   
-    // postData = async () => {
-    //   const myapi = new API();
-    //   const dataThrow : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history")
-    //   try {
-    //     this.state.timeStamp;
-    //     console.log(dataThrow);
-    //   }catch(e){
-    //     console.log(e);
-    //   }
-    // }
 
+  // Post Call to get the chart Values, we send the timestamp created when the component did  mount
 
    getChartData = async () => {
 
     const myapi = new API();
-    const response : Array<ChartData> = await myapi.doGetwithParams("/nrrm-ripple/grade-history");
+    const response : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history/getFilterGradesbyYear",
+  
+    );
+
     try {
       console.log(response);
+
+      const months = {
+        '00': 'ENE',
+        '01': 'FEB',
+        '02': 'MAR',
+        '03': 'ABR',
+        '04': 'MAY',
+        '05': 'JUN',
+        '06': 'JUL',
+        '07': 'AGO',
+        '08': 'SEP',
+        '09': 'OCT',
+        '10': 'NOV',
+        '11': 'DIC',
+      };
 
       let labelsArray:any = [];
       let valuesArray:any = [];
 
       response.forEach(element => {
-        labelsArray.push(element.timestamp.slice(0,10));
-        valuesArray.push(parseFloat(element.totalPercentage));
+        let auxdate = new Date(element.timestamp);
+        let auxmonth = auxdate.getMonth().toString().length == 1 ? '0'+ auxdate.getMonth().toString() : auxdate.getMonth().toString();
+        let auxyear = ' ' + auxdate.getFullYear().toString();
+        
+        labelsArray.push([(months as any)[auxmonth], auxyear]);
+        valuesArray.push(Math.round(parseFloat(element.totalPercentage) * 100));
       });
 
       const graphData = {
@@ -64,10 +70,10 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
           labels: labelsArray,
           datasets: [
             {
-              label: 'Values',
+              label: '% ',
               data: valuesArray,
               backgroundColor: [
-                'rgba(128,194,66, 0.9)' 
+                'rgba(128,194,66, 0.7)' 
               ]
             }
           ]
@@ -85,8 +91,6 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
   }
 
  
-  
-  
   currentDate = () => {
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -96,15 +100,12 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
         ...this.state,
         timeStamp: dateTime,
       })     
-      console.log(dateTime);
-      console.log(this.state.timeStamp);
-      
+      console.log('Date time', dateTime);
+      console.log('State timestamp', this.state.timeStamp);
   }
 
   render() {
-
     return (
-        
         <IonPage>
           <IonHeader>
             <IonToolbar>

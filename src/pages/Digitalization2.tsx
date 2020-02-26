@@ -1,29 +1,23 @@
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonRow, IonPage, IonTitle, IonToolbar,IonItem , IonLoading, IonCard, IonCardSubtitle, IonCardHeader, IonCardContent, IonCardTitle, IonCol } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-
 import DigitalizationChart2 from '../components/DigitalizationChart2'
-
 import API from '../utils/httpUtils';
 import { RippleIndicator, RippleIndicatorInfo, GraphDataChartBar } from '../declarations';
-import BarChartSubIndicators from './BarChartSubIndicators';
-import { number } from 'prop-types';
 
 
 
 type Props = { props:any };
 
-
 //Function Component Definition
 const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
-  
-  
   const myapi = new API(Params);
   const [showLoading, setShowLoading] = useState(true);
 
   const [dataOrigen, setDataOrigen] = useState<RippleIndicator>(null);
   const [graphData, setGraphData] = useState<GraphDataChartBar>(null);
+
 
     const loadData = async ()=>{
       try{
@@ -42,12 +36,8 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
               console.log(indicator);
               indicator.indicators.forEach((element:RippleIndicator, index:number) => {
-                // labelsArray.push(element.description);
-                numberLabels.push((index+1).toString());
-                
+                numberLabels.push((index+1).toString());                
                 valuesArray.push(element.percentage*100);
-                
-                
               });
 
               const graphData: GraphDataChartBar = {        
@@ -57,7 +47,7 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
                     label: 'Values',
                     data: valuesArray,
                     backgroundColor: [
-                      'rgba(128,194,66, 0.9)' 
+                      'rgba(128,194,66, 0.7)' 
                     ]
                   }
                 ]
@@ -74,12 +64,10 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
       }   
     }
 
-
   useEffect(() => {
     loadData();
  }, [Params,dataOrigen]);
 
- 
 
   return (
     
@@ -104,7 +92,5 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
 </IonPage>
   );
 };
-
-
 
 export default withRouter(Digitalization2);

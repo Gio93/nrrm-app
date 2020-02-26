@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import './Chart.css'
 import {
-    IonCard
+    IonCard, 
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle
 } from '@ionic/react';
 
 
@@ -36,40 +39,9 @@ export class Chart extends Component<any, State> {
     }
 
 
-    // componentDidUpdate() {
-    //     this.setState({
-    //         data: {...this.props.data}
-    //     })
-    //     console.log(this.state.data)
-    // }
-
- 
-
     pocData(){  
         console.log(this.state.data);
     }
-
-    
-
-
-    // Aqui obtenemos el valor maximo y el minimo de historical Data Chart 
-    // ---> topValue()
-    // ---> lowValue()
-
-    // topValue() {
-    //     let topV = (this.props.data.datasets[0].data)
-    //     .sort();
-    //     // topV.sort((a, b) => (a.topV > b.topV) ? 1 : (a.topV === b.topV) ? ((a.topV > b.topV) ? 1 : -1) : -1 )
-    //     console.log(topV[0])
-    // }
-
-    // lowValue() {
-    //     let lowV = (this.props.data.datasets[0].data)
-    //     .sort(-1);
-    //     // topV.sort((a, b) => (a.topV > b.topV) ? 1 : (a.topV === b.topV) ? ((a.topV > b.topV) ? 1 : -1) : -1 )
-    //     console.log(lowV[0])
-    //     console.log("YEEEEEEEEEEEEE")
-    // }
 
     
     render() {
@@ -78,7 +50,17 @@ export class Chart extends Component<any, State> {
         console.log("tengo datos??")
         return (
             <div className="chart">
-                <IonCard>
+                <IonCard className="ion-activatable">
+
+                    <IonCardHeader>
+                        <IonCardSubtitle>
+                            Historical digitalization grade
+                        </IonCardSubtitle>
+                        <IonCardTitle class="totalPercentage important" color="success">
+                                Evolution grade
+                            </IonCardTitle>
+
+                    </IonCardHeader>
                     <div className="contentChart2">
                         {this.props.data ? 
                             <Line
@@ -89,15 +71,23 @@ export class Chart extends Component<any, State> {
                                     layout: {
                                         padding: {
                                             left: 5,
-                                            right: 40,
-                                            top: 40,
-                                            bottom: 5
+                                            right: 25,
+                                            top: 60,
+                                            bottom: 40
                                         }
+                                    },
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+                                                max: 100
+                                            }
+                                        }]
                                     },
                                     title: {
                                         display: false,
                                         text: 'Report from' + this.props.title,
-                                        fontSize: 30,
+                                        fontSize: 60,
                                         position: 'top',
                                         fontStyle: 'regular',
                                         padding: 12
@@ -105,8 +95,11 @@ export class Chart extends Component<any, State> {
                                     legend: {
                                         display: this.props.displayLegend,
                                         position: this.props.legendPosition,
+                                        align: "center",
+                                        fullWidth: true,
                                         labels: {
-                                            fontSize: 16,
+                                            fontColor: "rgba(255, 0 , 0 , 0.9)",
+                                            fontSize: 40,
                                             fontStyle: 'regular'
                                         }
 

@@ -61,9 +61,7 @@ getDate() {
   let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   let dateTime = date+' '+time;
   console.log(dateTime);
-   return {
-    "fecha_fin":{dateTime}
-   }       
+   return dateTime.toString();      
 }
 
  doGet(url){
@@ -93,7 +91,7 @@ doGetwithParams(url){
       url: CONFIG.API_ENDPOINT+url,
       method: 'get',
       params: {
-        fecha_fin: this.getDate()
+        fecha_fin: ""+this.getDate()+""
       }
     }).then(response => {
       console.log(response);
@@ -115,8 +113,9 @@ doPostwithParams(url){
       // body: this.getDate(),
       url: CONFIG.API_ENDPOINT+url,
       method: 'post',
-      params: {
-        fecha_fin: this.getDate()
+      // data: data,
+      data: {
+        frontDate: ""+this.getDate()+""
       }
     }).then(response => {
       console.log(response);
