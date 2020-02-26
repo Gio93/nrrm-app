@@ -4,6 +4,10 @@
     font-weight: 700;
 }
 
+.total-percentage.total-percentage--small {
+    font-size: 28px;
+}
+
 .graphic path {
     stroke-width: 0;
 }
@@ -27,24 +31,6 @@
         display: block;
         position: relative;
         padding-left: 50%;
-        margin-bottom: -5vw;
-    }
-}
-
-@media(min-width: 992px) {
-    ion-card.graph-card ion-card-header {
-        margin-bottom: -7.5vw;
-    }
-}
-
-@media(min-width: 1200px) {
-    ion-card.graph-card ion-card-header {
-        margin-bottom: -4.5vw;
-    }
-}
-
-@media(max-width: 767px) {
-    ion-card.graph-card ion-card-header {
-        margin-bottom: 0;
+        margin-bottom: -2.5vw;
     }
 }

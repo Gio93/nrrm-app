@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import './DigitalizationChart2.css'
 import { IonCardSubtitle, IonItem, IonText, IonButton, IonLabel, IonIcon, IonAlert } from '@ionic/react';
 import { GraphDataChartBar, RippleIndicator } from '../declarations';
 import {
@@ -64,14 +63,10 @@ export class DigitalionChart2 extends Component<any, State> {
 
 
     listItems(){
-         if(this.state.indicator && this.state.indicator.indicators)
-        {
+        if(this.state.indicator && this.state.indicator.indicators) {
             return (
-            
                 <IonList>
-                {
-                    this.state.indicator.indicators.map((item:any, i:any) =>
-                    {   
+                    {this.state.indicator.indicators.map((item:any, i:any) => {   
                         return (
                             <IonItem class="item item-text-wrap item-graph" 
                                 key={i} 
@@ -81,143 +76,140 @@ export class DigitalionChart2 extends Component<any, State> {
                                         {i+1}.&nbsp;{item.alias}
                                     </strong>
                                 </IonText>
-                                    
                                 <IonButton 
                                     onClick={() => {
-                                                      this.setState({showAlert: true});
-                                                      this.setState({alerMessage: item.name});
-                                                      console.log(this.state.showAlert);
-                                                   }
-                                            } 
+                                        this.setState({showAlert: true});
+                                        this.setState({alerMessage: item.name});
+                                        console.log(this.state.showAlert);
+                                    }}
                                     slot="end" 
                                     fill="clear"
                                     size="default"
-                                    class="info">
+                                    class="info"
+                                >
                                     <IonLabel color="success" mode="ios">
                                         { Math.round((item.percentage*100 + Number.EPSILON) * 100) / 100}%
                                     </IonLabel>
-                                    <IonIcon icon={informationCircleOutline} mode="ios" color="success" size="small" slot="end">
-                                        {/*  */}
-                                    </IonIcon>
+                                    <IonIcon 
+                                        icon={informationCircleOutline} 
+                                        mode="ios" 
+                                        color="success" 
+                                        size="small" 
+                                        slot="end"
+                                    ></IonIcon>
                                 </IonButton>
                             </IonItem>
                         );
-                    })
-                }
-                {this.props.handlerSpinner(false)}
+                    })}
+                    {this.props.handlerSpinner(false)}
                 </IonList>
-                 
             );
-            
         }
     }
 
-    
     render() {
         return (      
-            <div className="chart">
-                <IonCard className="ion-activatable">
+            <div>
+                <IonCard className="graph-card">
                     <IonCardHeader>
                         <IonCardSubtitle>
                             {this.state.indicator? this.state.indicator.name : null} indicators
                         </IonCardSubtitle>
-                        <IonCardTitle color="success">
+                        <IonCardTitle className="total-percentage total-percentage--small">
                             {this.state.indicator? this.state.indicator.percentage*100 +'%': null}
                         </IonCardTitle>
                     </IonCardHeader>
-
-                        <div className="contentChart2">
-                            {this.state.data ? 
-                                <Bar
-                                    data={this.state.data}
-                                    options={{
-                                        responsive: true,
-                                        maintainAspectRatio: false,
-                                        layout: {
-                                            padding: {
-                                                left: 5,
-                                                right: 40,
-                                                top: 40,
-                                                bottom: 5
-                                            }
-                                        },
-                                        title: {
-                                            display: false,
-                                            // text: 'Report from' + this.state.indicator.name,
-                                            fontSize: 30,
-                                            position: 'top',
-                                            fontStyle: 'regular',
-                                            padding: 12
-                                        },
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    beginAtZero: true,
-                                                    max: 100
-                                                }
-                                            }],
-                                            xAxes: [{
-                                                ticks: {
-                                                    beginAtZero: true,
-     
-                                                }
-                                            }]
-                                        },
-                                        legend: {
-                                            display: this.props.displayLegend,
-                                            position: this.props.legendPosition,
-                                            labels: {
-                                                fontSize: 16,
-                                                fontStyle: 'regular'
-                                            }
-
-                                        },
-                                        tooltips: {
-                                            enabled: true,
-                                            mode: 'nearest',
-                                            backgroundColor: "rgba(224, 232, 216,1)",
-                                            titleFontSize: 16,
-                                            titleFontColor: "rgba(117, 93, 96, 1)",  
-                                            borderColor: "rgba(184, 204, 189, 1)",  
-                                            borderWidth: 0.7,
-                                            footerFontSize: 22, 
-                                            footerFontColor: "rgba(117, 93, 96, 1)",  
-                                            footerAlign: 'right',    
-                                            bodyFontSize: 18,
-                                            bodyFontColor: "rgba(117, 93, 96, 1)",  
-                                            caretSize: 10,
-                                            yPadding: 10,
-                                            xPadding: 10,
-                                        },
-                                        elements: {
-                                            line: {
-                                                tension: 0.4,
-                                                borderColor: "rgba(32, 156, 56)",
-                                                borderWidth: 1,
-                                                borderCapStyle: "square"
-                                            },
-                                            point: {
-                                                backgroundColor: "rgba(14, 128, 37, 1)",
-                                                radius: 2,
-                                                hitRadius: 4,
-                                            }
-                                        }
-                                    }}
-                                />   : null}
-                                
-                        </div>
-                        <IonCardContent>
+                    <IonCardContent>
                         <IonGrid>
-                    
                             <IonRow class="ion-align-items-center">
-                            <IonCol class="ion-float-left ">
-                            {
-                                this.listItems()
-                            }
-                            </IonCol>
+                                <IonCol size-lg="5" size-md="6" size="12" class="ion-align-items-center">
+                                    <div className="contentChart2">
+                                        {this.state.data ? 
+                                            <Bar
+                                                data={this.state.data}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    layout: {
+                                                        padding: {
+                                                            left: 5,
+                                                            right: 40,
+                                                            top: 40,
+                                                            bottom: 5
+                                                        }
+                                                    },
+                                                    title: {
+                                                        display: false,
+                                                        // text: 'Report from' + this.state.indicator.name,
+                                                        fontSize: 30,
+                                                        position: 'top',
+                                                        fontStyle: 'regular',
+                                                        padding: 12
+                                                    },
+                                                    scales: {
+                                                        yAxes: [{
+                                                            ticks: {
+                                                                beginAtZero: true,
+                                                                max: 100
+                                                            }
+                                                        }],
+                                                        xAxes: [{
+                                                            ticks: {
+                                                                beginAtZero: true,
+                
+                                                            }
+                                                        }]
+                                                    },
+                                                    legend: {
+                                                        display: this.props.displayLegend,
+                                                        position: this.props.legendPosition,
+                                                        labels: {
+                                                            fontSize: 16,
+                                                            fontStyle: 'regular'
+                                                        }
+
+                                                    },
+                                                    tooltips: {
+                                                        enabled: true,
+                                                        mode: 'nearest',
+                                                        backgroundColor: "rgba(224, 232, 216,1)",
+                                                        titleFontSize: 16,
+                                                        titleFontColor: "rgba(117, 93, 96, 1)",  
+                                                        borderColor: "rgba(184, 204, 189, 1)",  
+                                                        borderWidth: 0.7,
+                                                        footerFontSize: 22, 
+                                                        footerFontColor: "rgba(117, 93, 96, 1)",  
+                                                        footerAlign: 'right',    
+                                                        bodyFontSize: 18,
+                                                        bodyFontColor: "rgba(117, 93, 96, 1)",  
+                                                        caretSize: 10,
+                                                        yPadding: 10,
+                                                        xPadding: 10,
+                                                    },
+                                                    elements: {
+                                                        line: {
+                                                            tension: 0.4,
+                                                            borderColor: "rgba(32, 156, 56)",
+                                                            borderWidth: 1,
+                                                            borderCapStyle: "square"
+                                                        },
+                                                        point: {
+                                                            backgroundColor: "rgba(14, 128, 37, 1)",
+                                                            radius: 2,
+                                                            hitRadius: 4,
+                                                        }
+                                                    }
+                                                }}
+                                            />   : null}
+                                            
+                                    </div>
+                                </IonCol>
+                                <IonCol size-lg="6" offset-lg="1" size-md="6" offset-md="0" size="12" class="ion-float-left">
+                                    {this.listItems()}
+                                </IonCol>
                             </IonRow>
-                            </IonGrid>
-                        </IonCardContent>
+                        </IonGrid>
+                    </IonCardContent>
                 </IonCard>
             <IonAlert
                 isOpen={this.state.showAlert}

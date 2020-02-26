@@ -39,9 +39,8 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
               // labelsArray.push(element.description);
               numberLabels.push((index+1).toString());
               
-              valuesArray.push(element.percentage*100);
+              valuesArray.push(Math.round(element.percentage * 100));
               backgroundColors.push('rgba(128,194,66, 0.9)');
-              
             });
 
             const graphData: GraphDataChartBar = {        
@@ -81,24 +80,24 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
   return (
     
   <IonPage>
-  <IonHeader>
-    <IonToolbar>
-    <IonButtons slot="start">
-      <IonBackButton  defaultHref="/dgrade/"/>
-    </IonButtons>
-  <IonTitle>{dataOrigen != null ? dataOrigen.name : null}</IonTitle>
-    </IonToolbar>
-  </IonHeader>
-  <IonContent>
-  <IonLoading
-          isOpen={showLoading}
-          // onDidDismiss={() => setShowLoading(false)}
-          message={'Loading...'}
-          // duration={5000}
-        />
-    {graphData && dataOrigen? <DigitalizationChart2 data={graphData} indicator={dataOrigen} handlerSpinner={handlerSpinner}  /> : null }
-  </IonContent>
-</IonPage>
+      <IonHeader>
+          <IonToolbar>
+              <IonButtons slot="start">
+                <IonBackButton  defaultHref="/dgrade/"/>
+              </IonButtons>
+              <IonTitle>{dataOrigen != null ? dataOrigen.name : null}</IonTitle>
+          </IonToolbar>
+      </IonHeader>
+      <IonContent>
+          <IonLoading
+                  isOpen={showLoading}
+                  // onDidDismiss={() => setShowLoading(false)}
+                  message={'Loading...'}
+                  // duration={5000}
+                />
+          {graphData && dataOrigen? <DigitalizationChart2 data={graphData} indicator={dataOrigen} handlerSpinner={handlerSpinner}  /> : null }
+      </IonContent>
+  </IonPage>
   
   );
 };
