@@ -224,11 +224,7 @@ class DigitalizationChart extends React.Component<any, State>{
                                     {this.percentageGrade + '%'}
                                 </IonCardTitle>
                             </div>
-                            <div>
-                                <IonToolbar>
-                                    <IonButton routerLink="/historicalChart">Go historic</IonButton>
-                                </IonToolbar>
-                            </div>
+                           
                         </div>
                     </IonCardHeader>
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import './Chart.css'
+import './DigitalizationChart2.css'
 import { IonCardSubtitle, IonItem, IonText, IonButton, IonLabel, IonIcon, IonAlert } from '@ionic/react';
 import { GraphDataChartBar, RippleIndicator } from '../declarations';
 import {
@@ -25,11 +25,10 @@ export class DigitalionChart2 extends Component<any, State> {
             data: null,
             indicator: null,
             showAlert: false,
-            alerMessage: "",
-            // dataOrigen: {}
-        }
-        
+            alerMessage: ""
+        }      
     }
+
     static defaultProps = {
         displayTitle: true,
         displayLegend: false,
@@ -113,10 +112,9 @@ export class DigitalionChart2 extends Component<any, State> {
         }
     }
 
-
+    
     render() {
-        return (
-            
+        return (      
             <div className="chart">
                 <IonCard className="ion-activatable">
                     <IonCardHeader>
@@ -150,6 +148,20 @@ export class DigitalionChart2 extends Component<any, State> {
                                             position: 'top',
                                             fontStyle: 'regular',
                                             padding: 12
+                                        },
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    max: 100
+                                                }
+                                            }],
+                                            xAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true,
+     
+                                                }
+                                            }]
                                         },
                                         legend: {
                                             display: this.props.displayLegend,

@@ -1,7 +1,6 @@
 import { IonButtons, IonContent, IonHeader, IonPage, IonTitle, IonToolbar,IonLoading, IonBackButton } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-
 import DigitalizationChart2 from '../components/DigitalizationChart2'
 
 import { RippleIndicator, GraphDataChartBar } from '../declarations';
@@ -9,7 +8,6 @@ import { RippleIndicator, GraphDataChartBar } from '../declarations';
 
 
 type Props = { props:any };
-
 
 //Function Component Definition
 const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
@@ -79,7 +77,6 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
     
  }, []);
 
- 
 
   return (
     
@@ -105,7 +102,5 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
   
   );
 };
-
-
 
 export default withRouter(Digitalization2);
