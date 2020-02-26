@@ -8,62 +8,51 @@ import API from '../utils/httpUtils';
 import { RippleIndicator, RippleIndicatorInfo } from '../declarations';
 
 
-
 type Props = { props:any };
-
 
 //Function Component Definition
 const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) => {
   
   const myapi = new API(Params);
   const [showLoading, setShowLoading] = useState(true);
-
   const [data1, setData1] = useState<Array<RippleIndicatorInfo>>(null);
   const [dataOrigen, setDataOrigen] = useState<Array<RippleIndicator>>(null);
 
-    const loadData= async ()=>{
-      try{
-        setShowLoading(true);
-        const response: Array<RippleIndicator> = await myapi.doGet("/nrrm-ripple/indicator");
-        indicatorGroups(response);
-      }catch (e) {
-        console.log(e);
-        setData1(null);
-      }
-      
+  const loadData = async() => {
+    try {
+      setShowLoading(true);
+      const response: Array<RippleIndicator> = await myapi.doGet("/nrrm-ripple/indicator");
+      indicatorGroups(response);
+    } catch (e) {
+      console.log(e);
+      setData1(null);
     }
+  }
 
-    const indicatorGroups = (data:Array<RippleIndicator>)=>{
-      let CoreData: Array<RippleIndicatorInfo> = [];
-      let dataFormat:any;
-    
-      if(!data) return;
-      for(let i=0; i < data.length; i++){
-        if(data[i].indicators.length>0){
-          CoreData.push({
-            State:data[i].alias,
-            current: data[i].percentage * 100,
-            remainder: 100 - (data[i].percentage * 100),
-            total: 100
-          });
-        }
+  const indicatorGroups = (data:Array<RippleIndicator>) => {
+    let CoreData: Array<RippleIndicatorInfo> = [];
+    let dataFormat:any;
+  
+    if(!data) return;
+    for(let i=0; i < data.length; i++){
+      if(data[i].indicators.length>0){
+        CoreData.push({
+          State:data[i].alias,
+          current: data[i].percentage * 100,
+          remainder: 100 - (data[i].percentage * 100),
+          total: 100
+        });
       }
-      console.log('Loaded core data', CoreData);
-
-     dataFormat = [...CoreData];
-     dataFormat.columns =["State", "current" ,"remainder"];
-
-    //  dataFormat = [...dataProof];
-    //  dataFormat.columns =["State", "current" ,"remainder"];
-
-      setShowLoading(false);
-      setData1(dataFormat);
-      setDataOrigen(data);
     }
+    console.log('Loaded core data', CoreData);
 
+    dataFormat = [...CoreData];
+    dataFormat.columns =["State", "current" ,"remainder"];
 
-
-
+    setShowLoading(false);
+    setData1(dataFormat);
+    setDataOrigen(data);
+  }
 
 
   // https://es.reactjs.org/docs/hooks-reference.html
@@ -75,31 +64,33 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
   //hook que se lanza al cargar el componente en pantalla
   useEffect(() => {
     loadData();
- }, []);
+  }, []);
 
   return (
     <IonPage>
       <IonHeader>
+
         <IonToolbar>
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
           <IonTitle>Digitalization Grade</IonTitle>
         </IonToolbar>
+
       </IonHeader>
       <IonContent>
-      <IonLoading
-              isOpen={showLoading}
-              onDidDismiss={() => setShowLoading(false)}
-              message={'Loading...'}
-              duration={5000}
-            />
+
+        <IonLoading
+          isOpen={showLoading}
+          onDidDismiss={() => setShowLoading(false)}
+          message={'Loading...'}
+          duration={5000}
+        />
         <DigitalizationChart data={data1} dataOrigen={dataOrigen} />
+
       </IonContent>
     </IonPage>
   );
 };
-
-
 
 export default DigitalizationGrade;

@@ -236,7 +236,7 @@ const ListItems = (data: any[] & any) => {
       console.log("navigate!");
       history2.push("/ripple/"+x.uuid);
     }
-    //debugger;
+    ////debugger;
     return (
       <IonCol size="12" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="3" key={x.id}>
       

@@ -31,11 +31,10 @@ class DigitalizationChart extends React.Component<any, State>{
     }
 
 
-
-
     componentDidMount() {
         //this.createRadialStackedBarChart()
     }
+
     componentDidUpdate() {
         if (this.props.data && this.props.dataOrigen && this.rendering) {
             this.createRadialStackedBarChart();
@@ -43,18 +42,12 @@ class DigitalizationChart extends React.Component<any, State>{
         }
     }
 
-    // navigationtoIndicatorDetail(item: RippleIndicator) {
-    //     this.props.history.push('/indicators/' + item.id, item);
-    // }
+
     navigationtoIndicatorDetail(item: RippleIndicator) {
         this.props.history.push('/dgrade2/' + item.id, item);
     }
 
-
-
-
     createRadialStackedBarChart() {
-
 
         let svg = select(this.ref.current)
             .attr("viewBox", `${-this.width / 2} ${-this.height / 2} ${this.width} ${this.height}`)
@@ -91,9 +84,9 @@ class DigitalizationChart extends React.Component<any, State>{
                 .data(this.props.data)
                 .join("g")
                 .attr("transform", (d: any) => `
-                rotate(${((x(d.State) + x.bandwidth() / 2) * 180 / Math.PI - 90)})
-                translate(${this.innerRadius},0)
-            `)
+                    rotate(${((x(d.State) + x.bandwidth() / 2) * 180 / Math.PI - 90)})
+                    translate(${this.innerRadius},0)
+                `)
                 .call((g: any) => g.append("line")
                     .attr("x2", -5)
                     .attr("stroke", "#FFF"))
@@ -121,7 +114,7 @@ class DigitalizationChart extends React.Component<any, State>{
                 .call((g: any) => g.append("text")
                     .attr("y", (d: any) => -y(d))
                     .attr("dy", "0.85em")
-                    .attr("stroke", "#fff")
+                    .attr("stroke", "#FFF")
                     .attr("stroke-width", 5)
                     .text(y.tickFormat(5, "s"))
                     .clone(true)
@@ -165,86 +158,70 @@ class DigitalizationChart extends React.Component<any, State>{
         if (this.props.dataOrigen) {
             return (
                 <IonList>
-                    {
-                        this.props.dataOrigen.map((item: RippleIndicator, i: any) => {
-                            return (
-                                <IonItem class="item item-text-wrap item-graph"
-                                    key={i}
-
+                    {this.props.dataOrigen.map((item: RippleIndicator, i: any) => {
+                        return (
+                            <IonItem class="item-graph"
+                                key={i}
+                            >
+                                <IonText>
+                                    <strong>
+                                        {item.name}
+                                    </strong>
+                                </IonText>
+                                <IonButton
+                                    onClick={() => this.navigationtoIndicatorDetail(item)}
+                                    slot="end"
+                                    fill="clear"
+                                    size="default"
+                                    class="info"
                                 >
-                                    <IonText>
-                                        <strong>
-                                            {item.name}
-                                        </strong>
-                                    </IonText>
-
-                                    <IonButton
-                                        onClick=
-                                        {
-                                            () =>
-                                                this.navigationtoIndicatorDetail(item)
-                                        }
+                                    <IonLabel color="success" mode="ios">
+                                        {Math.round((item.percentage * 100 + Number.EPSILON) * 100) / 100}%
+                                    </IonLabel>
+                                    <IonIcon 
+                                        icon={arrowForward}
+                                        mode="ios" 
+                                        color="success" 
+                                        size="medium" 
                                         slot="end"
-                                        fill="clear"
-                                        size="default"
-                                        class="info">
-                                        <IonLabel color="success" mode="ios">
-                                            {Math.round((item.percentage * 100 + Number.EPSILON) * 100) / 100}%
-                                </IonLabel>
-                                        <IonIcon icon={arrowForward} mode="ios" color="success" size="medium" slot="end">
-                                            {/*  */}
-                                        </IonIcon>
-                                    </IonButton>
-                                </IonItem>
-                            );
-                        })
-                    }
+                                    ></IonIcon>
+                                </IonButton>
+                            </IonItem>
+                        );
+                    })}
                 </IonList>
             );
         }
-
     }
 
     render() {
         return (
             <div>
-                <IonCard className="ion-activatable">
-                    
-
+                <IonCard className="graph-card">
                     <IonCardHeader>
-                        <div className="container">
-                            <div>
-                                <IonCardSubtitle>
-                                    Digitalization grade
+                        <IonCardSubtitle>
+                            Digitalization grade
                         </IonCardSubtitle>
-                                {
-                                    this.searchGradePercentage()
-                                }
-                                <IonCardTitle class="totalPercentage important" color="success">
-                                    {this.percentageGrade + '%'}
-                                </IonCardTitle>
-                            </div>
-                           
-                        </div>
+                        <IonCardTitle class="total-percentage">
+                            {this.searchGradePercentage()}
+                            {this.percentageGrade + '%'}
+                        </IonCardTitle>
                     </IonCardHeader>
-
                     <IonCardContent>
-
                         <IonGrid>
-                            <IonRow>
-                                <IonCol class="ion-align-items-center">
+                            <IonRow class="ion-align-items-center">
+                                <IonCol size-md="5" size="12" class="ion-align-items-center">
                                     <div>
-                                        <svg ref={this.ref}
-                                            width={this.width} height={this.height}>
+                                        <svg 
+                                            ref={this.ref}
+                                            width={this.width} 
+                                            height={this.height}
+                                        >
                                         </svg>
                                     </div>
                                 </IonCol>
-                            </IonRow>
-                            <IonRow class="ion-align-items-center">
-                                <IonCol class="ion-float-left ">
-                                    {
-                                        this.listItems()
-                                    }
+                                <IonCol size-md="6" offset-md="1" size="12" class="ion-float-left">
+                                    {this.listItems()}
                                 </IonCol>
                             </IonRow>
                         </IonGrid>

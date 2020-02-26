@@ -169,7 +169,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
         onIonScrollStart={() => {}}
         onIonScroll={(e) => {
           try {
-            //debugger;
+            ////debugger;
             let y = e.detail.scrollTop;
             let lowerDistance = 0;
             let lowerDistanceElement = "";
@@ -189,7 +189,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             }
             
             setIonSelectedSegmentKey(lowerDistanceElement);
-            //debugger;
+            ////debugger;
             let segmentButton:HTMLIonContentElement = document.querySelector('ion-segment.rippleSegment');
             let segmentButtonSelected:HTMLIonContentElement = document.querySelector('ion-segment-button.'+lowerDistanceElement);
             segmentButton.scrollTo(segmentButtonSelected.offsetLeft,0);

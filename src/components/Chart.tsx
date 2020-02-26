@@ -28,26 +28,12 @@ export class Chart extends Component<any, State> {
     }
 
     componentDidMount() {
-        const data = this.state.data;
-        this.setState({data})
-        // this.setState({
-        //     data: {...this.props.data}
-        // })
-        console.log(this.state.data);
-        console.log(this.props.data);
-        console.log("EEEEEOOOOOOO");
+        const data = this.props.data;
+        this.setState({data:data})
+        this.props.handlerSpinner(false);
     }
-
-
-    pocData(){  
-        console.log(this.state.data);
-    }
-
     
     render() {
-        console.log(this.props.data)
-        console.log(this.state.data)
-        console.log("tengo datos??")
         return (
             <div className="chart">
                 <IonCard className="ion-activatable">
@@ -139,7 +125,6 @@ export class Chart extends Component<any, State> {
 
                     </div>
                 </IonCard>
-            {this.props.data.datasets ? this.pocData() : null}
             </div>
         )
     }

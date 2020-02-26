@@ -17,7 +17,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
     super(props);
     //this.ref = useRef(null);
     console.debug("constructor");
-    //debugger;
+    ////debugger;
     this.state = {
       data: props.data
     };
@@ -34,7 +34,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
     console.debug("componentDidMount::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     setTimeout(() => {
       console.debug("Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientHeight);
-      //debugger;
+      ////debugger;
       if(this.ref.current.clientHeight+this.ref.current.clientHeight>0){
         this.paintDiagram();
       }
@@ -74,7 +74,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
   getNodeTemplate(node:any){
     let border = this.getBorderColorForType(node.data.type);
     let color= this.getColorForType(node.data.type);
-    //debugger;
+    ////debugger;
     return `<div 
               class='nodeBox' 
               style='cursor:pointer;
@@ -122,7 +122,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
         //   Call father onClickNode
         //   this.props.onClickNode(nodeData);
         // }
-        // debugger;
+        // //debugger;
         // this.removeChildrenFromParent(nodeData.data.id,[]);
         // while(let found = this.state.data.findIndex((a)=>a.father===nodeData.data.id)!==-1){
         //   this.state.data.splice(found,1);
@@ -209,11 +209,11 @@ class RippleRoadDiagram extends React.Component<any,State>{
     if(!this.myTree || !this.state.data) return;
     // Display the tree based on the data
     this.myTree.refresh(this.state.data);
-    //debugger;
+    ////debugger;
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
-   // debugger;
+   // //debugger;
     console.debug("componentDidUpdate::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     if(prevState.data!== this.props.data){
       if(this.props.data)this.setState({data:this.props.data});

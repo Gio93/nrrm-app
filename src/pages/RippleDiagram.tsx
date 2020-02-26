@@ -43,7 +43,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       myapi.doGet("/nrrm-ripple/ripple").then(data => {
         setShowLoading(false);
         setFilterData(data);
-        //debugger;
+        ////debugger;
         return flatterDataSet(data);
       });
     }
@@ -70,7 +70,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     const loadAdvancedFilteredData=()=>{
         setShowLoading(true);
         if(!data)return;
-        //debugger;
+        ////debugger;
         data.forEach((singleData)=>{
           if(aFilters.length===0) {
             singleData.highlighted=false;

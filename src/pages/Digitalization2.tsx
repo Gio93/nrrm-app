@@ -86,7 +86,7 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
     <IonButtons slot="start">
       <IonBackButton  defaultHref="/dgrade/"/>
     </IonButtons>
-      <IonTitle>Digitalization Grade</IonTitle>
+  <IonTitle>{dataOrigen != null ? dataOrigen.name : null}</IonTitle>
     </IonToolbar>
   </IonHeader>
   <IonContent>

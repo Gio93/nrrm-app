@@ -28,16 +28,16 @@
 }
 
 .legend__item--one {
-    border-color: #FFB107 !important;
-    background-color: #FFC107;
+    border-color: var(--tech-yellow) !important;
+    background-color: var(--tech-yellow);
 }
 
 .legend__item--two {
-    border-color: #8BA34A !important;
-    background-color: #8BC34A;
+    border-color: var(--tech-green) !important;
+    background-color: var(--tech-green);
 }
 
 .legend__item--three {
-    border-color: #009CD4 !important;
-    background-color: #00BCD4;
+    border-color: var(--tech-blue) !important;
+    background-color: var(--tech-blue);
 }

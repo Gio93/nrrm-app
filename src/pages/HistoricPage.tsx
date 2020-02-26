@@ -16,8 +16,10 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     this.state = {
        data: {},
        spinner: true,
-       timeStamp : ""
+       timeStamp : "",
     }
+
+    this.handlerSpinner = this.handlerSpinner.bind(this);
   }
 
   componentDidMount() {
@@ -104,6 +106,13 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
       console.log('State timestamp', this.state.timeStamp);
   }
 
+  
+  handlerSpinner(control:boolean){
+    //debugger;
+    this.setState({
+      spinner: control});
+  }
+
   render() {
     return (
         <IonPage>
@@ -120,16 +129,14 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
               isOpen={this.state.spinner}
               onDidDismiss={() => this.setState({spinner:false})}
               message={'Loading...'}
-              duration={5000}
+              duration={2000}
             />
           {this.state.data ?
             <Chart
               data={this.state.data} location="Madrid" legendPosition="bottom" 
-              /> : null}
+              handlerSpinner={this.handlerSpinner} /> : null}
           </IonContent>  
         </IonPage>
-      
-
     )
   } 
 }
