@@ -32,13 +32,10 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
   }
   event: Event;
 
-
-
   updateUserName = (event: any) => {
     this.setState({ username: event.detail.value });
     
   };
-
 
   updatePassword = (event: any) => {
     this.setState({ password: event.detail.value });
@@ -47,21 +44,19 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
   updateEmail = (event: any) => {
     this.setState({ email: event.detail.value });
   };
+  
   toggleAction = () => {
     this.state.action === 'Login' ? this.setState({action: 'SignUp'}) : this.setState({action: 'Login'})
   }
+
   componentDidMount(){
-    
     this.clearCredentials();
   
-  
     this.props.history.listen((location, action) => {
-    if(location.pathname === "/login"){
-      this.clearCredentials();
-    }
-})
-    
-
+      if(location.pathname === "/login"){
+        this.clearCredentials();
+      }
+    })
   }
 
   clearCredentials(){
@@ -71,9 +66,9 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     });
     window.dispatchEvent(this.event);   
     localStorage.removeItem("token");       
-            localStorage.removeItem("username");
-            localStorage.removeItem("isLogin");
-            localStorage.removeItem("email");
+    localStorage.removeItem("username");
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("email");
   }
 
   login2= () => {
@@ -94,12 +89,9 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     if(this.state.action  === 'Login'){
       url = CONFIG.API_ENDPOINT + '/admin/auth';
       credentials = {
-        
           "username": this.state.email,
           "password": this.state.password
-      
       }
-
     } else {
       url = CONFIG.API_ENDPOINT + '/auth';
       credentials = {
@@ -107,101 +99,90 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
           "email": this.state.email,
           "password": this.state.password,
           "username": this.state.username
-      }
+        }
       }
     }
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",              
-            },
-            body: JSON.stringify(credentials)
 
-        })
-        .then((res) => {
-          // TO DO : real login
-          if(res.status === 200 || res.status === 201){
-            return res.json();
-          } else {  
-            if(this.state.action === 'SignUp') {
-              throw new Error("Error creating user");
-            } else {
-              throw new Error("Error Logging in")  
-            }                
-          }
-         
-        } )
-        .then(
-          (result) => {
-                 
-              localStorage.setItem("token",result.accessToken);       
-              localStorage.setItem("username", this.state.username);
-              localStorage.setItem("isLogin", "true");
-              localStorage.setItem("email", this.state.username);
-             
-              this.event = new CustomEvent('loggedIn', {
-                detail: true,
-              });
-              window.dispatchEvent(this.event);
-              this.props.history.replace('/rippleDiagram');
-          },
-    
-          (error) => {
-           console.error(error);           
-           this.setState({toastMessage: error.toString(), toastState: true});
-          }
-        )
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",              
+      },
+      body: JSON.stringify(credentials)
+    })
+    .then((res) => {
+      // TO DO : real login
+      if(res.status === 200 || res.status === 201){
+        return res.json();
+      } else {  
+        if(this.state.action === 'SignUp') {
+          throw new Error("Error creating user");
+        } else {
+          throw new Error("Error Logging in")  
+        }                
+      }
+    })
+    .then(
+      (result) => {
+        localStorage.setItem("token",result.accessToken);       
+        localStorage.setItem("username", this.state.username);
+        localStorage.setItem("isLogin", "true");
+        localStorage.setItem("email", this.state.username);
+        
+        this.event = new CustomEvent('loggedIn', {
+          detail: true,
+        });
+        window.dispatchEvent(this.event);
+        this.props.history.replace('/rippleDiagram');
+      },
+      (error) => {
+        console.error(error);           
+        this.setState({toastMessage: error.toString(), toastState: true});
+      })
   }
 
   render(){
     return(
       <IonPage>
-        <IonHeader>
-          <IonToolbar >
-            <IonTitle class="header" >Login</IonTitle>
-            <IonMenuButton slot="start"></IonMenuButton>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent class="ion-padding">
-          <video autoPlay webkit-playsinline="true" playsInline loop muted id="backgroundvideo">
-            {/* <source src={videobgMp4} type='video/mp4; codecs="h.264"' /> */}
-            <source src={videobgWebm} type="video/webm" />
-          </video>
-          <div className="ion-text-center">
-            <img src={image} alt="logo" width="50%" />
-          </div>
-          <IonToast
-            isOpen={this.state.toastState}
-            onDidDismiss={() => this.setState(() => ({ toastState: false }))}
-            message={this.state.toastMessage}
-            duration={400}
-          >
-          </IonToast>
-          <form action="" className="loginForm centerAbsolute">
-            <div className="ion-text-center">
-              <img src={image} alt="logo" width="100%" />
-            </div>
-            <IonItem>
-              <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email"></IonInput>
-            </IonItem>
-            {this.state.action === 'SignUp' ?
-            <IonItem>
-              <IonInput onIonChange={this.updateUserName} type="text" placeholder="Username"></IonInput>
-            </IonItem>
-              : <></>}
-            <IonItem>
-              <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" ></IonInput>
-            </IonItem>
-            <IonButton onClick={this.login} className="loginbutton">{this.state.action}</IonButton>
-          </form>
-        </IonContent>
-        {/* <IonFooter class="ion-padding" className="footerLogin">
-          <IonToolbar text-center className="toolbarCustom">
-            Click here to <a onClick={this.toggleAction}>{this.state.action === 'Login' ? 'SignUp' : 'Login'}</a>
-          </IonToolbar>
-        </IonFooter> */}
+          <IonHeader>
+              <IonToolbar>
+                  <IonTitle class="header" >Login</IonTitle>
+                  <IonMenuButton slot="start"></IonMenuButton>
+              </IonToolbar>
+          </IonHeader>
+          <IonContent class="ion-padding">
+              <video className="backgroundVideo" autoPlay loop muted webkit-playsinline="true" playsInline>
+                {/* <source src={videobgMp4} type='video/mp4; codecs="h.264"' /> */}
+                <source src={videobgWebm} type="video/webm" />
+              </video>
+              <IonToast
+                isOpen={this.state.toastState}
+                onDidDismiss={() => this.setState(() => ({ toastState: false }))}
+                message={this.state.toastMessage}
+                duration={400}
+              >
+              </IonToast>
+              <div className="formWrapper">
+                  <form action="" className="loginForm">
+                      <img src={image} alt="logo" width="100%" />
+                      <IonItem>
+                          <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email"></IonInput>
+                      </IonItem>
+                      {this.state.action === 'SignUp' ?
+                          <IonItem>
+                              <IonInput onIonChange={this.updateUserName} type="text" placeholder="Username"></IonInput>
+                          </IonItem>
+                      :
+                          null
+                      }
+                    <IonItem>
+                        <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" ></IonInput>
+                    </IonItem>
+                    <IonButton onClick={this.login} className="loginbutton">{this.state.action}</IonButton>
+                  </form>
+              </div>
+          </IonContent>
       </IonPage>
-  
     )
   }
 }
