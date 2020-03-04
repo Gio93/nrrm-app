@@ -1,3 +1,4 @@
+import './Charts.css'
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { GraphDataChartBar, RippleIndicator } from '../declarations';

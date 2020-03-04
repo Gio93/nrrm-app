@@ -1,4 +1,4 @@
-import './DigitalizationChart.css'
+import './Charts.css'
 import { RippleIndicatorInfo, RippleIndicator } from '../declarations';
 import React from 'react';
 import { scaleLinear, scaleBand } from 'd3-scale';

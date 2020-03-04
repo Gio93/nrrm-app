@@ -1,3 +1,4 @@
+import './Charts.css'
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -123,10 +124,10 @@ export class Chart extends Component<any, State> {
                                                     maintainAspectRatio: false,
                                                     layout: {
                                                         padding: {
-                                                            left: 5,
-                                                            right: 25,
-                                                            top: 60,
-                                                            bottom: 40
+                                                            left: 0,
+                                                            right: 0,
+                                                            top: 0,
+                                                            bottom: 0
                                                         }
                                                     },
                                                     scales: {
@@ -194,7 +195,7 @@ export class Chart extends Component<any, State> {
                                         }
                                     </div>
                                 </IonCol>
-                                <IonCol size-md="6" size="12">
+                                <IonCol size-sm="6" size="12">
                                     { this.listItems() }
                                 </IonCol>
                             </IonRow>
