@@ -68,10 +68,10 @@ export class DigitalionChart2 extends Component<any, State> {
     listItems(){
         if(this.state.indicator && this.state.indicator.indicators) {
             return (
-                <IonList>
+                <IonList className="item-graph-list">
                     {this.state.indicator.indicators.map((item:any, i:any) => {   
                         return (
-                            <IonItem class="item item-text-wrap item-graph" 
+                            <IonItem class="item-graph" 
                                 key={i} 
                             >
                                 <IonText>
@@ -125,8 +125,8 @@ export class DigitalionChart2 extends Component<any, State> {
                     <IonCardContent>
                         <IonGrid>
                             <IonRow>
-                                <IonCol size-lg="5" size-md="6" size="12">
-                                    <div className="contentChart2">
+                                <IonCol size-sm="6" size="12">
+                                    <div className="chart-wrapper">
                                         { this.state.data ? 
                                             <Bar
                                                 data={this.state.data}
@@ -135,10 +135,10 @@ export class DigitalionChart2 extends Component<any, State> {
                                                     maintainAspectRatio: false,
                                                     layout: {
                                                         padding: {
-                                                            left: 5,
-                                                            right: 40,
-                                                            top: 40,
-                                                            bottom: 5
+                                                            left: 0,
+                                                            right: 10,
+                                                            top: 0,
+                                                            bottom: 0
                                                         }
                                                     },
                                                     title: {
@@ -207,7 +207,7 @@ export class DigitalionChart2 extends Component<any, State> {
                                             
                                     </div>
                                 </IonCol>
-                                <IonCol size-lg="6" offset-lg="1" size-md="6" offset-md="0" size="12">
+                                <IonCol size-sm="6" size="12">
                                     { this.listItems() }
                                 </IonCol>
                             </IonRow>

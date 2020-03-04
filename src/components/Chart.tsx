@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
-import './Chart.css'
 import {
     IonCard, 
     IonCardHeader,
@@ -67,7 +66,7 @@ export class Chart extends Component<any, State> {
             }
         
             return (
-                <IonList>
+                <IonList className="item-graph-list">
                     {history.map((item:any ,i: any) => {
                         return (
                             <IonItem class="item-graph"
@@ -114,8 +113,8 @@ export class Chart extends Component<any, State> {
                     <IonCardContent>
                         <IonGrid>
                             <IonRow>
-                                <IonCol size-md="5" size="12">
-                                    <div className="contentChart2">
+                                <IonCol size-sm="6" size="12">
+                                    <div className="chart-wrapper">
                                         {this.state.data ? 
                                             <Line
                                                 data={this.state.data}
@@ -195,7 +194,7 @@ export class Chart extends Component<any, State> {
                                         }
                                     </div>
                                 </IonCol>
-                                <IonCol size-md="6" offset-md="1" size="12">
+                                <IonCol size-md="6" size="12">
                                     { this.listItems() }
                                 </IonCol>
                             </IonRow>

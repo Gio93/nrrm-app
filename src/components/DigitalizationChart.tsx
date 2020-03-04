@@ -157,7 +157,7 @@ class DigitalizationChart extends React.Component<any, State>{
     listItems() {
         if (this.props.dataOrigen) {
             return (
-                <IonList>
+                <IonList className="item-graph-list">
                     {this.props.dataOrigen.map((item: RippleIndicator, i: any) => {
                         return (
                             <IonItem class="item-graph"
@@ -210,8 +210,8 @@ class DigitalizationChart extends React.Component<any, State>{
                     <IonCardContent>
                         <IonGrid>
                             <IonRow>
-                                <IonCol size-md="5" size="12">
-                                    <div>
+                                <IonCol size-sm="6" size="12">
+                                    <div className="chart-wrapper">
                                         <svg 
                                             ref={this.ref}
                                             width={this.width} 
@@ -220,7 +220,7 @@ class DigitalizationChart extends React.Component<any, State>{
                                         </svg>
                                     </div>
                                 </IonCol>
-                                <IonCol size-md="6" offset-md="1" size="12">
+                                <IonCol size-sm="6" size="12">
                                     { this.listItems() }
                                 </IonCol>
                             </IonRow>
