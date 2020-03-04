@@ -64,7 +64,6 @@ export class Chart extends Component<any, State> {
                     value: values[i]
                 }
                 history.push(element);
-                history.push(element);
             }
         
             return (
