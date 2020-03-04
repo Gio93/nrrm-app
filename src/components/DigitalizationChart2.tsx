@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
-import { IonCardSubtitle, IonItem, IonText, IonButton, IonLabel, IonIcon, IonAlert } from '@ionic/react';
 import { GraphDataChartBar, RippleIndicator } from '../declarations';
 import {
+    IonCardSubtitle,
+    IonItem,
+    IonText,
+    IonButton,
+    IonLabel,
+    IonIcon,
+    IonAlert,
     IonCard,
     IonCardHeader,
     IonCardTitle,
@@ -15,7 +21,7 @@ import {
 import { informationCircleOutline } from 'ionicons/icons';
 
 
-type State = { data: GraphDataChartBar, indicator: RippleIndicator,showAlert:boolean, alerMessage: string};
+type State = { data: GraphDataChartBar, indicator: RippleIndicator, showAlert: boolean, alerMessage: string};
 
 export class DigitalionChart2 extends Component<any, State> {
     constructor(props: any) {
@@ -36,16 +42,13 @@ export class DigitalionChart2 extends Component<any, State> {
     }
 
     componentDidMount(){
-        console.log("RENDERIZO componentDidMount Chart2 con props:", this.props);
         const { indicator } = this.props;
         const { data } = this.props;
         this.setState({ indicator: indicator });
         this.setState({ data: data });
-
     }
     
     componentDidUpdate(nextProps: any) {
-        console.log("RENDERIZO componentDidUpdate Chart2");
         const { indicator } = this.props;
         const { data } = this.props;
         if (nextProps.indicator !== indicator) {
@@ -113,18 +116,18 @@ export class DigitalionChart2 extends Component<any, State> {
                 <IonCard className="graph-card">
                     <IonCardHeader>
                         <IonCardSubtitle>
-                            {this.state.indicator? this.state.indicator.name : null} indicators
+                            { this.state.indicator? this.state.indicator.name : null } indicators
                         </IonCardSubtitle>
                         <IonCardTitle className="total-percentage total-percentage--small">
-                            {this.state.indicator? this.state.indicator.percentage*100 +'%': null}
+                            { this.state.indicator? this.state.indicator.percentage*100 + '%' : null }
                         </IonCardTitle>
                     </IonCardHeader>
                     <IonCardContent>
                         <IonGrid>
-                            <IonRow class="ion-align-items-center">
-                                <IonCol size-lg="5" size-md="6" size="12" class="ion-align-items-center">
+                            <IonRow>
+                                <IonCol size-lg="5" size-md="6" size="12">
                                     <div className="contentChart2">
-                                        {this.state.data ? 
+                                        { this.state.data ? 
                                             <Bar
                                                 data={this.state.data}
                                                 options={{
@@ -204,22 +207,22 @@ export class DigitalionChart2 extends Component<any, State> {
                                             
                                     </div>
                                 </IonCol>
-                                <IonCol size-lg="6" offset-lg="1" size-md="6" offset-md="0" size="12" class="ion-float-left">
-                                    {this.listItems()}
+                                <IonCol size-lg="6" offset-lg="1" size-md="6" offset-md="0" size="12">
+                                    { this.listItems() }
                                 </IonCol>
                             </IonRow>
                         </IonGrid>
                     </IonCardContent>
                 </IonCard>
-            <IonAlert
-                isOpen={this.state.showAlert}
-                onDidDismiss={() => this.setState({showAlert: false})}
-                header={'Indicator Detail'}
-                // subHeader={'Subtitle'}
-                message={this.state.alerMessage}
-                buttons={['Close']}
-            />                          
-        </div>
+                <IonAlert
+                    isOpen={this.state.showAlert}
+                    onDidDismiss={() => this.setState({showAlert: false})}
+                    header={'Indicator Detail'}
+                    // subHeader={'Subtitle'}
+                    message={this.state.alerMessage}
+                    buttons={['Close']}
+                />
+            </div>
         )
     }
 }

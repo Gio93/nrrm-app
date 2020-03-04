@@ -203,14 +203,14 @@ class DigitalizationChart extends React.Component<any, State>{
                             Digitalization grade
                         </IonCardSubtitle>
                         <IonCardTitle class="total-percentage">
-                            {this.searchGradePercentage()}
-                            {this.percentageGrade + '%'}
+                            { this.searchGradePercentage() }
+                            { this.percentageGrade + '%' }
                         </IonCardTitle>
                     </IonCardHeader>
                     <IonCardContent>
                         <IonGrid>
-                            <IonRow class="ion-align-items-center">
-                                <IonCol size-md="5" size="12" class="ion-align-items-center">
+                            <IonRow>
+                                <IonCol size-md="5" size="12">
                                     <div>
                                         <svg 
                                             ref={this.ref}
@@ -220,8 +220,8 @@ class DigitalizationChart extends React.Component<any, State>{
                                         </svg>
                                     </div>
                                 </IonCol>
-                                <IonCol size-md="6" offset-md="1" size="12" class="ion-float-left">
-                                    {this.listItems()}
+                                <IonCol size-md="6" offset-md="1" size="12">
+                                    { this.listItems() }
                                 </IonCol>
                             </IonRow>
                         </IonGrid>

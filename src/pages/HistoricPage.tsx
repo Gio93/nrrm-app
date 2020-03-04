@@ -30,12 +30,10 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
 
   // Post Call to get the chart Values, we send the timestamp created when the component did  mount
 
-   getChartData = async () => {
+  getChartData = async () => {
 
     const myapi = new API();
-    const response : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history/getFilterGradesbyYear",
-  
-    );
+    const response : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history/getFilterGradesbyYear");
 
     try {
       console.log(response);
@@ -57,37 +55,40 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
 
       let labelsArray:any = [];
       let valuesArray:any = [];
+      let indexMonth: number = new Date().getMonth();
 
-      response.forEach(element => {
-        let auxdate = new Date(element.timestamp);
-        let auxmonth = auxdate.getMonth().toString().length == 1 ? '0'+ auxdate.getMonth().toString() : auxdate.getMonth().toString();
-        let auxyear = ' ' + auxdate.getFullYear().toString();
+      for (let i = (response.length - 1); i >= 0; i--) {
+        const element = response[i];
+        const auxdate = new Date(element.timestamp);
+        const auxmonth = indexMonth.toString().length == 1 ? '0'+ indexMonth.toString() : indexMonth.toString();
+        const auxyear = ' ' + auxdate.getFullYear().toString();
+
+        labelsArray.unshift([(months as any)[auxmonth], auxyear]);
+        valuesArray.unshift(Math.round(parseFloat(element.totalPercentage) * 100));
         
-        labelsArray.push([(months as any)[auxmonth], auxyear]);
-        valuesArray.push(Math.round(parseFloat(element.totalPercentage) * 100));
-      });
+        indexMonth--;
+        if(indexMonth < 0){
+          indexMonth = 11;
+        }
+      }
 
       const graphData = {
-        
-          labels: labelsArray,
-          datasets: [
-            {
-              label: '% ',
-              data: valuesArray,
-              backgroundColor: [
-                'rgba(128,194,66, 0.7)' 
-              ]
-            }
-          ]
-         
-        
+        labels: labelsArray,
+        datasets: [
+          {
+            label: '% ',
+            data: valuesArray,
+            backgroundColor: [
+              'rgba(128,194,66, 0.7)' 
+            ]
+          }
+        ]
       };
 
     
       console.log(graphData);
       this.setState({spinner: true, data: graphData });
-   
-    }catch(e){
+    } catch(e) {
       console.log(e);
     }
   }
@@ -98,47 +99,52 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     let dateTime = date+' '+time;
-      this.setState({
-        ...this.state,
-        timeStamp: dateTime,
-      })     
-      console.log('Date time', dateTime);
-      console.log('State timestamp', this.state.timeStamp);
+    this.setState({
+      ...this.state,
+      timeStamp: dateTime,
+    });
   }
 
   
   handlerSpinner(control:boolean){
     //debugger;
     this.setState({
-      spinner: control});
+      spinner: control
+    });
   }
 
   render() {
     return (
-        <IonPage>
+      <IonPage>
           <IonHeader>
-            <IonToolbar>
-              <IonButtons slot="start">
-                <IonMenuButton />
-              </IonButtons>
-              <IonTitle>Historic chart</IonTitle>
-            </IonToolbar>
+              <IonToolbar>
+                  <IonButtons slot="start">
+                      <IonMenuButton />
+                  </IonButtons>
+                  <IonTitle>Historic chart</IonTitle>
+              </IonToolbar>
           </IonHeader>
           <IonContent className = "chart-content">
-          <IonLoading
-              isOpen={this.state.spinner}
-              onDidDismiss={() => this.setState({spinner:false})}
-              message={'Loading...'}
-              duration={2000}
-            />
-          {this.state.data ?
-            <Chart
-              data={this.state.data} location="Madrid" legendPosition="bottom" 
-              handlerSpinner={this.handlerSpinner} /> : null}
-          </IonContent>  
-        </IonPage>
+              <IonLoading
+                isOpen={this.state.spinner}
+                onDidDismiss={() => this.setState({spinner:false})}
+                message={'Loading...'}
+                duration={2000}
+              />
+              {this.state.data ? this.state.data.datasets ?
+                  <Chart
+                    data={this.state.data}
+                    location="Madrid"
+                    legendPosition="bottom" 
+                    handlerSpinner={this.handlerSpinner}
+                  />
+              :
+                  null : null
+              }
+          </IonContent>
+      </IonPage>
     )
-  } 
+  }
 }
 export default HistoricPage;
 
