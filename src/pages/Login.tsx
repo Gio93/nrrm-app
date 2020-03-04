@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonToolbar,  IonContent,   IonButton, IonInput, IonToast, IonItem, IonHeader, IonTitle, IonMenuButton, IonPage } from '@ionic/react';
+import { IonToolbar,  IonContent,   IonButton, IonInput, IonToast, IonItem, IonHeader, IonTitle, IonMenuButton, IonPage, IonList } from '@ionic/react';
 // import { any } from 'prop-types';
 import image from '../assets/images/logoNRM.png';
 import { RouteComponentProps } from 'react-router';
@@ -165,20 +165,22 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
               <div className="formWrapper">
                   <form action="" className="loginForm">
                       <img src={image} alt="logo" width="100%" />
-                      <IonItem>
-                          <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email"></IonInput>
-                      </IonItem>
-                      {this.state.action === 'SignUp' ?
-                          <IonItem>
-                              <IonInput onIonChange={this.updateUserName} type="text" placeholder="Username"></IonInput>
-                          </IonItem>
-                      :
-                          null
-                      }
-                    <IonItem>
-                        <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" ></IonInput>
-                    </IonItem>
-                    <IonButton onClick={this.login} className="loginbutton">{this.state.action}</IonButton>
+                      <IonList>
+                        <IonItem>
+                            <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email"></IonInput>
+                        </IonItem>
+                        {this.state.action === 'SignUp' ?
+                            <IonItem>
+                                <IonInput onIonChange={this.updateUserName} type="text" placeholder="Username"></IonInput>
+                            </IonItem>
+                        :
+                            null
+                        }
+                        <IonItem>
+                            <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" ></IonInput>
+                        </IonItem>
+                        <IonButton onClick={this.login} className="loginbutton">{this.state.action}</IonButton>
+                      </IonList>
                   </form>
               </div>
           </IonContent>

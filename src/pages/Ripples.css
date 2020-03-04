@@ -10,6 +10,10 @@ ion-card {
     --background: white !important;
 }
 
+ion-card.ripple-card {
+    height: calc(100% - 20px);
+}
+
 ion-fab-button {
     color: white !important;
 }

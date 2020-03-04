@@ -61,6 +61,10 @@ ion-content {
     --background-focused: none;
 }
 
+.loginForm ion-item .native-input {
+    padding: 0;
+}
+
 .loginForm ion-input{
     color: #FFFFFF;
     outline: none;

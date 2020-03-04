@@ -16,7 +16,7 @@
     padding-left: 20px;
 }
 
-.item-graph {
+.item-graph, .item-native {
     --padding-start: 0;
     --padding-end: 0;
     --inner-padding-start: 0;

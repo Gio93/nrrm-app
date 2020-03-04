@@ -135,6 +135,40 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
       loadData();
     }
   };
+
+  const ListItems = (data: any[] & any) => {
+    let history2 = useHistory();
+    if(!data.data) return <IonList></IonList>;
+      
+    const items = data.data.map((x:RippleInfo) => {
+      const navigateToDetail = () => {
+        console.log("navigate!");
+        history2.push("/ripple/"+x.uuid);
+      }
+  
+      return (
+        <IonCol size="12" size-sm="6" size-lg="4" size-xl="3" key={x.id}>
+  
+          <Card cardId={x.id} 
+            title={x.name}
+            description={x.smallDescription} 
+            technologies={x.technologiesInvolved} 
+            types={[x.type]} 
+            implementationType={[x.implementationType]}
+            owner={x.rippleOwner}
+            progress={x.progressDegree}
+            onClick={navigateToDetail} 
+          ></Card>
+  
+        </IonCol>
+      );
+    });
+    return <IonGrid>
+      <IonRow className="ion-align-items-stretch">
+        {items}
+      </IonRow>
+    </IonGrid>;
+  };
   
   return (
     <IonPage>
@@ -147,116 +181,125 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent><IonLoading
-        isOpen={showLoading}
-        onDidDismiss={() => setShowLoading(false)}
-        message={'Loading...'}
-        duration={5000}
-      />
-      <IonSearchbar id="searchInput" animated onIonChange={onSearch} debounce={400}></IonSearchbar>
-      {aFilters.map(a=>{console.log("ionchip"); return <IonChip onClick={()=>{
-        resetFilter(a);
-      }}><IonLabel>{a.value}</IonLabel><IonIcon name="close-circle" /></IonChip>})}
+      <IonContent>
+        <IonLoading
+          isOpen={showLoading}
+          onDidDismiss={() => setShowLoading(false)}
+          message={'Loading...'}
+          duration={5000}
+        />
+        <IonGrid>
+          <IonRow>
+            <IonCol size="12">
+              <IonSearchbar id="searchInput" animated onIonChange={onSearch} debounce={400}></IonSearchbar>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+
+        { aFilters.map(a => {
+          console.log("ionchip"); 
+          return <IonChip 
+            onClick={() => {
+              resetFilter(a);
+            }}
+          >
+            <IonLabel>{a.value}</IonLabel>
+            <IonIcon name="close-circle" /></IonChip>
+        })}
         <ListItems data = {data}/>
         <div className="customStackedButtons">
-        <IonFab vertical="bottom" horizontal="end" slot="fixed" >
-          <IonFabButton routerLink="/rippleDiagram">
-            <IonIcon icon={stats} color="light"/>
-          </IonFabButton> 
-
-          {/*<IonFabList side="top">
-            <IonFabButton><IonIcon icon={flask} /></IonFabButton>
-            <IonFabButton><IonIcon icon={beer} /></IonFabButton>
-            <IonFabButton><IonIcon icon={football} /></IonFabButton>
-          </IonFabList>*/}
-        </IonFab> 
-        <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
-          <IonFabButton color="secondary">
+          <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+            <IonFabButton routerLink="/rippleDiagram">
+              <IonIcon icon={stats} color="light"/>
+            </IonFabButton> 
+          </IonFab> 
+          <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
+            <IonFabButton color="secondary">
               <IonIcon icon={funnel} color="light"/>
-          </IonFabButton> 
-          <IonFabList side="top">
-            <IonFabButton title="Implementation Type" onClick={(e)=>{
-              setShowModalImplementationType(true);
-            }}><IonIcon icon={trophy} /></IonFabButton>
-            <IonFabButton title="Solution Type" onClick={(e)=>{
-              setShowModalType(true);
-            }}><IonIcon icon={desktop} /></IonFabButton>
-            <IonFabButton title="Business Area" onClick={(e)=>{    
-              setShowModalBusinessArea(true);
-            }}><IonIcon icon={business} /></IonFabButton>
-          </IonFabList>
-        </IonFab>
+            </IonFabButton> 
+            <IonFabList side="top">
+              <IonFabButton 
+                title="Implementation Type" 
+                onClick={(e) => {
+                  setShowModalImplementationType(true);
+                }}
+              >
+                <IonIcon icon={trophy} />
+              </IonFabButton>
+              <IonFabButton 
+                title="Solution Type" 
+                onClick={(e) => {
+                  setShowModalType(true);
+                }}
+              >
+                <IonIcon icon={desktop} />
+              </IonFabButton>
+              <IonFabButton 
+                title="Business Area" 
+                onClick={(e) => {    
+                  setShowModalBusinessArea(true);
+                }}
+              >
+                <IonIcon icon={business} />
+              </IonFabButton>
+            </IonFabList>
+          </IonFab>
         </div>
         <IonModal isOpen={showModalImplementationType}>
           <IonList>
-            {aImplementationTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
-              addFilters(a);
-              setShowModalImplementationType(false);
-            }}>{a.value}</IonItem>)}
+            { aImplementationTypes.map(a =>
+              <IonItem key={a.key} 
+                onClick={(e) => {
+                  addFilters(a);
+                  setShowModalImplementationType(false);
+                }}
+              >
+                {a.value}
+              </IonItem>)}
           </IonList>
-          <IonButton onClick={() => setShowModalImplementationType(false)}>Cerrar</IonButton>
+          <IonButton 
+            onClick={() => setShowModalImplementationType(false)}
+          >
+            Cerrar
+          </IonButton>
         </IonModal>
-
         <IonModal isOpen={showModalType}>
-        <IonList>
-            {aTypes.map(a=><IonItem key={a.key} onClick={(e)=>{
-              addFilters(a);
-              setShowModalType(false);
-            }}>{a.value}</IonItem>)}
+          <IonList>
+            { aTypes.map(a => 
+              <IonItem 
+                key={a.key} 
+                onClick={(e) => {
+                  addFilters(a);
+                  setShowModalType(false);
+                }}
+              >
+                {a.value}
+              </IonItem>)}
           </IonList>
-          <IonButton onClick={() => setShowModalType(false)}>Cerrar</IonButton>
+          <IonButton 
+            onClick={() => setShowModalType(false)}
+          >
+            Cerrar
+          </IonButton>
         </IonModal>
-
         <IonModal isOpen={showModalBusinessArea}>
-        <IonList>
-            {aBusinessAreas.map(a=><IonItem key={a.key} onClick={(e)=>{
-              addFilters(a);
-              setShowModalBusinessArea(false);
-            }}>{a.value}</IonItem>)}
+          <IonList>
+            { aBusinessAreas.map(a =>
+              <IonItem 
+                key={a.key} 
+                onClick={(e) => {
+                  addFilters(a);
+                  setShowModalBusinessArea(false);
+                }}
+              >
+                {a.value}
+              </IonItem>)}
           </IonList>
           <IonButton onClick={() => setShowModalBusinessArea(false)}>Cerrar</IonButton>
         </IonModal>
         
-
       </IonContent>
     </IonPage>
   );
 };
-
-const ListItems = (data: any[] & any) => {
-
-  let history2 = useHistory();
-  if(!data.data) return <IonList></IonList>;
-
-  console.log(data.data);
-  
-  const items = data.data.map((x:RippleInfo) => {
-
-    const navigateToDetail = () => {
-      console.log("navigate!");
-      history2.push("/ripple/"+x.uuid);
-    }
-    ////debugger;
-    return (
-      <IonCol size="12" sizeXs="12" sizeSm="6" sizeMd="6" sizeLg="4" sizeXl="3" key={x.id}>
-      
-        
-        <Card cardId={x.id} 
-          title={x.name}
-          description={x.smallDescription} 
-          technologies={x.technologiesInvolved} 
-          types={[x.type]} 
-          implementationType={[x.implementationType]}
-          owner={x.rippleOwner}
-          progress={x.progressDegree}
-          onClick={navigateToDetail} 
-          ></Card>
-      
-      </IonCol>
-    );
-  });
-
-  return <IonGrid><IonRow>{items}</IonRow></IonGrid>;
-};
-
 export default ListPage;
