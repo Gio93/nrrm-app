@@ -14,12 +14,20 @@
 
 .item-graph {
     --padding-start: 0;
+    --padding-end: 0;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --ion-safe-area-left: 0;
+    --ion-safe-area-right: 0;
     font-size: 14px;
 }
 
-.item-graph ion-button {
+.item-graph ion-button{
+    --padding-start: 4px;
+    --padding-end: 4px;
     color: var(--ion-color-tech-green);
     font-size: 18px;
+    margin: 0;
 }
 
 .item-graph ion-icon {
