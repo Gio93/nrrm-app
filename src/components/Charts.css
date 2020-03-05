@@ -46,6 +46,10 @@
     .item-graph-list {
         padding-left: 0;
     }
+
+    .chart-wrapper {
+        min-height: 50vh;
+    }    
 }
 
 @media(min-width: 576px) {
