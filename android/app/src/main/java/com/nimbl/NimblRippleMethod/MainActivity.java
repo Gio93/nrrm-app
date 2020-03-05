@@ -1,4 +1,4 @@
-package com.techedge.nimbleripplemethod;
+package com.nimbl.NimblRippleMethod;
 
 import android.os.Bundle;
 
