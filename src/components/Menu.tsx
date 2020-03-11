@@ -14,8 +14,8 @@ class Menu extends React.Component<any, any> {
         loggedInPages: [
           // { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
           { title: 'Ripple Road', path: '/rippleDiagram', icon: 'create' },
-          { title: 'Ripple', path: '/ripple', icon: 'create'},
-          { title: 'Digitalization', path: '/dgrade', icon: 'podium' },
+          { title: 'Ripples List', path: '/ripple', icon: 'create'},
+          { title: 'Digitalization Grades', path: '/dgrade', icon: 'podium' },
           { title: 'Digitalization Evolution', path: '/historicalChart', icon: 'stats'},
           { title: 'Logout', path: '/login', icon: 'log-out' },
           // { title: 'Digitalization2', path: '/dgrade2', icon: 'stats'},
@@ -36,8 +36,8 @@ class Menu extends React.Component<any, any> {
           loggedInPages: [
             // { title: 'My Profile', path: '/profile/'+localStorage.getItem("username"), icon: 'person'},        
             { title: 'Ripple Road', path: '/rippleDiagram', icon: 'create' },
-            { title: 'Ripple', path: '/ripple', icon: 'create'},
-            { title: 'Digitalization', path: '/dgrade', icon: 'stats' },
+            { title: 'Ripples List', path: '/ripple', icon: 'create'},
+            { title: 'Digitalization Grades', path: '/dgrade', icon: 'stats' },
             { title: 'Digitalization Evolution', path: '/historicalChart', icon: 'stats'},
             { title: 'Logout', path: '/login', icon: 'log-out' },
 

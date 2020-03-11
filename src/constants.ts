@@ -4,8 +4,11 @@ export interface AppConfig {
   }  
   
 export const CONFIG: AppConfig = {
-    API_ENDPOINT : "https://hades-nrm-dot-techedge-es-nrm-des.appspot.com"
-  };
+    // pre endpoint
+    // API_ENDPOINT : "https://hades-nrm-dot-techedge-es-nrm-des.appspot.com"
+    // pro endpoint
+    API_ENDPOINT : "https://hades-nrm-dot-techedge-es-nrm-pro.appspot.com"
+};
 
 export enum COMMAND {
     COUNT = "COUNT",

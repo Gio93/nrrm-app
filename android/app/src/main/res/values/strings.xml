@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">NimblRippleMethod</string>
-    <string name="title_activity_main">NimblRippleMethod</string>
+    <string name="title_activity_main">NRM</string>
     <string name="package_name">com.nimbl.NimblRippleMethod</string>
     <string name="custom_url_scheme">com.nimbl.NimblRippleMethod</string>
 </resources>

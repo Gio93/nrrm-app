@@ -7,6 +7,8 @@ import * as d3 from 'd3';
 import { IonCard, IonCardContent, IonGrid, IonRow, IonCol, IonCardHeader, IonCardSubtitle, IonCardTitle, IonItem, IonIcon, IonList, IonText, IonLabel, IonButton, IonToolbar } from '@ionic/react';
 import { withRouter } from "react-router-dom";
 import { arrowForward } from 'ionicons/icons';
+import Skeleton from 'react-loading-skeleton';
+
 
 type State = { data: Array<RippleIndicatorInfo>, dataOrigen: Array<RippleIndicator> };
 
@@ -199,17 +201,19 @@ class DigitalizationChart extends React.Component<any, State>{
             <div>
                 <IonCard className="graph-card">
                     <IonCardHeader>
-                        <IonCardSubtitle>
-                            Digitalization grade
-                        </IonCardSubtitle>
-                        <IonCardTitle class="total-percentage">
+                    {<IonCardSubtitle>Digitalization grade</IonCardSubtitle> ? <IonCardSubtitle>Digitalization grade</IonCardSubtitle> : <Skeleton></Skeleton>}
+                        {/* <IonCardTitle class="total-percentage">
                             { this.searchGradePercentage() }
                             { this.percentageGrade + '%' }
-                        </IonCardTitle>
+                        </IonCardTitle> */}
+                        <IonCardTitle class="total-percentage">  {this.searchGradePercentage()}
+                            { this.searchGradePercentage() }
+                            { this.percentageGrade == undefined ? <Skeleton count={1} width={150}></Skeleton> : this.percentageGrade + "%"}
+                        </IonCardTitle>  
                     </IonCardHeader>
                     <IonCardContent>
                         <IonGrid>
-                            <IonRow>
+                            {/* <IonRow>
                                 <IonCol size-sm="6" size="12">
                                     <div className="chart-wrapper">
                                         <svg 
@@ -222,6 +226,42 @@ class DigitalizationChart extends React.Component<any, State>{
                                 </IonCol>
                                 <IonCol size-sm="6" size="12">
                                     { this.listItems() }
+                                </IonCol>
+                            </IonRow> */}
+                             <IonRow>
+                                {<IonCol size-md="5" size="12">    
+                                    <div>
+                                        <svg 
+                                            ref={this.ref}
+                                            width={this.width} 
+                                            height={this.height} 
+                                        >
+                                        </svg>
+                                    </div></IonCol> ? 
+                                    <IonCol>  
+                                    <div>
+                                        <svg 
+                                            ref={this.ref}
+                                            width={this.width} 
+                                            height={this.height} 
+                                        >
+                                        </svg>
+                                    </div>
+                                    </IonCol>  :
+                                     <Skeleton  circle={true} height={339} width={339}></Skeleton>}
+                                   
+                                {/* <IonCol size-md="5" size="12">
+                                    <div>
+                                        <svg 
+                                            ref={this.ref}
+                                            width={this.width} 
+                                            height={this.height} 
+                                        >
+                                        </svg>
+                                    </div> */}
+                                
+                                <IonCol size-md="6" offset-md="1" size="12">
+                                    { this.listItems() == undefined ? <Skeleton count={6}></Skeleton> : this.listItems() }
                                 </IonCol>
                             </IonRow>
                         </IonGrid>

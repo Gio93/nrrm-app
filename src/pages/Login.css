@@ -77,3 +77,20 @@ ion-content {
     width: 100%;
     margin: 12px 0 0;
 }
+
+.loginbutton {
+    height: 44px;
+    color: white;
+}
+
+.toast{
+    --background: rgb(185, 51, 51);
+    --border-color:rgb(185, 51, 51);
+    --border-width: 1;
+    --color: white;
+    --max-height: 90px;
+    --min-height: 20px;
+    --border-style: solid;
+    --border-radius: 4;
+    font-size: 14px;
+}

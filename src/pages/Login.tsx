@@ -118,7 +118,8 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
         if(this.state.action === 'SignUp') {
           throw new Error("Error creating user");
         } else {
-          throw new Error("Error Logging in")  
+          throw new Error(`Loggedin failed.  
+          Please enter a valid account`)  
         }                
       }
     })
@@ -155,7 +156,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
                 {/* <source src={videobgMp4} type='video/mp4; codecs="h.264"' /> */}
                 <source src={videobgWebm} type="video/webm" />
               </video>
-              <IonToast
+              <IonToast cssClass="toast"
                 isOpen={this.state.toastState}
                 onDidDismiss={() => this.setState(() => ({ toastState: false }))}
                 message={this.state.toastMessage}
