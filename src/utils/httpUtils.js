@@ -104,6 +104,28 @@ export default class API {
         });
     };
 
+    doGetwithRippleFilterCard(url) {
+        return axios({
+            headers: this.getHeaders(),
+            // body: this.getDate(),
+            url: CONFIG.API_ENDPOINT + url,
+            method: 'get',
+            params: {
+                only_cards: true
+            }
+        }).then(response => {
+            console.log(response);
+            return response.data;
+        }).catch((e) => {
+            //debugger;
+            if (e.request.status === 401) {
+                this.handleRedirect();
+            } else {
+                this.showError(e.message);
+            }
+        });
+    };
+
 
     doPostwithParams(url) {
         return axios({

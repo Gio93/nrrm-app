@@ -39,7 +39,7 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
 
   const loadData=()=>{
       setShowLoading(true);
-      myapi.doGet("/nrrm-ripple/ripple").then(data => {
+      myapi.doGetwithRippleFilterCard("/nrrm-ripple/ripple").then(data => {
         setShowLoading(false);
         if(!data) return setData([]); 
         let aImp:Array<Filter>=[];
