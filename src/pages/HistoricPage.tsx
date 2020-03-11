@@ -33,9 +33,10 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
   getChartData = async () => {
 
     const myapi = new API();
-    const response : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history/getFilterGradesbyYear");
-
+    
     try {
+      const response : Array<ChartData> = await myapi.doPostwithParams("/nrrm-ripple/grade-history/getFilterGradesbyYear");
+      // const response : Array<ChartData> = await myapi.doGetwithParams("/nrrm-ripple/grade-history/getFilterGradesbyYear");
       console.log(response);
 
       const months = {

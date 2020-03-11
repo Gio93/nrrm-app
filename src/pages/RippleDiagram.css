@@ -11,12 +11,24 @@
     background: rgba(255, 255, 255, .85);
 }
 
+#tree .node .nodeBox>div {
+    /* white-space: nowrap; */
+}
+
+#tree .node .nodeBox>div>div {
+    margin-bottom: 45px !important;
+    font-size: 12px;
+}
+
 .legend {
     position: absolute;
     bottom: 32px;
     left: 12px;
     width: auto;
     height: auto;
+    padding: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
 }
 
 .legend__item {

@@ -1,6 +1,6 @@
 {
   "appId": "com.nimbl.NimblRippleMethod",
-  "appName": "NRM",
+  "appName": "NimblRippleMethod",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
