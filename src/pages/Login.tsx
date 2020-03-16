@@ -126,6 +126,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     .then(
       (result) => {
         localStorage.setItem("token",result.accessToken);       
+        localStorage.setItem("refresh_token", result.refreshToken)
         localStorage.setItem("username", this.state.username);
         localStorage.setItem("isLogin", "true");
         localStorage.setItem("email", this.state.username);
