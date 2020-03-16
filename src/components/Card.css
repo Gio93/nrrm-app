@@ -20,7 +20,8 @@ ion-chip.ion-color-nimbldigitalasset {
     color: white;
 }
 
-ion-chip.ion-color-nimblintegrationsystem {
+ion-chip.ion-color-nimblintegrationsystem,
+ion-chip.ion-color-nimblsystemintegration {
     background: var(--ion-color-nimblintegrationsystem) !important;
     color: white;
 }

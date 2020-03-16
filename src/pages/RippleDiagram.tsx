@@ -131,16 +131,28 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           businessAreaUUID:""
         }
       ];
-      for(let i=0;i<data.length;i++){
+      for(let i = 0; i < data.length; i++){
+
+        let auxHasChildren = false;
+        for (let j = 0; j < data.length; j++) {
+          if (data[j].predecessor !== null){
+            if (data[i].id === data[j].predecessor.id){
+              auxHasChildren = true;
+              break;
+            }
+          }
+        }
+
         flatData.push({
           id:data[i].id,
           name:data[i].name,
           smallDescription:data[i].smallDescription,
-          father: (data[i].predecessor)?data[i].predecessor.id : 0,
+          father: (data[i].predecessor) ? data[i].predecessor.id : 0,
           type: (data[i].type)?data[i].type.id : 0,
           isOpened:true,
-          hasChildren: !data.find((e)=>e.id === ((data[i].predecessor)?data[i].predecessor.id:0)),
-          highlighted:!!data[i].selected,
+          // hasChildren: !data.find((e)=>e.id === ((data[i].predecessor)?data[i].predecessor.id:0)),
+          hasChildren: auxHasChildren,
+          highlighted: data[i].selected,
           typeUUID:data[i].type.uuid,
           implementationTypeUUID:data[i].implementationType.uuid,
           businessAreaUUID:data[i].businessArea.uuid
