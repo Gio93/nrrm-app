@@ -92,8 +92,8 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         return acc+"&businessArea="+current.key;
       }else return "";
     },"");
-
-    myapi.doGet("/nrrm-ripple/ripple/getFilters?"+sfilters).then(data=>{
+    let terminationUrl = sfilters.length>0? sfilters+ "&only_cards=true" : "only_cards=true"
+    myapi.doGet("/nrrm-ripple/ripple/getFilters?"+terminationUrl).then(data=>{
       setShowLoading(false);
       return setData(data);
     })
