@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { CONFIG } from '../constants';
+import {
+    CONFIG
+} from '../constants';
+import {
+    local
+} from 'd3';
 
 export default class API {
 
@@ -52,7 +57,19 @@ export default class API {
         // header.append("Authorization","Bearer "+localStorage.getItem("token"));
         // return header;
     }
+    async refreshToken() {
+        const accesstoken = await axios.post(`${CONFIG.API_ENDPOINT}/admin/auth/refresh`, JSON.stringify({
+            "grantType": "refreshToken",
+            'refreshToken': localStorage.getItem('refresh_token')
+        }), {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Basic ${process.env.clientsecret}`
+            }
+        });
+        localStorage.setItem("token", accesstoken.data.accessToken);
 
+    }
     getDate() {
         let today = new Date();
         let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -62,7 +79,8 @@ export default class API {
         return dateTime.toString();
     }
 
-    doGet(url) {
+    async doGet(url) {
+        await this.refreshToken();
         return axios({
             headers: this.getHeaders(),
             url: CONFIG.API_ENDPOINT + url,
@@ -82,7 +100,9 @@ export default class API {
     };
 
     // , this.getDate()
-    doGetwithParams(url) {
+    async doGetwithParams(url) {
+        await this.refreshToken();
+
         return axios({
             headers: this.getHeaders(),
             // body: this.getDate(),
@@ -104,7 +124,9 @@ export default class API {
         });
     };
 
-    doGetwithRippleFilterCard(url) {
+    async doGetwithRippleFilterCard(url) {
+        await this.refreshToken();
+
         return axios({
             headers: this.getHeaders(),
             // body: this.getDate(),
@@ -127,7 +149,9 @@ export default class API {
     };
 
 
-    doPostwithParams(url) {
+    async doPostwithParams(url) {
+        await this.refreshToken();
+
         return axios({
             headers: this.getHeaders(),
             // body: this.getDate(),
