@@ -3,6 +3,7 @@ import { IonToolbar,  IonContent,   IonButton, IonInput, IonToast, IonItem, IonH
 // import { any } from 'prop-types';
 import image from '../assets/images/logoNRM.png';
 import { RouteComponentProps } from 'react-router';
+import { Plugins } from '@capacitor/core'
 
 import { CONFIG } from '../constants';
 
@@ -11,30 +12,32 @@ import videobgWebm from '../assets/video/loopWaves.webm';
 
 type Props = { props:any };
 type State = {username: string, password: string, toastState: boolean, toastMessage: string, action: string, email: string};
+type User = {email:string, password:string};
+const { Storage } = Plugins;
+
+
 
 class LoginPage extends React.Component <Props & RouteComponentProps<any>, State> {
 
   constructor(props: any) {
     super(props);
     this.state = {
+     email: '',
      username: '',
      password: '',
      toastState: false,
      toastMessage: 'Message',
      action: "Login",
-     email: ''
     };           
     this.event = new CustomEvent('loggedIn', {
       detail: false
+      
     });
-    
- 
   }
   event: Event;
 
   updateUserName = (event: any) => {
     this.setState({ username: event.detail.value });
-    
   };
 
   updatePassword = (event: any) => {
@@ -51,16 +54,20 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
 
   componentDidMount(){
     this.clearCredentials();
-  
     this.props.history.listen((location, action) => {
       if(location.pathname === "/login"){
         this.clearCredentials();
       }
     })
+    this.getObject().then((resp)=> {
+      if(resp != null) {
+        this.setState({ email: resp.email})
+        this.setState({ password: resp.password})
+      }   
+    })
   }
 
   clearCredentials(){
-    console.log("Cleaning credentials...");
     this.event = new CustomEvent('loggedIn', {
       detail: false
     });
@@ -71,6 +78,27 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     localStorage.removeItem("email");
   }
 
+
+  //// STORAGE BODY /////
+
+  async setObject(email:string, pass:string) {
+    await Storage.set({
+      key: 'user',
+      value: JSON.stringify({
+        email: email,
+        password: pass
+      })
+    });
+  }
+  
+  // JSON "get" example
+  async getObject(): Promise<User> {
+    const ret = await Storage.get({ key: 'user' });
+    const user = JSON.parse(ret.value);
+    return user;
+  }
+  
+  
   login2= () => {
     localStorage.setItem("token","1234");       
     localStorage.setItem("username", this.state.username);
@@ -85,6 +113,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
   }
 
   login= () => {
+    this.setObject(this.state.email, this.state.password);
     let url , credentials;     
     if(this.state.action  === 'Login'){
       url = CONFIG.API_ENDPOINT + '/admin/auth';
@@ -144,6 +173,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
   }
 
   render(){
+    
     return(
       <IonPage>
           <IonHeader>
@@ -169,17 +199,17 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
                       <img src={image} alt="logo" width="100%" />
                       <IonList>
                         <IonItem>
-                            <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email"></IonInput>
+                            <IonInput onIonChange={this.updateEmail} type="email" placeholder="Email" value={this.state.email}></IonInput>
                         </IonItem>
                         {this.state.action === 'SignUp' ?
                             <IonItem>
-                                <IonInput onIonChange={this.updateUserName} type="text" placeholder="Username"></IonInput>
+                                <IonInput onIonChange={this.updateUserName} type="text" placeholder="Username" value={this.state.username}></IonInput>
                             </IonItem>
                         :
                             null
                         }
                         <IonItem>
-                            <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" ></IonInput>
+                            <IonInput onIonChange={this.updatePassword} type="password" placeholder="Password" value={this.state.password} ></IonInput>
                         </IonItem>
                         <IonButton onClick={this.login} className="loginbutton">{this.state.action}</IonButton>
                       </IonList>

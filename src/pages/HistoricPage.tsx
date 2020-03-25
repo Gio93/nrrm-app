@@ -117,14 +117,14 @@ class HistoricPage extends Component <ChartProps, ChartState>  {
   render() {
     return (
       <IonPage>
-          <IonHeader>
-              <IonToolbar>
-                  <IonButtons slot="start">
-                      <IonMenuButton />
-                  </IonButtons>
-                  <IonTitle>Historic chart</IonTitle>
-              </IonToolbar>
-          </IonHeader>
+            <IonHeader>
+                <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonMenuButton />
+                    </IonButtons>
+                    <IonTitle>Historic chart</IonTitle>
+                </IonToolbar>
+            </IonHeader>
           <IonContent className = "chart-content">
               <IonLoading
                 isOpen={this.state.spinner}
