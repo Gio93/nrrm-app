@@ -2,9 +2,12 @@ import React from "react";
 import './RippleRoadDiagram.css'
 import * as Treeviz from 'treeviz';
 import { RippleDiagramNode } from "../declarations";
+// import { PropTypes } from 'react';
 
 
-type State = {data:Array<RippleDiagramNode>};
+
+type State = {data:Array<RippleDiagramNode>, border:any, color:any
+};
 
 class RippleRoadDiagram extends React.Component<any,State>{
 
@@ -16,10 +19,15 @@ class RippleRoadDiagram extends React.Component<any,State>{
   constructor(props:any){
     super(props);
     //this.ref = useRef(null);
+    this.getNodeTemplate = this.getNodeTemplate.bind(this);
     console.debug("constructor");
     ////debugger;
     this.state = {
-      data: props.data
+      data: props.data,
+      border: props.getBorderFromParent,
+      color: props.getColorFromParent
+      // getColorForType: props.getColorForType,
+      // getBorderColorForType: props.getBorderColorForType
     };
     
     if(this.state.data){
@@ -28,6 +36,8 @@ class RippleRoadDiagram extends React.Component<any,State>{
     }
 
     this.ref = React.createRef(); 
+    console.log("mis props del padre border", this.state.border);
+    console.log("mis props del padre color",  this.state.color);
   }
 
   componentDidMount(){
@@ -41,40 +51,51 @@ class RippleRoadDiagram extends React.Component<any,State>{
     }, 1000);
   }
   
-  getColorForType(type:any){
-    switch(type){
-      case 0:
-        return "#ccc";
-      case 1:
-        return "#FFC107";
-      case 2:
-        return "#8BC34A";
-      case 3:
-        return "#00BCD4";
-      default:
-        return "#ddd"
-    }
-  }
+  // getColorForType(type:any){
+  //   // console.log("que tipo es?", type);
+  //   switch(type){
+  //     case 0:
+  //       return "#ccc";
+  //     case 1:
+  //       return "#FFC107";
+  //     case 2:
+  //       return "#8BC34A";
+  //     case 3:
+  //       return "#00BCD4";
+  //     default:
+  //       return "#ddd"
+  //   }
+  // }
 
-  getBorderColorForType(type:any){
-    switch(type){
-      case 0:
-        return "#aaa";
-      case 1:
-        return "#FFB107";
-      case 2:
-        return "#8BA34A";
-      case 3:
-        return "#009CD4";
-      default:
-        return "#bbb"
-    }
-  }
+  // getBorderColorForType(type:any){
+  //   switch(type){
+  //     case 0:
+  //       return "#aaa";
+  //     case 1:
+  //       return "#FFB107";
+  //     case 2:
+  //       return "#8BA34A";
+  //     case 3:
+  //       return "#009CD4";
+  //     default:
+  //       return "#bbb"
+  //   }
+  // }
 
   getNodeTemplate(node:any){
-    let border = this.getBorderColorForType(node.data.type);
-    let color= this.getColorForType(node.data.type);
+    // console.log("Esto son las props", this.props);
+   
+    
+
+    // let border = this.getBorderColorForType(node.data.type);
+    let border = this.props.getBorderFromParent(node.data.type);
+    // let color= this.getColorForType(node.data.type);
+    let color = this.props.getColorFromParent(node.data.type);
     ////debugger;
+    // console.log("que nos trae aqui?(border)", border);
+    console.log("ESTO ES EL BORDE",border);
+    console.log("ESTO ES EL COLOR",color);
+    
     return `<div 
               class='nodeBox' 
               style='cursor:pointer;
@@ -90,7 +111,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
               ${(node.data.highlighted)?"box-shadow: 0px 0px 20px 9px "+border+";":"box-shadow:none;"}
               border-radius:20px;'>
                 <div style='border-left:2px;border-color:red;width:150px'>
-                  <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div>
+                  <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div> 
                 </div>
             </div>`;
   }
@@ -117,7 +138,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
       linkShape: "curve",
       linkColor: (nodeData) => "#B0BEC5" ,
       onNodeClick: (nodeData) => {
-        console.log(nodeData);
+        // console.log(nodeData);
         // if(this.props.onClickNode){
         //   Call father onClickNode
         //   this.props.onClickNode(nodeData);

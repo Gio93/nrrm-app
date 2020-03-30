@@ -321,3 +321,5 @@ export interface GraphDataChartBarSubItem {
 }
 
 export interface Filter  {key:string, value:string, type:number};
+
+export interface FilterAux  {key:string, value:string, type:number, typeColor:number};

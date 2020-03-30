@@ -7,7 +7,7 @@ import {
 import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
-import { RippleDiagramNode, Filter, searchableRippleInfo } from '../declarations';
+import { RippleDiagramNode, Filter, searchableRippleInfo, FilterAux } from '../declarations';
 import {  list, funnel, business, desktop, trophy } from 'ionicons/icons';
 
 type Props = { props:any };
@@ -34,6 +34,11 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
   const [showModalImplementationType, setShowModalImplementationType] = useState(false);
   const [showModalType, setShowModalType] = useState(false);
   const [showModalBusinessArea, setShowModalBusinessArea] = useState(false);
+  let [nonRepeatedValues, setNonRepeatValues] = useState([]);
+  // const backGroundColors:Array<string> = [
+  //   "black", "green", "yellow", "orange", "purple", "red", "pink", "grey", "blue"
+  // ];
+
 
   const [data, setData] = useState<Array<RippleDiagramNode>>(null);
   console.log("RippleDiagramPage");
@@ -51,19 +56,31 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     const setFilterData=(data: searchableRippleInfo[])=>{
       if(!data) return setData([]); 
         let aImp:Array<Filter>=[];
-        let aTypes:Array<Filter>=[];
+        let aTypes:Array<FilterAux>=[];
         let aBusinessAreas:Array<Filter>=[];
+        
         data.forEach( (element:searchableRippleInfo) => {
           aImp.push({key:element.implementationType.uuid,value:element.implementationType.implementationType,type:0});
-          aTypes.push({key:element.type.uuid,value:element.type.rippleType,type:1});
+          aTypes.push({key:element.type.uuid,value:element.type.rippleType,type:1, typeColor:element.type.id});
           aBusinessAreas.push({key:element.businessArea.uuid,value:element.businessArea.businessArea,type:2});
+          setNonRepeatValues (Array.from(new Set(aTypes.map(a => a.key)))
+          .map(id => {
+            return aTypes.find(a => a.key === id)
+          }));
+    
         });
+        
+        
+        // console.log("HECTOOOR", aTypes);
+        // console.log("NO REPETIDOS", nonRepeatedValues);
+
         setImplementationTypes(uniqueValues(aImp));
         setTypes(uniqueValues(aTypes));
         setBusinessAreas(uniqueValues(aBusinessAreas));
     }
 
     const uniqueValues=(aArray:Array<any>)=>{
+      // console.log(uniqueValues);
       return aArray.filter((thing, index, self) => self.findIndex(t => t.place === thing.place && t.key === thing.key) === index);
     }
 
@@ -169,6 +186,64 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       setAnimate(!animate);
     }
 
+     const  getColorForType = (type:any)=>{
+      switch(type){
+        case 0:
+          return "#ccc";
+        case 1:
+          return "#FFC107";
+        case 2:
+          return "#00BCD4";
+        case 3:
+          return "#8BC34A";
+        case 4:
+          return "#D35BD7";
+        case 5:
+          return "#734ccf";
+        case 6:
+          return "#ed785a";
+        case 7:
+          return "#ab5d0f";
+        case 8:
+          return "#0be6a8";
+        case 9:
+          return "#edba77";
+        case 10:
+          return "#bf3f43";
+        default:
+          return "#ddd"
+      }
+    };
+  
+    const  getBorderColorForType = (type:any)=>{
+      switch(type){
+        case 0:
+          return "#aaa";
+        case 1:
+          return "#FFB107";
+        case 2:
+          return "#00BCD4";
+        case 3:
+          return "#8BC34A";
+        case 4:
+          return "#D35BD7";
+        case 5:
+          return "#734ccf";
+        case 6:
+          return "#ed785a";
+        case 7:
+          return "#ab5d0f";
+        case 8:
+          return "#0be6a8";
+        case 9:
+          return "#edba77";
+        case 10:
+          return "#bf3f43";
+        default:
+          return "#bbb"
+        }
+      }
+      
     useEffect(() => {
       loadData();
     }, []);  
@@ -203,11 +278,23 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
             />
             <div className="ripple-diagram-wrapper">
               <RippleRoadDiagram onClickNode={(a:RippleDiagramNode) => onClickNode(a)}
-                data={data}
+                data={data} getColorFromParent = {getColorForType.bind(null)} getBorderFromParent = {getBorderColorForType.bind(null)}  
               />
             </div>
             <div className="legend">
-              <IonRow>
+              
+              {nonRepeatedValues.map((element, index) => {
+                
+                  return <IonRow>
+                      <IonCol size="auto">
+                        <div  className='legend__item' style={{backgroundColor: getColorForType(element.typeColor), borderColor:getBorderColorForType(element.typeColor) }}></div>
+                      </IonCol>
+                      <IonCol size="auto">
+                        <span>{element.value}</span> 
+                      </IonCol>
+                </IonRow>
+              })}
+              {/* <IonRow>
                 <IonCol size="auto">
                   <div className='legend__item legend__item--one'></div>
                 </IonCol>
@@ -230,7 +317,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                 <IonCol size="auto">
                   <span>Nimbl Digital Asset</span> 
                 </IonCol>
-              </IonRow>
+              </IonRow> */}
             </div>
             <div className="customStackedButtons">
               <IonFab vertical="bottom" horizontal="end" slot="fixed" >
