@@ -9,6 +9,7 @@ import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
 import { RippleDiagramNode, Filter, searchableRippleInfo, FilterAux } from '../declarations';
 import {  list, funnel, business, desktop, trophy } from 'ionicons/icons';
+import {getColorForType} from '../theme/colorfcns';
 
 type Props = { props:any };
 
@@ -186,63 +187,63 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       setAnimate(!animate);
     }
 
-     const  getColorForType = (type:any)=>{
-      switch(type){
-        case 0:
-          return "#ccc";
-        case 1:
-          return "#FFC107";
-        case 2:
-          return "#00BCD4";
-        case 3:
-          return "#8BC34A";
-        case 4:
-          return "#D35BD7";
-        case 5:
-          return "#734ccf";
-        case 6:
-          return "#ed785a";
-        case 7:
-          return "#ab5d0f";
-        case 8:
-          return "#0be6a8";
-        case 9:
-          return "#edba77";
-        case 10:
-          return "#bf3f43";
-        default:
-          return "#ddd"
-      }
-    };
+    //  const  getColorForType = (type:any)=>{
+    //   switch(type){
+    //     case 0:
+    //       return "#ccc";
+    //     case 1:
+    //       return "#FFC107";
+    //     case 2:
+    //       return "#00BCD4";
+    //     case 3:
+    //       return "#8BC34A";
+    //     case 4:
+    //       return "#D35BD7";
+    //     case 5:
+    //       return "#734ccf";
+    //     case 6:
+    //       return "#ed785a";
+    //     case 7:
+    //       return "#ab5d0f";
+    //     case 8:
+    //       return "#0be6a8";
+    //     case 9:
+    //       return "#edba77";
+    //     case 10:
+    //       return "#bf3f43";
+    //     default:
+    //       return "#ddd"
+    //   }
+    // };
   
-    const  getBorderColorForType = (type:any)=>{
-      switch(type){
-        case 0:
-          return "#aaa";
-        case 1:
-          return "#FFB107";
-        case 2:
-          return "#00BCD4";
-        case 3:
-          return "#8BC34A";
-        case 4:
-          return "#D35BD7";
-        case 5:
-          return "#734ccf";
-        case 6:
-          return "#ed785a";
-        case 7:
-          return "#ab5d0f";
-        case 8:
-          return "#0be6a8";
-        case 9:
-          return "#edba77";
-        case 10:
-          return "#bf3f43";
-        default:
-          return "#bbb"
-        }
-      }
+    // const  getBorderColorForType = (type:any)=>{
+    //   switch(type){
+    //     case 0:
+    //       return "#aaa";
+    //     case 1:
+    //       return "#FFB107";
+    //     case 2:
+    //       return "#00BCD4";
+    //     case 3:
+    //       return "#8BC34A";
+    //     case 4:
+    //       return "#D35BD7";
+    //     case 5:
+    //       return "#734ccf";
+    //     case 6:
+    //       return "#ed785a";
+    //     case 7:
+    //       return "#ab5d0f";
+    //     case 8:
+    //       return "#0be6a8";
+    //     case 9:
+    //       return "#edba77";
+    //     case 10:
+    //       return "#bf3f43";
+    //     default:
+    //       return "#bbb"
+    //     }
+    //   }
       
     useEffect(() => {
       loadData();
@@ -278,7 +279,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
             />
             <div className="ripple-diagram-wrapper">
               <RippleRoadDiagram onClickNode={(a:RippleDiagramNode) => onClickNode(a)}
-                data={data} getColorFromParent = {getColorForType.bind(null)} getBorderFromParent = {getBorderColorForType.bind(null)}  
+                data={data} getColorFromParent = {getColorForType.bind(null)} getBorderFromParent = {getColorForType.bind(null)}  
               />
             </div>
             <div className="legend">
@@ -287,7 +288,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                 
                   return <IonRow>
                       <IonCol size="auto">
-                        <div  className='legend__item' style={{backgroundColor: getColorForType(element.typeColor), borderColor:getBorderColorForType(element.typeColor) }}></div>
+                        <div  className='legend__item' style={{backgroundColor: getColorForType(element.typeColor), borderColor:getColorForType(element.typeColor) }}></div>
                       </IonCol>
                       <IonCol size="auto">
                         <span>{element.value}</span> 

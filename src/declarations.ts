@@ -20,6 +20,7 @@ export interface CardInfo {
   description:string;
   technologies:Array<TechnologiesInvolvedDto>;
   types : Array<RippleTypeDto>;
+  colorHandler : any,
   implementationType : Array<RippleImplementationTypeDto>;
   owner: string;
   progress: number;

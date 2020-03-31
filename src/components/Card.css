@@ -1,13 +1,12 @@
-
-.circularLabel{
+.circularLabel {
     background: #0D8585;
     padding: 5px;
-    color:white !important;
+    color: white !important;
     font-weight: bold;
     border-radius: 100%;
 }
 
-.customCard .customRipple{
+.customCard .customRipple {
     z-index: 99;
 }
 
@@ -15,6 +14,8 @@
     height: 300px;
 }
 
+
+/* 
 ion-chip.ion-color-nimbldigitalasset {
     background: var(--ion-color-nimbldigitalasset) !important;
     color: white;
@@ -29,4 +30,4 @@ ion-chip.ion-color-nimblsystemintegration {
 ion-chip.ion-color-backbone {
     background: var(--ion-color-backbone) !important;
     color: white;
-}
+} */

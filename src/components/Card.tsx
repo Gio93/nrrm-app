@@ -51,9 +51,10 @@ class Card extends React.Component<CardInfo, any> {
                             { this.props.types.map((x:RippleTypeDto) => {
                                 return (
                                     <IonChip 
-                                        style={{width: 'max-content'}}
+                                        style={{width: 'max-content', color: 'white',background:this.props.colorHandler(x.id)}}
                                         key={x.rippleType} 
-                                        color={x.rippleType.split(" ").join("").toLowerCase()}
+                                        // color={x.rippleType.split(" ").join("").toLowerCase()}
+                                        // color={this.props.colorHandler(x.id)}
                                     >
                                         <IonLabel>{x.rippleType}</IonLabel>
                                     </IonChip>
