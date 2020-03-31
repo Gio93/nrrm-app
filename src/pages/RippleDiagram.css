@@ -26,7 +26,9 @@
     left: 12px;
     width: auto;
     height: auto;
-    padding: 4px;
+    max-height: 112px;
+    overflow: auto;
+    padding: 5px;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 8px;
 }
@@ -35,21 +37,5 @@
     display: flex;
     height: 20px;
     width: 20px;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.legend__item--one {
-    border-color: var(--tech-yellow) !important;
-    background-color: var(--tech-yellow);
-}
-
-.legend__item--two {
-    border-color: var(--tech-green) !important;
-    background-color: var(--tech-green);
-}
-
-.legend__item--three {
-    border-color: var(--tech-blue) !important;
-    background-color: var(--tech-blue);
+    border-radius: 50%;
 }

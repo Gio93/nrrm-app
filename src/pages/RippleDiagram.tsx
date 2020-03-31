@@ -285,14 +285,13 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
             <div className="legend">
               
               {nonRepeatedValues.map((element, index) => {
-                
-                  return <IonRow>
-                      <IonCol size="auto">
-                        <div  className='legend__item' style={{backgroundColor: getColorForType(element.typeColor), borderColor:getColorForType(element.typeColor) }}></div>
-                      </IonCol>
-                      <IonCol size="auto">
-                        <span>{element.value}</span> 
-                      </IonCol>
+                return <IonRow>
+                  <IonCol size="auto">
+                    <div  className='legend__item' style={{backgroundColor: getColorForType(element.typeColor), borderColor:getColorForType(element.typeColor) }}></div>
+                  </IonCol>
+                  <IonCol size="auto">
+                    <span>{element.value}</span> 
+                  </IonCol>
                 </IonRow>
               })}
               {/* <IonRow>
