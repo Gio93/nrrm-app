@@ -42,14 +42,14 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
 
   const [data, setData] = useState<Array<RippleDiagramNode>>(null);
-  console.log("RippleDiagramPage");
 
     const loadData=()=>{
       setShowLoading(true);
-      myapi.doGet("/nrrm-ripple/ripple").then(data => {
+      // myapi.doGet("/nrrm-ripple/ripple").then(data => {
+      myapi.doGet("/nrrm-ripple/ripple?email=" + localStorage.getItem('email')).then(data => {
         setShowLoading(false);
         setFilterData(data);
-        ////debugger;
+        //debugger;
         return flatterDataSet(data);
       });
     }
@@ -71,10 +71,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     
         });
         
-        
-        // console.log("HECTOOOR", aTypes);
-        // console.log("NO REPETIDOS", nonRepeatedValues);
-
         setImplementationTypes(uniqueValues(aImp));
         setTypes(uniqueValues(aTypes));
         setBusinessAreas(uniqueValues(aBusinessAreas));
@@ -186,64 +182,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       // document.querySelector('body').addClass('modal-active');
       setAnimate(!animate);
     }
-
-    //  const  getColorForType = (type:any)=>{
-    //   switch(type){
-    //     case 0:
-    //       return "#ccc";
-    //     case 1:
-    //       return "#FFC107";
-    //     case 2:
-    //       return "#00BCD4";
-    //     case 3:
-    //       return "#8BC34A";
-    //     case 4:
-    //       return "#D35BD7";
-    //     case 5:
-    //       return "#734ccf";
-    //     case 6:
-    //       return "#ed785a";
-    //     case 7:
-    //       return "#ab5d0f";
-    //     case 8:
-    //       return "#0be6a8";
-    //     case 9:
-    //       return "#edba77";
-    //     case 10:
-    //       return "#bf3f43";
-    //     default:
-    //       return "#ddd"
-    //   }
-    // };
-  
-    // const  getBorderColorForType = (type:any)=>{
-    //   switch(type){
-    //     case 0:
-    //       return "#aaa";
-    //     case 1:
-    //       return "#FFB107";
-    //     case 2:
-    //       return "#00BCD4";
-    //     case 3:
-    //       return "#8BC34A";
-    //     case 4:
-    //       return "#D35BD7";
-    //     case 5:
-    //       return "#734ccf";
-    //     case 6:
-    //       return "#ed785a";
-    //     case 7:
-    //       return "#ab5d0f";
-    //     case 8:
-    //       return "#0be6a8";
-    //     case 9:
-    //       return "#edba77";
-    //     case 10:
-    //       return "#bf3f43";
-    //     default:
-    //       return "#bbb"
-    //     }
-    //   }
       
     useEffect(() => {
       loadData();
@@ -294,30 +232,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                   </IonCol>
                 </IonRow>
               })}
-              {/* <IonRow>
-                <IonCol size="auto">
-                  <div className='legend__item legend__item--one'></div>
-                </IonCol>
-                <IonCol size="auto">
-                  <span>Backbone</span> 
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol size="auto">
-                  <div className='legend__item legend__item--two'></div>
-                </IonCol>
-                <IonCol size="auto">
-                  <span>Nimbl System Integration</span> 
-                </IonCol>
-              </IonRow>
-              <IonRow>
-                <IonCol size="auto">
-                  <div className='legend__item legend__item--three'></div>
-                </IonCol>
-                <IonCol size="auto">
-                  <span>Nimbl Digital Asset</span> 
-                </IonCol>
-              </IonRow> */}
             </div>
             <div className="customStackedButtons">
               <IonFab vertical="bottom" horizontal="end" slot="fixed" >

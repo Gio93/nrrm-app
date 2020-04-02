@@ -98,20 +98,6 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
     return user;
   }
   
-  
-  login2= () => {
-    localStorage.setItem("token","1234");       
-    localStorage.setItem("username", this.state.username);
-    localStorage.setItem("isLogin", "true");
-    localStorage.setItem("email", this.state.email);
-   
-    this.event = new CustomEvent('loggedIn', {
-      detail: true,
-    });
-    window.dispatchEvent(this.event);
-    this.props.history.replace('/');
-  }
-
   login= () => {
     this.setObject(this.state.email, this.state.password);
     let url , credentials;     
@@ -158,7 +144,7 @@ class LoginPage extends React.Component <Props & RouteComponentProps<any>, State
         localStorage.setItem("refresh_token", result.refreshToken)
         localStorage.setItem("username", this.state.username);
         localStorage.setItem("isLogin", "true");
-        localStorage.setItem("email", this.state.username);
+        localStorage.setItem("email", this.state.email);
         
         this.event = new CustomEvent('loggedIn', {
           detail: true,

@@ -21,7 +21,8 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
   const loadData = async() => {
     try {
       setShowLoading(true);
-      const response: Array<RippleIndicator> = await myapi.doGet("/nrrm-ripple/indicator");
+      // const response: Array<RippleIndicator> = await myapi.doGet("/nrrm-ripple/indicator");
+      const response: Array<RippleIndicator> = await myapi.doGet("/nrrm-ripple/indicator?email=" + localStorage.getItem('email'));
       indicatorGroups(response);
     } catch (e) {
       console.log(e);

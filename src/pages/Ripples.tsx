@@ -40,7 +40,8 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
 
   const loadData=()=>{
       setShowLoading(true);
-      myapi.doGetwithRippleFilterCard("/nrrm-ripple/ripple").then(data => {
+      // myapi.doGetwithRippleFilterCard("/nrrm-ripple/ripple?email=" + localStorage.getItem('email')).then(data => {
+      myapi.doGet("/nrrm-ripple/ripple/getFilters?email=" + localStorage.getItem('email') + '&only_cards=true').then(data=>{
         setShowLoading(false);
         if(!data) return setData([]); 
         let aImp:Array<Filter>=[];
@@ -72,40 +73,6 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
       
     }
 
-    // async function loadFilteredData(textToFilter:string) {
-    //   const loadedData = await getDataFilteredFromAPI(textToFilter);
-    //     console.log(loadedData);
-    //     setData(loadedData);
-    //   }
-    // const  getColorForType = (type:any)=>{
-    //   switch(type){
-    //     case 0:
-    //       return "#ccc";
-    //     case 1:
-    //       return "#FFC107";
-    //     case 2:
-    //       return "#00BCD4";
-    //     case 3:
-    //       return "#8BC34A";
-    //     case 4:
-    //       return "#D35BD7";
-    //     case 5:
-    //       return "#734ccf";
-    //     case 6:
-    //       return "#ed785a";
-    //     case 7:
-    //       return "#ab5d0f";
-    //     case 8:
-    //       return "#0be6a8";
-    //     case 9:
-    //       return "#edba77";
-    //     case 10:
-    //       return "#bf3f43";
-    //     default:
-    //       return "#ddd"
-    //   }
-    // };
-
   useEffect(() => {
     loadData();
   },[]);
@@ -121,14 +88,12 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         return acc+"&businessArea="+current.key;
       }else return "";
     },"");
-    let terminationUrl = sfilters.length>0? sfilters+ "&only_cards=true" : "only_cards=true"
-    myapi.doGet("/nrrm-ripple/ripple/getFilters?"+terminationUrl).then(data=>{
+    let terminationUrl = sfilters.length > 0 ? sfilters + "&only_cards=true" : "&only_cards=true"
+    // myapi.doGet("/nrrm-ripple/ripple/getFilters?"+terminationUrl).then(data=>{
+      myapi.doGet("/nrrm-ripple/ripple/getFilters?" + terminationUrl + '&email=' + localStorage.getItem('email')).then(data=>{
       setShowLoading(false);
       return setData(data);
-    })
-
-    
-    
+    });
   }
 
   const resetFilter = (selectedFilter:Filter)=>{
