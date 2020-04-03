@@ -36,10 +36,9 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
   const [showModalType, setShowModalType] = useState(false);
   const [showModalBusinessArea, setShowModalBusinessArea] = useState(false);
   let [nonRepeatedValues, setNonRepeatValues] = useState([]);
-  // const backGroundColors:Array<string> = [
-  //   "black", "green", "yellow", "orange", "purple", "red", "pink", "grey", "blue"
-  // ];
-
+  let [maxLevels, setMaxLevels] = useState<number>(0);
+  let auxMaxLevels: number = 0;
+  let trackLevels: number = 0;
 
   const [data, setData] = useState<Array<RippleDiagramNode>>(null);
 
@@ -146,17 +145,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
         }
       ];
       for(let i = 0; i < data.length; i++){
-
-        let auxHasChildren = false;
-        for (let j = 0; j < data.length; j++) {
-          if (data[j].predecessor !== null){
-            if (data[i].id === data[j].predecessor.id){
-              auxHasChildren = true;
-              break;
-            }
-          }
-        }
-
         flatData.push({
           id:data[i].id,
           name:data[i].name,
@@ -164,16 +152,45 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           father: (data[i].predecessor) ? data[i].predecessor.id : 0,
           type: (data[i].type)?data[i].type.id : 0,
           isOpened:true,
-          // hasChildren: !data.find((e)=>e.id === ((data[i].predecessor)?data[i].predecessor.id:0)),
-          hasChildren: auxHasChildren,
+          hasChildren: data[i].successor.length > 0 ? true : false,
           highlighted: data[i].selected,
           typeUUID:data[i].type.uuid,
           implementationTypeUUID:data[i].implementationType.uuid,
           businessAreaUUID:data[i].businessArea.uuid
         });
       }
-      setData(flatData.sort((a,b)=>a.id-b.id));
 
+
+      let lastChildren = data.filter(node => node.successor.length === 0);
+      console.log('lastChildren', lastChildren);
+      lastChildren.forEach((node) => {
+        let levels = 0;
+        levels = trackPredecessor(node, data);
+        if (trackLevels === 0) {
+          auxMaxLevels = trackLevels;
+        }
+        else {
+          if (trackLevels > auxMaxLevels) {
+            auxMaxLevels = trackLevels;
+          }
+        }
+        trackLevels = 0;
+      });
+      auxMaxLevels++;
+      setMaxLevels(auxMaxLevels);
+      console.log('Max levels', auxMaxLevels);
+      setData(flatData.sort((a,b)=>a.id-b.id));
+    }
+
+    function trackPredecessor(node: searchableRippleInfo, data: Array<searchableRippleInfo>): number {
+      if (node.predecessor === null) {
+        trackLevels++;
+        return trackLevels
+      }
+      else {
+        trackLevels++;
+        trackPredecessor(data.find(item => item.uuid === node.predecessor.uuid), data);
+      }
     }
 
     const onClickNode = (node : RippleDiagramNode)=>{
@@ -216,8 +233,12 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
               duration={3000}
             />
             <div className="ripple-diagram-wrapper">
-              <RippleRoadDiagram onClickNode={(a:RippleDiagramNode) => onClickNode(a)}
-                data={data} getColorFromParent = {getColorForType.bind(null)} getBorderFromParent = {getColorForType.bind(null)}  
+              <RippleRoadDiagram 
+                onClickNode={(a:RippleDiagramNode) => onClickNode(a)}
+                data={data} 
+                getColorFromParent = {getColorForType.bind(null)} 
+                getBorderFromParent = {getColorForType.bind(null)} 
+                maxLevels = {maxLevels}
               />
             </div>
             <div className="legend">

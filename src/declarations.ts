@@ -40,6 +40,8 @@ export interface RippleInfo{
 
     predecessor: RippleInfo;
 
+    successor: RippleInfo[];
+
     smallDescription:string;
 
     progressDegree:number;

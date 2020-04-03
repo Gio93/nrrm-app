@@ -4,9 +4,10 @@ import * as Treeviz from 'treeviz';
 import { RippleDiagramNode } from "../declarations";
 // import { PropTypes } from 'react';
 
-
-
-type State = {data:Array<RippleDiagramNode>, border:any, color:any
+type State = {
+  data: Array<RippleDiagramNode>, 
+  border: any, 
+  color: any,
 };
 
 class RippleRoadDiagram extends React.Component<any,State>{
@@ -15,19 +16,18 @@ class RippleRoadDiagram extends React.Component<any,State>{
   myTree:any;
   allData:Array<RippleDiagramNode>;
   tmpData:Array<RippleDiagramNode>;
+  maxLevels: number = 0;
 
   constructor(props:any){
     super(props);
     //this.ref = useRef(null);
     this.getNodeTemplate = this.getNodeTemplate.bind(this);
-    console.debug("constructor");
-    ////debugger;
+    // console.debug("constructor");
+    // debugger;
     this.state = {
       data: props.data,
       border: props.getBorderFromParent,
-      color: props.getColorFromParent
-      // getColorForType: props.getColorForType,
-      // getBorderColorForType: props.getBorderColorForType
+      color: props.getColorFromParent,
     };
     
     if(this.state.data){
@@ -35,66 +35,28 @@ class RippleRoadDiagram extends React.Component<any,State>{
         this.tmpData = this.state.data.slice();
     }
 
-    this.ref = React.createRef(); 
-    console.log("mis props del padre border", this.state.border);
-    console.log("mis props del padre color",  this.state.color);
+    this.ref = React.createRef();
   }
 
   componentDidMount(){
     console.debug("componentDidMount::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     setTimeout(() => {
       console.debug("Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientHeight);
-      ////debugger;
+      // debugger;
       if(this.ref.current.clientHeight+this.ref.current.clientHeight>0){
+        console.log('paint tree', this.state.data);
         this.paintDiagram();
       }
     }, 1000);
   }
   
-  // getColorForType(type:any){
-  //   // console.log("que tipo es?", type);
-  //   switch(type){
-  //     case 0:
-  //       return "#ccc";
-  //     case 1:
-  //       return "#FFC107";
-  //     case 2:
-  //       return "#8BC34A";
-  //     case 3:
-  //       return "#00BCD4";
-  //     default:
-  //       return "#ddd"
-  //   }
-  // }
-
-  // getBorderColorForType(type:any){
-  //   switch(type){
-  //     case 0:
-  //       return "#aaa";
-  //     case 1:
-  //       return "#FFB107";
-  //     case 2:
-  //       return "#8BA34A";
-  //     case 3:
-  //       return "#009CD4";
-  //     default:
-  //       return "#bbb"
-  //   }
-  // }
-
   getNodeTemplate(node:any){
     // console.log("Esto son las props", this.props);
-   
-    
-
     // let border = this.getBorderColorForType(node.data.type);
     let border = this.props.getBorderFromParent(node.data.type);
     // let color= this.getColorForType(node.data.type);
     let color = this.props.getColorFromParent(node.data.type);
-    ////debugger;
-    // console.log("que nos trae aqui?(border)", border);
-    console.log("ESTO ES EL BORDE",border);
-    console.log("ESTO ES EL COLOR",color);
+    //debugger;
     
     return `<div 
               class='nodeBox' 
@@ -126,8 +88,8 @@ class RippleRoadDiagram extends React.Component<any,State>{
       hasPan:true,
       nodeWidth:20,
       nodeHeight:20,
-      marginLeft:12,
-      marginRight:4,
+      marginLeft:20,
+      marginRight:20,
       marginTop:0,
       marginBottom:0,
       mainAxisNodeSpacing:"auto",
@@ -138,23 +100,6 @@ class RippleRoadDiagram extends React.Component<any,State>{
       linkShape: "curve",
       linkColor: (nodeData) => "#B0BEC5" ,
       onNodeClick: (nodeData) => {
-        // console.log(nodeData);
-        // if(this.props.onClickNode){
-        //   Call father onClickNode
-        //   this.props.onClickNode(nodeData);
-        // }
-        // //debugger;
-        // this.removeChildrenFromParent(nodeData.data.id,[]);
-        // while(let found = this.state.data.findIndex((a)=>a.father===nodeData.data.id)!==-1){
-        //   this.state.data.splice(found,1);
-        // }
-        // this.setState({data:this.state.data.splice(1,1)});
-        // this.setState({data:this.state.data.filter((el)=>el.father!==nodeData.data.id)});
-        // this.state.data.push({ id: this.state.data.length+1, text_1: "new!", text_2: "new", father: nodeData.id,  color:"#00BCD4" });
-        // this.updateData();
-        // if(nodeData.id > 2)
-        //   this.myTree.refresh(this.allData);
-        // else this.updateData();
         if(this.findIfShowingChildren(nodeData.data.id)){
           // close
           let nArray = this.removeChildrenFromParent(nodeData.data.id);
@@ -185,12 +130,14 @@ class RippleRoadDiagram extends React.Component<any,State>{
     let tmpData = this.tmpData.slice();
     let children = tmpData.filter((el) => el.father === nodeId);
     let indices:Array<number> = [];
-    console.log("CHILDREN OF "+nodeId+" are "+JSON.stringify(children));
+    console.log("CHILDREN OF "+nodeId+" are", children);
     children.forEach((node) => {
       console.log("looking for children of "+node.id);
       indices.push(tmpData.findIndex((a) => a.id === node.id));
-      if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
-        indices = indices.concat(this.getIndicesFromChildrenForRemove(node.id))
+      if (indices && indices.length>0) {
+        console.log("found ", indices);
+        indices = indices.concat(this.getIndicesFromChildrenForRemove(node.id));
+      }
     });
     return indices;
   }
@@ -199,12 +146,14 @@ class RippleRoadDiagram extends React.Component<any,State>{
     let tmpData = this.allData.slice();
     let children = tmpData.filter((el) => el.father === nodeId);
     let indices:Array<number> = [];
-    console.log("CHILDREN OF "+nodeId+" are "+JSON.stringify(children));
+    console.log("CHILDREN OF "+nodeId+" are", children);
     children.forEach((node)=>{
       indices.push(tmpData.findIndex((a)=>a.id===node.id));
       console.log("looking for children of "+node.id);
-      if(indices && indices.length>0)console.log("found "+JSON.stringify(indices));
-        indices=indices.concat(this.getIndicesFromChildren(node.id))
+      if (indices && indices.length>0) {
+        console.log("found "+JSON.stringify(indices));
+        indices=indices.concat(this.getIndicesFromChildren(node.id));
+      }
     });
     return indices;
   }
@@ -212,8 +161,9 @@ class RippleRoadDiagram extends React.Component<any,State>{
   addChildrenFromParent(nodeId:number){
     let tmpData:Array<RippleDiagramNode> = []; 
     let toAdd = this.getIndicesFromChildren(nodeId);
-    for (var i = toAdd.length -1; i >= 0; i--)
+    for (var i = toAdd.length -1; i >= 0; i--) {
       tmpData.push(this.allData[toAdd[i]]);
+    }
     return tmpData;
   }
 
@@ -221,23 +171,29 @@ class RippleRoadDiagram extends React.Component<any,State>{
     let tmpData = this.tmpData.slice(); 
     let toRemove = this.getIndicesFromChildrenForRemove(nodeId);
     toRemove.sort(function(a,b){ return b - a; });
-    for (var i = 0; i < toRemove.length ; i++)
+    for (var i = 0; i < toRemove.length ; i++) {
       tmpData.splice(toRemove[i],1);
+    }
     return tmpData;
   }
 
   updateData(){
     if(!this.myTree || !this.state.data) return;
     // Display the tree based on the data
+    console.log('Tree refresh', this.state.data);
     this.myTree.refresh(this.state.data);
-    ////debugger;
+    //debugger;
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
-   // //debugger;
+    //debugger;
     console.debug("componentDidUpdate::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     if(prevState.data!== this.props.data){
-      if(this.props.data)this.setState({data:this.props.data});
+      if (this.props.data) {
+        this.setState({
+          data: this.props.data
+        });
+      }
       if(this.state.data){
         this.allData = this.state.data.slice();
         this.tmpData = this.state.data.slice();
@@ -250,7 +206,10 @@ class RippleRoadDiagram extends React.Component<any,State>{
 
   render() {
     return (
-      <div ref={this.ref} id="tree"></div>
+      <div ref={this.ref} id="tree" style={{
+        width: this.props.maxLevels > 0 ? (this.props.maxLevels * 200) + 'px' : '90%',
+        margin: this.props.maxLevels * 200 > window.innerWidth ? '0 5%' : '0 auto'
+      }}></div>
     );
   }
 };
