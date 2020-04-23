@@ -25,7 +25,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
     const [selectedRippleId, setSelectedRippleId] = useState(Params.match.params.ripple);
     
 
-    const SECTIONS:Array<string> = ["AS-IS","Solution","Challenge","Value","Benefits","Ripple Information","Exponential Technologies","Roles", "Numbers", "Complexity"];
+    const SECTIONS:Array<string> = ["AS-IS","Solution","Challenge","Value","Benefits","Ripple Information","Exponential Technologies","Roles", "Numbers", "Complexity", "Project"];
     const [ionSelectedSegmentKey, setIonSelectedSegmentKey] = useState("part0");
     const myapi = new API(Params);
 
@@ -36,17 +36,19 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
         myapi.doGet("/nrrm-ripple/ripple/findOne/"+selectedRippleId).then(data => {
           return setData(data);
         });
-
-        // async function loadData() {
-        // const loadedData = await getDataFromAPI();
-        //   setData(loadedData);
-        // }
-        // console.log("selectedCard :: "+data);
-        // //if(!data){
-        //   loadData();
-        // //}
         
-    },[]);  
+        // async function loadData() {
+          // const loadedData = await getDataFromAPI();
+          //   setData(loadedData);
+          // }
+          // console.log("selectedCard :: "+data);
+          // //if(!data){
+            //   loadData();
+            // //}
+            console.log("ESTO ES LA DATAA", data);
+        
+    },[]
+    );  
 
     const getText=(key:string)=>{
       if(!data)return;
@@ -75,7 +77,20 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
     const getComplexityItems=()=>{
       let temp:Array<KeyAndValue> = [];
       temp.push({key:"Complexity ("+data.complexityPercentage+"%)",numberValue:parseFloat(data.complexityPercentage as any)/100});
-      temp.push({key:"Impact ("+data.impactPercentage+"%)",numberValue:parseFloat(data.impactPercentage as any)/100});
+      temp.push({key:"Business Impact ("+data.impactPercentage+"%)",numberValue:parseFloat(data.impactPercentage as any)/100});
+      return temp;
+    }
+
+    const getProjectItems=()=>{
+      let temp:Array<KeyAndValue> = [];
+      temp.push({key:"Responsable de ejecución ("+data.complexityPercentage+"%)",numberValue:parseFloat(data.complexityPercentage as any)/100});
+      temp.push({key:"Responsable de ejecución ("+data.rippleOwner+")"});
+      temp.push({key:"Progress Degree ("+data.progressDegree+")"});
+      temp.push({key:"Initial Date ("+data.projectInitDate+")"});
+      temp.push({key:"End Date ("+data.projectEndDate+")"});
+      temp.push({key:"Project Status ("+data.projectStatus+")"});
+      temp.push({key:"Project Risks ("+data.projectRisks+")"});
+      // temp.push({key:"Project Risks ", data.projectRisks});
       return temp;
     }
 
@@ -123,11 +138,20 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             let color = (x.numberValue > 0.7) ? "success" : (x.numberValue > 0.4) ? "warning" : "danger";  
             return (<IonItem key={"com"+i} className="ri"><IonLabel position="stacked">{x.key}</IonLabel><IonProgressBar value={x.numberValue} color={color}></IonProgressBar></IonItem>);
           });
+          case "Project":
+          return getProjectItems().map((x,i)=>{
+            console.log("ESTO ES LA X", x);
+            // return (<IonItem key={"num"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonLabel>{x.value}</IonLabel></IonItem>);
+            return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+
+          });
+
       }
     }
+    
 
     return (
-        <IonPage>
+      <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
@@ -142,6 +166,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
                       className="rippleSegment"
                       onIonChange={e => {
                         console.log('Segment selected', e.detail.value);
+                        console.log('QUE ES ESTOO??', e.detail.value);
                       }}
                       scrollable
                     >

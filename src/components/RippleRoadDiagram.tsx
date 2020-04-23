@@ -1,22 +1,32 @@
-import React from "react";
+import React , { useState }  from "react";
 import './RippleRoadDiagram.css'
 import * as Treeviz from 'treeviz';
 import { RippleDiagramNode } from "../declarations";
+import { IonPopover, IonButton } from '@ionic/react';
 // import { PropTypes } from 'react';
+import { PopoverExample } from './PopoverExample';
 
 type State = {
   data: Array<RippleDiagramNode>, 
   border: any, 
   color: any,
+  
 };
 
 class RippleRoadDiagram extends React.Component<any,State>{
 
+  
   ref:any;
   myTree:any;
   allData:Array<RippleDiagramNode>;
   tmpData:Array<RippleDiagramNode>;
   maxLevels: number = 0;
+  ev:any;
+  nodeValue:any;
+  selectedNode: RippleDiagramNode;
+  nodeData: number;
+
+
 
   constructor(props:any){
     super(props);
@@ -28,13 +38,13 @@ class RippleRoadDiagram extends React.Component<any,State>{
       data: props.data,
       border: props.getBorderFromParent,
       color: props.getColorFromParent,
+      
     };
     
     if(this.state.data){
         this.allData = this.state.data.slice();
         this.tmpData = this.state.data.slice();
     }
-
     this.ref = React.createRef();
   }
 
@@ -67,16 +77,20 @@ class RippleRoadDiagram extends React.Component<any,State>{
               flex-direction:column;
               justify-content:center;
               align-items:center;
-              border-color:${node.data.hasChildren && !node.data.isOpened && !node.children ? 'gray' : border};
-              border-width: ${node.data.hasChildren && !node.data.isOpened && !node.children ? '5px' : '1px'};
+              border-color:${node.data.isSelected ? 'gray' : border};
+              border-width: ${node.data.isSelected ? '5px' : '1px'};
               background-color:${color};
               ${(node.data.highlighted)?"box-shadow: 0px 0px 20px 9px "+border+";":"box-shadow:none;"}
               border-radius:20px;'>
                 <div style='border-left:2px;border-color:red;width:150px'>
-                  <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div> 
+                  <div style='margin-bottom:100px;text-align: center;'>${node.data.name} </div>
                 </div>
             </div>`;
   }
+
+
+  // border-color:${node.data.hasChildren && !node.data.isOpened && !node.children ? 'gray' : border};
+  // border-width: ${node.data.hasChildren && !node.data.isOpened && !node.children ? '5px' : '1px'};
 
   paintDiagram () {
     this.myTree = Treeviz.create({
@@ -106,7 +120,8 @@ class RippleRoadDiagram extends React.Component<any,State>{
           let obj=nArray.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=false;
           this.tmpData=nArray;
-          this.myTree.refresh(this.tmpData);
+          // this.myTree.refresh(this.tmpData);
+          
         }else{
           // open
           let nArray = this.addChildrenFromParent(nodeData.data.id);
@@ -114,12 +129,51 @@ class RippleRoadDiagram extends React.Component<any,State>{
           let obj=this.tmpData.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=true;
           this.tmpData.sort(function(a,b){ return a.id - b.id; });
-          this.myTree.refresh(this.tmpData);
+          // this.myTree.refresh(this.tmpData);
         }
+        this.setSelectedNode(nodeData.data.id);
+        console.log("EEEEEEE", nodeData.data.id);
+        this.myTree.refresh(this.tmpData);
       }
     });
     this.updateData();
   }
+
+  // presentButton(ev:any) {
+  //   const fabButton = Object.assign(document.createElement('ion-fab-button'), {
+  //     data: this.props.data,
+  //     show: true,
+  //     component: 'ion-fab-button',
+  //     event: ev,
+  //     translucent: true
+  //   });
+  //   document.body.appendChild(fabButton);
+  //   console.log("EEEEEY IM THE DATA OF THIS MA MEN", this.props.data)
+  //   return fabButton;
+  // }
+
+  
+
+  setSelectedNode(nodeId: number) {
+    let node = this.tmpData.find((a)=>a.id === nodeId);
+    this.allData.forEach((node) => {
+      node.isSelected = false;
+    });
+    node.isSelected = true;
+    this.selectedNode = node;
+    this.sendData();
+
+  }
+
+  sendData() {
+    this.props.parentCallback(this.selectedNode);
+    console.log("NODEDATAAA", this.selectedNode)
+}
+  
+  navigateNode(url?:any) {
+    console.log("NavigateNode function");
+  }
+
 
   findIfShowingChildren(nodeId:number){
     let children = this.tmpData.filter((el)=>el.father===nodeId);
@@ -209,9 +263,18 @@ class RippleRoadDiagram extends React.Component<any,State>{
       <div ref={this.ref} id="tree" style={{
         width: this.props.maxLevels > 0 ? (this.props.maxLevels * 200) + 'px' : '90%',
         margin: this.props.maxLevels * 200 > window.innerWidth ? '0 5%' : '0 auto'
-      }}></div>
+      }}>
+      </div>
     );
   }
 };
 
 export default RippleRoadDiagram;
+
+// const NoAuthWebsite = ({ nodeId }) => {
+//   const [nodeValue, setNodeValue] = useState("");
+//   return (
+//         setNodeValue(nodeId)
+//   );
+//   }
+

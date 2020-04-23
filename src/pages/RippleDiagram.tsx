@@ -8,7 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import  RippleRoadDiagram  from "../components/RippleRoadDiagram";
 import { RippleDiagramNode, Filter, searchableRippleInfo, FilterAux } from '../declarations';
-import {  list, funnel, business, desktop, trophy } from 'ionicons/icons';
+import {  funnel, business, desktop, trophy, informationCircle } from 'ionicons/icons';
 import {getColorForType} from '../theme/colorfcns';
 
 type Props = { props:any };
@@ -35,12 +35,14 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
   const [showModalImplementationType, setShowModalImplementationType] = useState(false);
   const [showModalType, setShowModalType] = useState(false);
   const [showModalBusinessArea, setShowModalBusinessArea] = useState(false);
+  const [selectedNodeData, setSelectedNodeData] = useState<any>(null);
   let [nonRepeatedValues, setNonRepeatValues] = useState([]);
   let [maxLevels, setMaxLevels] = useState<number>(0);
   let auxMaxLevels: number = 0;
   let trackLevels: number = 0;
 
   const [data, setData] = useState<Array<RippleDiagramNode>>(null);
+  const [originData, setOriginData] = useState<Array<any>>(null);
 
     const loadData=()=>{
       setShowLoading(true);
@@ -48,10 +50,20 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       myapi.doGet("/nrrm-ripple/ripple?email=" + localStorage.getItem('email')).then(data => {
         setShowLoading(false);
         setFilterData(data);
-        //debugger;
+        setOriginData(data);
         return flatterDataSet(data);
       });
     }
+
+    const callbackFunction = (nodeData:any) => {
+      let selectedData = null;
+      selectedData = originData.find(node => node.id === nodeData.id);
+      setSelectedNodeData(selectedData);
+      console.log("CHILDdATA", selectedNodeData);
+      console.log("SELECTED DATA", selectedData);
+      console.log(selectedNodeData);
+     
+}
 
     const setFilterData=(data: searchableRippleInfo[])=>{
       if(!data) return setData([]); 
@@ -67,9 +79,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           .map(id => {
             return aTypes.find(a => a.key === id)
           }));
-    
         });
-        
         setImplementationTypes(uniqueValues(aImp));
         setTypes(uniqueValues(aTypes));
         setBusinessAreas(uniqueValues(aBusinessAreas));
@@ -141,6 +151,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           highlighted : false,
           typeUUID:"",
           implementationTypeUUID:"",
+          isSelected: false,
           businessAreaUUID:""
         }
       ];
@@ -156,6 +167,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
           highlighted: data[i].selected,
           typeUUID:data[i].type.uuid,
           implementationTypeUUID:data[i].implementationType.uuid,
+          isSelected: false,
           businessAreaUUID:data[i].businessArea.uuid
         });
       }
@@ -206,6 +218,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
     return (
         <IonPage>
+          
           <IonHeader>
             
             <IonToolbar>
@@ -237,8 +250,10 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                 onClickNode={(a:RippleDiagramNode) => onClickNode(a)}
                 data={data} 
                 getColorFromParent = {getColorForType.bind(null)} 
-                getBorderFromParent = {getColorForType.bind(null)} 
+                getBorderFromParent = {getColorForType.bind(null)}
                 maxLevels = {maxLevels}
+                parentCallback = {callbackFunction.bind(null)}
+                
               />
             </div>
             <div className="legend">
@@ -255,11 +270,20 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
               })}
             </div>
             <div className="customStackedButtons">
-              <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+            {selectedNodeData !=null ?
+                <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+                  <IonFabButton routerLink={"/ripple/" + selectedNodeData.uuid}>
+                    <IonIcon icon={informationCircle} color="light"/>
+                  </IonFabButton> 
+                </IonFab> 
+                :
+                null
+              }
+              {/* <IonFab vertical="bottom" horizontal="end" slot="fixed" >
                 <IonFabButton routerLink="/ripple">
                   <IonIcon icon={list} color="light"/>
                 </IonFabButton> 
-              </IonFab> 
+              </IonFab>  */}
               <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
                 <IonFabButton color="secondary">
                   <IonIcon icon={funnel} color="light"/>

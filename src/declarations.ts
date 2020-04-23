@@ -71,6 +71,22 @@ export interface RippleInfo{
     
     impactPercentage:number;
     //Impact percentage of the ripple
+
+    projectResponsibleExecution:string;
+    //Project Responsible Execution
+
+    projectInitDate:number;
+    //Project Init Date
+
+    projectEndDate:number;
+    //Project End Date
+
+    projectStatus:number;
+    //Project Status
+
+    projectRisks:number;
+    //Project Risk
+    
     
     reefBreak:boolean;
     //Reef break of the ripple
@@ -250,6 +266,7 @@ export interface RippleDiagramNode{
   type:number,
   hasChildren:boolean,
   isOpened:boolean,
+  isSelected:boolean,
   highlighted:boolean,
   typeUUID:string,
   implementationTypeUUID:string,
