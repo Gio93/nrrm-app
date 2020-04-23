@@ -52,21 +52,15 @@ class RippleRoadDiagram extends React.Component<any,State>{
     console.debug("componentDidMount::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     setTimeout(() => {
       console.debug("Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientHeight);
-      // debugger;
       if(this.ref.current.clientHeight+this.ref.current.clientHeight>0){
-        console.log('paint tree', this.state.data);
         this.paintDiagram();
       }
     }, 1000);
   }
   
   getNodeTemplate(node:any){
-    // console.log("Esto son las props", this.props);
-    // let border = this.getBorderColorForType(node.data.type);
     let border = this.props.getBorderFromParent(node.data.type);
-    // let color= this.getColorForType(node.data.type);
     let color = this.props.getColorFromParent(node.data.type);
-    //debugger;
     
     return `<div 
               class='nodeBox' 
@@ -132,7 +126,6 @@ class RippleRoadDiagram extends React.Component<any,State>{
           // this.myTree.refresh(this.tmpData);
         }
         this.setSelectedNode(nodeData.data.id);
-        console.log("EEEEEEE", nodeData.data.id);
         this.myTree.refresh(this.tmpData);
       }
     });
@@ -164,12 +157,9 @@ class RippleRoadDiagram extends React.Component<any,State>{
     let tmpData = this.tmpData.slice();
     let children = tmpData.filter((el) => el.father === nodeId);
     let indices:Array<number> = [];
-    console.log("CHILDREN OF "+nodeId+" are", children);
     children.forEach((node) => {
-      console.log("looking for children of "+node.id);
       indices.push(tmpData.findIndex((a) => a.id === node.id));
       if (indices && indices.length>0) {
-        console.log("found ", indices);
         indices = indices.concat(this.getIndicesFromChildrenForRemove(node.id));
       }
     });
@@ -180,12 +170,9 @@ class RippleRoadDiagram extends React.Component<any,State>{
     let tmpData = this.allData.slice();
     let children = tmpData.filter((el) => el.father === nodeId);
     let indices:Array<number> = [];
-    console.log("CHILDREN OF "+nodeId+" are", children);
     children.forEach((node)=>{
       indices.push(tmpData.findIndex((a)=>a.id===node.id));
-      console.log("looking for children of "+node.id);
       if (indices && indices.length>0) {
-        console.log("found "+JSON.stringify(indices));
         indices=indices.concat(this.getIndicesFromChildren(node.id));
       }
     });
@@ -214,13 +201,10 @@ class RippleRoadDiagram extends React.Component<any,State>{
   updateData(){
     if(!this.myTree || !this.state.data) return;
     // Display the tree based on the data
-    console.log('Tree refresh', this.state.data);
     this.myTree.refresh(this.state.data);
-    //debugger;
   }
 
   componentDidUpdate(prevProps:any, prevState:any){
-    //debugger;
     console.debug("componentDidUpdate::Height:"+this.ref.current.clientHeight+" width:"+this.ref.current.clientWidth);
     if(prevState.data!== this.props.data){
       if (this.props.data) {

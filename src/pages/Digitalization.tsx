@@ -45,7 +45,6 @@ const DigitalizationGrade:React.FC<Props & RouteComponentProps<any>> = (Params) 
         });
       }
     }
-    console.log('Loaded core data', CoreData);
 
     dataFormat = [...CoreData];
     dataFormat.columns =["State", "current" ,"remainder"];

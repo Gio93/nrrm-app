@@ -29,7 +29,6 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
           let indicator = Params.location.state;
 
           if(indicator.indicators){
-            console.log("Inicio de formateo de datos, con variable:", indicator)
       
             let valuesArray:Array<number> = [];
             let numberLabels:Array<string> = [];
@@ -71,7 +70,6 @@ const Digitalization2:React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
   useEffect(() => {
     handlerSpinner(true);
-    console.log("RENDERIZO Digitalization2");
     loadData();
     
  }, []);

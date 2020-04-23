@@ -84,7 +84,6 @@ export class DigitalionChart2 extends Component<any, State> {
                                     onClick={() => {
                                         this.setState({showAlert: true});
                                         this.setState({alerMessage: item.name});
-                                        console.log(this.state.showAlert);
                                     }}
                                     slot="end" 
                                     fill="clear"

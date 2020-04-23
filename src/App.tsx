@@ -49,13 +49,7 @@ const App: React.FC = () => {
         <Menu/>
           <IonRouterOutlet id="main" >
             
-            <Route path="/"  component={Home} exact={true} 
-            // render={props => {
-            //   console.log("AAAAAAAA : "+props+""+isAuthed);
-            //   if (!props) return <></>;
-            //   return isAuthed ? <Home /> : <LoginPage props={props} history={props!.history} location={props!.location} match={props!.match}/>;
-            // }}
-            />
+            <Route path="/"  component={Home} exact={true} />
             <Route exact path="/login" component={LoginPage} /> 
             <Route exact path="/ripple/" component={RippleList} />
             <Route path="/ripple/:ripple" component={RipplePage} />

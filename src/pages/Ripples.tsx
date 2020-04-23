@@ -120,7 +120,6 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
 
   const onSearch = (e:any)=>{
     let textdata = e.currentTarget.value
-    console.log(textdata);
     if(textdata.length>0){
       //search
       loadFilteredData(textdata);
@@ -136,7 +135,6 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
       
     const items = data.data.map((x:RippleInfo) => {
       const navigateToDetail = () => {
-        console.log("navigate!");
         history2.push("/ripple/"+x.uuid);
       }
   
@@ -192,7 +190,6 @@ const ListPage: React.FC<Props & RouteComponentProps<any>> = (params) => {
         </IonGrid>
 
         { aFilters.map(a => {
-          console.log("ionchip"); 
           return <IonChip 
             onClick={() => {
               resetFilter(a);

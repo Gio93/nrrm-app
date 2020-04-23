@@ -58,9 +58,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       let selectedData = null;
       selectedData = originData.find(node => node.id === nodeData.id);
       setSelectedNodeData(selectedData);
-      console.log("CHILDdATA", selectedNodeData);
-      console.log("SELECTED DATA", selectedData);
-      console.log(selectedNodeData);
      
 }
 
@@ -172,7 +169,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
 
       let lastChildren = data.filter(node => node.successor.length === 0);
-      console.log('lastChildren', lastChildren);
       lastChildren.forEach((node) => {
         let levels = 0;
         levels = trackPredecessor(node, data);
@@ -188,7 +184,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       });
       auxMaxLevels++;
       setMaxLevels(auxMaxLevels);
-      console.log('Max levels', auxMaxLevels);
       setData(flatData.sort((a,b)=>a.id-b.id));
     }
 
@@ -204,9 +199,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     }
 
     const onClickNode = (node : RippleDiagramNode)=>{
-      // var buttonId = "six";
-      // document.querySelector('#modal-container').removeAttr('class').addClass(buttonId);
-      // document.querySelector('body').addClass('modal-active');
       setAnimate(!animate);
     }
       

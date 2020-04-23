@@ -32,21 +32,9 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
     useEffect(() => {
         setSelectedRippleId(Params.match.params.ripple);
-        console.log("useEffect");
         myapi.doGet("/nrrm-ripple/ripple/findOne/"+selectedRippleId).then(data => {
           return setData(data);
         });
-        
-        // async function loadData() {
-          // const loadedData = await getDataFromAPI();
-          //   setData(loadedData);
-          // }
-          // console.log("selectedCard :: "+data);
-          // //if(!data){
-            //   loadData();
-            // //}
-            console.log("ESTO ES LA DATAA", data);
-        
     },[]
     );  
 
@@ -140,7 +128,6 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
           });
           case "Project":
           return getProjectItems().map((x,i)=>{
-            console.log("ESTO ES LA X", x);
             return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
           });
 
@@ -163,8 +150,6 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
                       value={ionSelectedSegmentKey} 
                       className="rippleSegment"
                       onIonChange={e => {
-                        console.log('Segment selected', e.detail.value);
-                        console.log('QUE ES ESTOO??', e.detail.value);
                       }}
                       scrollable
                     >
