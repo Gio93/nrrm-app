@@ -141,9 +141,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
           case "Project":
           return getProjectItems().map((x,i)=>{
             console.log("ESTO ES LA X", x);
-            // return (<IonItem key={"num"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonLabel>{x.value}</IonLabel></IonItem>);
             return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
-
           });
 
       }

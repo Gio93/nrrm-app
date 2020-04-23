@@ -46,7 +46,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
 
     const loadData=()=>{
       setShowLoading(true);
-      // myapi.doGet("/nrrm-ripple/ripple").then(data => {
       myapi.doGet("/nrrm-ripple/ripple?email=" + localStorage.getItem('email')).then(data => {
         setShowLoading(false);
         setFilterData(data);
@@ -86,7 +85,6 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
     }
 
     const uniqueValues=(aArray:Array<any>)=>{
-      // console.log(uniqueValues);
       return aArray.filter((thing, index, self) => self.findIndex(t => t.place === thing.place && t.key === thing.key) === index);
     }
 
@@ -279,11 +277,7 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
                 :
                 null
               }
-              {/* <IonFab vertical="bottom" horizontal="end" slot="fixed" >
-                <IonFabButton routerLink="/ripple">
-                  <IonIcon icon={list} color="light"/>
-                </IonFabButton> 
-              </IonFab>  */}
+
               <IonFab vertical="bottom" horizontal="end" slot="fixed" className="secondaryFab" >
                 <IonFabButton color="secondary">
                   <IonIcon icon={funnel} color="light"/>

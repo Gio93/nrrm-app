@@ -139,20 +139,6 @@ class RippleRoadDiagram extends React.Component<any,State>{
     this.updateData();
   }
 
-  // presentButton(ev:any) {
-  //   const fabButton = Object.assign(document.createElement('ion-fab-button'), {
-  //     data: this.props.data,
-  //     show: true,
-  //     component: 'ion-fab-button',
-  //     event: ev,
-  //     translucent: true
-  //   });
-  //   document.body.appendChild(fabButton);
-  //   console.log("EEEEEY IM THE DATA OF THIS MA MEN", this.props.data)
-  //   return fabButton;
-  // }
-
-  
 
   setSelectedNode(nodeId: number) {
     let node = this.tmpData.find((a)=>a.id === nodeId);
@@ -167,14 +153,8 @@ class RippleRoadDiagram extends React.Component<any,State>{
 
   sendData() {
     this.props.parentCallback(this.selectedNode);
-    console.log("NODEDATAAA", this.selectedNode)
 }
   
-  navigateNode(url?:any) {
-    console.log("NavigateNode function");
-  }
-
-
   findIfShowingChildren(nodeId:number){
     let children = this.tmpData.filter((el)=>el.father===nodeId);
     return children.length>0;
@@ -270,11 +250,3 @@ class RippleRoadDiagram extends React.Component<any,State>{
 };
 
 export default RippleRoadDiagram;
-
-// const NoAuthWebsite = ({ nodeId }) => {
-//   const [nodeValue, setNodeValue] = useState("");
-//   return (
-//         setNodeValue(nodeId)
-//   );
-//   }
-
