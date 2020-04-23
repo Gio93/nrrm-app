@@ -1,8 +1,8 @@
 {
-  "appId": "com.nimbl.NimblRippleMethod",
-  "appName": "NimblRippleMethod",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "build",
-  "cordova": {}
+    "appId": "com.nimbl.NimblRippleMethod",
+    "appName": "NimblRippleMethod",
+    "bundledWebRuntime": true,
+    "npmClient": "npm",
+    "webDir": "build",
+    "cordova": {}
 }
