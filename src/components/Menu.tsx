@@ -1,7 +1,7 @@
 import React from 'react';
 import { IonIcon, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem,  IonMenuToggle, IonLabel } from '@ionic/react';
 import './Menu.css';
-import { PopoverExample } from './PopoverExample';
+
 
 class Menu extends React.Component<any, any> {
   constructor(props: any){
@@ -77,7 +77,6 @@ class Menu extends React.Component<any, any> {
               {this.state.isLoggedIn === "true" ? <> {this.state.routes.loggedInPages.map((art: any) =>
                 this.renderMenuItem(art))} </> :<> {this.state.routes.loggedOutPages.map((art: any) =>
                 this.renderMenuItem(art))} </> }
-                {/* <PopoverExample></PopoverExample> */}
             </IonList>
             <div className="wrapper">
               <div className="wave"></div>

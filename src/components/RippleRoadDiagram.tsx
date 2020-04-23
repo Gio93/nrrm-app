@@ -4,7 +4,6 @@ import * as Treeviz from 'treeviz';
 import { RippleDiagramNode } from "../declarations";
 import { IonPopover, IonButton } from '@ionic/react';
 // import { PropTypes } from 'react';
-import { PopoverExample } from './PopoverExample';
 
 type State = {
   data: Array<RippleDiagramNode>, 
