@@ -71,13 +71,14 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
     const getProjectItems=()=>{
       let temp:Array<KeyAndValue> = [];
-      temp.push({key:"Responsable de ejecución ("+data.complexityPercentage+"%)",numberValue:parseFloat(data.complexityPercentage as any)/100});
-      temp.push({key:"Responsable de ejecución ("+data.rippleOwner+")"});
-      temp.push({key:"Progress Degree ("+data.progressDegree+")"});
-      temp.push({key:"Initial Date ("+data.projectInitDate+")"});
-      temp.push({key:"End Date ("+data.projectEndDate+")"});
-      temp.push({key:"Project Status ("+data.projectStatus+")"});
-      temp.push({key:"Project Risks ("+data.projectRisks+")"});
+      temp.push({key:"Responsable de ejecución", value:data.rippleOwner});
+      temp.push({key:"Progress Degree ", value:data.progressDegree+"%"});
+      temp.push({key:"Initial Date ", value:data.projectInitDate+""});
+      temp.push({key:"End Date ", value:data.projectEndDate+""});
+      temp.push({key:"Project Status", value:data.projectStatus+""});
+      temp.push({key:"Project Risk", value:data.projectRisks+""});
+      temp.push({key:"Presupuesto asignado", value:data.projectAllocatedBudget+""});
+      temp.push({key:"Desviacion estimada", value:data.projectEstimatedDeviation+""});
       // temp.push({key:"Project Risks ", data.projectRisks});
       return temp;
     }
@@ -128,7 +129,10 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
           });
           case "Project":
           return getProjectItems().map((x,i)=>{
+            // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+            // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.value}</IonLabel></IonItem>);
             return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+
           });
 
       }

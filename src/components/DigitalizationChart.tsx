@@ -201,7 +201,7 @@ class DigitalizationChart extends React.Component<any, State>{
             <div>
                 <IonCard className="graph-card">
                     <IonCardHeader>
-                    {<IonCardSubtitle>Digitalization grade</IonCardSubtitle> ? <IonCardSubtitle>Digitalization grade</IonCardSubtitle> : <Skeleton></Skeleton>}
+                    {<IonCardSubtitle >Digitalization grade</IonCardSubtitle> ? <IonCardSubtitle class="subtitle">Digitalization grade</IonCardSubtitle> : <Skeleton></Skeleton>}
                         {/* <IonCardTitle class="total-percentage">
                             { this.searchGradePercentage() }
                             { this.percentageGrade + '%' }

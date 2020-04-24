@@ -87,6 +87,12 @@ export interface RippleInfo{
     projectRisks:number;
     //Project Risk
     
+    projectEstimatedDeviation:number;
+    //Project Risk
+
+    projectAllocatedBudget:number;
+    
+    
     
     reefBreak:boolean;
     //Reef break of the ripple

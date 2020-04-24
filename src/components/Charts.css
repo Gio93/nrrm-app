@@ -2,6 +2,13 @@
     color: var(--tech-green);
     font-size: 40px;
     font-weight: 700;
+    margin-left: 22px;
+    margin-top: 10px;
+}
+
+.subtitle {
+    margin-left: 20px;
+    margin-top: 10px;
 }
 
 .total-percentage.total-percentage--small {
@@ -16,7 +23,8 @@
     padding-left: 20px;
 }
 
-.item-graph, .item-native {
+.item-graph,
+.item-native {
     --padding-start: 0;
     --padding-end: 0;
     --inner-padding-start: 0;
@@ -26,7 +34,7 @@
     font-size: 14px;
 }
 
-.item-graph ion-button{
+.item-graph ion-button {
     --padding-start: 4px;
     --padding-end: 4px;
     color: var(--ion-color-tech-green);
@@ -46,10 +54,9 @@
     .item-graph-list {
         padding-left: 0;
     }
-
     .chart-wrapper {
         min-height: 50vh;
-    }    
+    }
 }
 
 @media(min-width: 576px) {
