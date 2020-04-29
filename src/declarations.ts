@@ -44,7 +44,7 @@ export interface RippleInfo{
 
     smallDescription:string;
 
-    progressDegree:number;
+    progressDegree:any;
 
     rippleOwner:string;        
 
@@ -75,10 +75,10 @@ export interface RippleInfo{
     projectResponsibleExecution:string;
     //Project Responsible Execution
 
-    projectInitDate:number;
+    projectInitDate:string;
     //Project Init Date
 
-    projectEndDate:number;
+    projectEndDate:string;
     //Project End Date
 
     projectStatus:number;
@@ -344,6 +344,23 @@ export interface GraphDataChartBarSubItem {
   label: string,
   data: Array<number>,
   backgroundColor: Array<string>
+}
+
+
+export interface GraphDataChartScatter {
+  labels: Array<string>,
+  datasets: Array<GraphDataChartBarSubItem>
+  // x:Array<number>,
+  // y:Array<number>
+  data:any
+  
+}
+
+export interface GraphDataChartScatterSubItem {
+  label: string,
+  data: Array<number>,
+  backgroundColor: Array<string>
+  
 }
 
 export interface Filter  {key:string, value:string, type:number};

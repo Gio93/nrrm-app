@@ -6,6 +6,7 @@ import {
 import { RouteComponentProps } from 'react-router';
 import API from '../utils/httpUtils';
 import { RippleInfo, TextDto } from '../declarations';
+import { values } from 'd3';
 
 
 type Props = { props:any };
@@ -25,7 +26,7 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
     const [selectedRippleId, setSelectedRippleId] = useState(Params.match.params.ripple);
     
 
-    const SECTIONS:Array<string> = ["AS-IS","Solution","Challenge","Value","Benefits","Ripple Information","Exponential Technologies","Roles", "Numbers", "Complexity", "Project"];
+    const SECTIONS:Array<string> = ["Short Description", "AS-IS","Solution","Challenge","Value","Benefits","Ripple Information","Exponential Technologies","Roles", "Numbers", "Complexity", "Project"];
     const [ionSelectedSegmentKey, setIonSelectedSegmentKey] = useState("part0");
     const myapi = new API(Params);
 
@@ -43,6 +44,12 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
       let dd = data.texts.find((x:TextDto)=>x.type.toUpperCase().indexOf(key)!==-1 );
       if(!!dd) return dd.text;
       else return ""
+    }
+
+    const getDescription=(key:string)=>{
+      if(!data)return;
+      let sd = data.smallDescription;
+      if(!!sd) return data.smallDescription;
     }
 
     const getRippleInfoItems=()=>{
@@ -71,14 +78,14 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
 
     const getProjectItems=()=>{
       let temp:Array<KeyAndValue> = [];
-      temp.push({key:"Responsable de ejecución", value:data.rippleOwner});
-      temp.push({key:"Progress Degree ", value:data.progressDegree+"%"});
-      temp.push({key:"Initial Date ", value:data.projectInitDate+""});
-      temp.push({key:"End Date ", value:data.projectEndDate+""});
-      temp.push({key:"Project Status", value:data.projectStatus+""});
-      temp.push({key:"Project Risk", value:data.projectRisks+""});
-      temp.push({key:"Presupuesto asignado", value:data.projectAllocatedBudget+""});
-      temp.push({key:"Desviacion estimada", value:data.projectEstimatedDeviation+""});
+      temp.push({key:"Responsible for execution", value:data.rippleOwner});
+      temp.push({key:"Progress Degree", value:data.progressDegree+"%"});
+      temp.push({key:"Initial Date ", value:data.projectInitDate.slice(0,10)+""});
+      temp.push({key:"End Date ", value:data.projectEndDate.slice(0,10)+""});
+      temp.push({key:"Status", value:data.projectStatus+""});
+      temp.push({key:"Risk", value:data.projectRisks+""});
+      temp.push({key:"Budget asigned", value:data.projectAllocatedBudget+"€"});
+      temp.push({key:"Estimated deviation", value:data.projectEstimatedDeviation+"€"});
       // temp.push({key:"Project Risks ", data.projectRisks});
       return temp;
     }
@@ -87,6 +94,8 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
      if (!data) return; 
 
       switch(section){
+        case "Short Description":
+          return <IonItem key="description0" className="description"><IonInput disabled>{getDescription("Short Description")}</IonInput><IonNote slot="end"></IonNote></IonItem>
         case "AS-IS":
           return <IonItem key="asis0" className="asis"><IonInput disabled>{getText("AS-IS")}</IonInput><IonNote slot="end"></IonNote></IonItem>;
 
@@ -127,13 +136,30 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
             let color = (x.numberValue > 0.7) ? "success" : (x.numberValue > 0.4) ? "warning" : "danger";  
             return (<IonItem key={"com"+i} className="ri"><IonLabel position="stacked">{x.key}</IonLabel><IonProgressBar value={x.numberValue} color={color}></IonProgressBar></IonItem>);
           });
-          case "Project":
-          return getProjectItems().map((x,i)=>{
-            // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
-            // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.value}</IonLabel></IonItem>);
-            return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+          // case "Project":
+          // return getProjectItems().map((x,i)=>{
+          //   // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+          //   // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.value}</IonLabel></IonItem>);
+          //   return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
 
-          });
+          // });
+          case "Project":
+            return getProjectItems().map((x,i)=>{
+              console.log("ESTO ES LA XXX", x);
+              let auxX = x.key.trim().toLowerCase().split(" ").join("-");
+        
+              console.log(auxX);
+              if (auxX === "progress-degree") {
+                let auxVal = parseFloat(x.value.substring(0,(x.value.length - 1))) / 100;
+                console.log("ESTO ES AUXVAL", auxVal);
+                let color = (auxVal > 0.6) ? "success" : (auxVal > 0.4) ? "warning" : "danger";
+                return (<IonItem key={"num"+i} className="num"><IonLabel position="stacked">{x.key} ({x.value})</IonLabel><IonProgressBar value={auxVal} color={color}></IonProgressBar></IonItem>);
+              } else 
+                return (<IonItem key={"num"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+              // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.key}</IonLabel><IonInput disabled>{x.value}</IonInput><IonNote slot="end"></IonNote></IonItem>);
+              // return (<IonItem key={"proj"+i} className="num"><IonLabel position="stacked">{x.value}</IonLabel></IonItem>);
+  
+            });
 
       }
     }

@@ -8,6 +8,7 @@ import RippleList from './pages/Ripples';
 import DigitalizationPage from './pages/Digitalization';
 import Digitalization2 from './pages/Digitalization2'
 import HistoricPage from './pages/HistoricPage';
+import EffortDiagramPage from './pages/EffortDiagramPage';
 
 
 
@@ -57,6 +58,7 @@ const App: React.FC = () => {
             <Route path="/dgrade" component={DigitalizationPage} />
             <Route path="/dgrade2" component={Digitalization2} />
             <Route path="/historicalChart" component={HistoricPage} />
+            <Route path="/effortDiagram" component={EffortDiagramPage} />
             <Redirect exact from="/" to="/login"></Redirect>
           </IonRouterOutlet>
       </IonSplitPane>
