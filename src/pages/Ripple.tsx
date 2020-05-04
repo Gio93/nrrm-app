@@ -80,8 +80,12 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
       let temp:Array<KeyAndValue> = [];
       temp.push({key:"Responsible for execution", value:data.rippleOwner});
       temp.push({key:"Progress Degree", value:data.progressDegree+"%"});
-      temp.push({key:"Initial Date ", value:data.projectInitDate.slice(0,10)+""});
-      temp.push({key:"End Date ", value:data.projectEndDate.slice(0,10)+""});
+      if (data.projectInitDate != null) {
+        temp.push({key:"Initial Date ", value:data.projectInitDate.slice(0,10)+""});
+      } else (temp.push({key:"Initial Date ", value:data.projectInitDate+""}));
+      if (data.projectEndDate != null) {
+        temp.push({key:"End Date ", value:data.projectEndDate.slice(0,10)+""});
+      } else (temp.push({key:"End Date ", value:data.projectEndDate+""}));
       temp.push({key:"Status", value:data.projectStatus+""});
       temp.push({key:"Risk", value:data.projectRisks+""});
       temp.push({key:"Budget asigned", value:data.projectAllocatedBudget+"€"});
@@ -89,6 +93,16 @@ const RipplePage: React.FC<Props & RouteComponentProps<any>> = (Params) => {
       // temp.push({key:"Project Risks ", data.projectRisks});
       return temp;
     }
+
+    // const getProjectItems=()=>{
+    //   let temp:Array<KeyAndValue> = []
+    //   if (data.projectEndDate != null) {
+    //     temp.push({key:"End Date ", value:data.projectEndDate.slice(0,10)+""});
+
+    //   } temp.push({key:"End Date ", value:data.projectEndDate+""});
+
+    //   return temp;
+    // }
 
     const getItemsForSection=(section:string)=>{
      if (!data) return; 
