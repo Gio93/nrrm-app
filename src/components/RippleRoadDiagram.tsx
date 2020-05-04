@@ -112,6 +112,8 @@ class RippleRoadDiagram extends React.Component<any,State>{
           let nArray = this.removeChildrenFromParent(nodeData.data.id);
           let obj=nArray.find((a)=>a.id===nodeData.data.id);
           obj.isOpened=false;
+          console.log("Esto es la nodeData", nodeData);
+          
           this.tmpData=nArray;
           // this.myTree.refresh(this.tmpData);
           
@@ -139,13 +141,14 @@ class RippleRoadDiagram extends React.Component<any,State>{
     });
     node.isSelected = true;
     this.selectedNode = node;
+    console.log("QUE ME TRAE EL NODE?", node);
     this.sendData();
 
   }
 
   sendData() {
     this.props.parentCallback(this.selectedNode);
-}
+  }
   
   findIfShowingChildren(nodeId:number){
     let children = this.tmpData.filter((el)=>el.father===nodeId);
@@ -188,7 +191,7 @@ class RippleRoadDiagram extends React.Component<any,State>{
   }
 
   removeChildrenFromParent(nodeId:number){   
-    let tmpData = this.tmpData.slice(); 
+    let tmpData = this.tmpData.slice();
     let toRemove = this.getIndicesFromChildrenForRemove(nodeId);
     toRemove.sort(function(a,b){ return b - a; });
     for (var i = 0; i < toRemove.length ; i++) {

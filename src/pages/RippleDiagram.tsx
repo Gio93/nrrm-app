@@ -54,10 +54,11 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
       });
     }
 
-    const callbackFunction = (nodeData:any) => {
+    const callbackFunction = (nodeData:any, data:any) => {
       let selectedData = null;
-      selectedData = originData.find(node => node.id === nodeData.id);
+      selectedData = originData.find(node => node.isCard === true) && originData.find(node => node.id === nodeData.id);
       setSelectedNodeData(selectedData);
+      console.log("QUE TENEMOS AQUI? PADRE!",originData)
      
 }
 
@@ -260,8 +261,8 @@ const RippleDiagramPage: React.FC<Props & RouteComponentProps<any>> = (Params) =
               })}
             </div>
             <div className="customStackedButtons">
-            {selectedNodeData !=null ?
-                <IonFab vertical="bottom" horizontal="end" slot="fixed" >
+            {selectedNodeData !=null && selectedNodeData.isCard === true ?
+                <IonFab vertical="bottom" horizontal="end" slot="fixed">
                   <IonFabButton routerLink={"/ripple/" + selectedNodeData.uuid}>
                     <IonIcon icon={informationCircle} color="light"/>
                   </IonFabButton> 
